@@ -7,6 +7,7 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model.map;
 
+import fr.univartois.butinfo.r304.flatcraft.model.CellFactory;
 
 /**
  * Le type MapGenerator
@@ -21,8 +22,21 @@ public class MapGenerator {
         
         SimpleGameMap map = new SimpleGameMap(hauteur,largeur,64);
         
+        for (int i = 0; i < hauteur; i++) {
+            for (int y = 0; y < largeur; y++) {
+                if(i < 64) {
+                    map.setAt(i, y, cellFactory.createSubSoil());
+                } else if (i == 64) {
+                    map.setAt(i, y, cellFactory.createSoilSurface());
+                } else {
+                    map.setAt(i, y, cellFactory.createSky());
+                }
+                
+            }
+        }
         
-        
+        return map;
+
     }
 
 }
