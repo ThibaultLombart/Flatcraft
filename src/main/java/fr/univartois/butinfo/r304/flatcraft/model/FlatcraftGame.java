@@ -19,6 +19,7 @@ package fr.univartois.butinfo.r304.flatcraft.model;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.IntegerProperty;
@@ -158,8 +159,12 @@ public final class FlatcraftGame {
      * @return La carte du jeu créée.
      */
     private GameMap createMap() {
-        // TODO Implémentez cette méthode.
-        return null;
+        int hauteur = this.height / 16;
+        int largeur = this.width / 16;
+        
+        return MapGenerator.createMapGen(hauteur,largeur,this.cellFactory);
+        
+        
     }
 
     /**
@@ -284,5 +289,8 @@ public final class FlatcraftGame {
         // On récupère enfin la cellule à cette position dans la carte.
         return map.getAt(row, column);
     }
+    
+    
+    
 
 }
