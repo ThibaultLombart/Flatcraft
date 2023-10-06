@@ -24,7 +24,7 @@ public class MapGenerator {
         
         for (int i = 0; i < hauteur; i++) {
             for (int y = 0; y < largeur; y++) {
-                if(i < 64) {
+                if(i < hauteur*(2/3)) {
                     map.setAt(i, y, cellFactory.createSubSoil());
                 } else if (i == 64) {
                     map.setAt(i, y, cellFactory.createSoilSurface());
