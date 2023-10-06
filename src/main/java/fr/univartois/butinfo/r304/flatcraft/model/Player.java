@@ -23,20 +23,20 @@ public class Player extends AbstractMovable{
 		this.xpPoints = new SimpleIntegerProperty(0);
 	}
 
-	public int getHealthPoints() {
-		return healthPoints.getValue();
+	public IntegerProperty getHealthPoints() {
+		return healthPoints;
 	}
 
 	public void setHealthPoints(IntegerProperty healthPoints) {
-		this.healthPoints.setValue(healthPoints.getValue());
+		this.healthPoints=healthPoints;
 	}
 
-	public int getXpPoints() {
-		return xpPoints.getValue();
+	public IntegerProperty getXpPoints() {
+		return xpPoints;
 	}
 
 	public void setXpPoints(IntegerProperty xpPoints) {
-		this.xpPoints.setValue(xpPoints.getValue());
+		this.xpPoints=xpPoints;
 	}
 
 	public void addItem(Resource res) {
