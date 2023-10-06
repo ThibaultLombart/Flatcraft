@@ -1,6 +1,7 @@
 package fr.univartois.butinfo.r304.flatcraft.model.map;
 
 import fr.univartois.butinfo.r304.flatcraft.model.IMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.Player;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
@@ -33,8 +34,13 @@ public class GenerateCell extends AbstractCell{
 	}
 
 	@Override
-	public boolean dig(IMovable player) {
+	public boolean dig(Player player) {
 		// TODO Auto-generated method stub
+		this.getResource().dig();
+		if(this.getResource().equals(0)) {
+			player.addItem(this.getResource());
+			return true;
+		}
 		return false;
 	}
 	
