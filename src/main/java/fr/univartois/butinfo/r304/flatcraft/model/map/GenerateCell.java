@@ -24,6 +24,11 @@ public class GenerateCell extends AbstractCell{
 	@Override
 	public boolean move(IMovable movable) {
 		// TODO Auto-generated method stub
+		if (this.getResource().equals(null)) {
+			movable.setX(this.getSprite().getHeight() * this.getRow()); 
+			movable.setY(this.getSprite().getWidth() * this.getColumn());
+			return true;
+		}
 		return false;
 	}
 
