@@ -143,7 +143,7 @@ public final class FlatcraftGame {
         controller.prepare(map);
        
         // TODO On crée le joueur, qui se trouve sur le sol à gauche de la carte.
-        player = new Player(this, 0, 65, spriteStore.getSprite("player"));
+        player = new Player(this, 0, this.height*(2/3), spriteStore.getSprite("player"));
         movableObjects.add(player);
         controller.addMovable(player);
         // TODO On fait le lien entre les différentes propriétés et leur affichage.
@@ -181,28 +181,33 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers le haut.
      */
     public void moveUp() {
-        // TODO Implémentez cette méthode.
+    	
     }
+    
 
     /**
      * Fait se déplacer le joueur vers le bas.
      */
     public void moveDown() {
-        // TODO Implémentez cette méthode.
+    	
     }
 
     /**
      * Fait se déplacer le joueur vers la gauche.
      */
     public void moveLeft() {
-        // TODO Implémentez cette méthode.
+    	double vit = player.getHorizontalSpeed();
+    	vit = -1;
+    	move(player);
     }
 
     /**
      * Fait se déplacer le joueur vers la droite.
      */
     public void moveRight() {
-        // TODO Implémentez cette méthode.
+    	double vit = player.getHorizontalSpeed();
+    	vit = +1;
+    	move(player);
     }
 
     /**
@@ -224,7 +229,10 @@ public final class FlatcraftGame {
      * Interrompt le déplacement du joueur.
      */
     public void stopMoving() {
-        // TODO Implémentez cette méthode.
+    	double vitH = player.getHorizontalSpeed();
+    	double vitV = player.getVerticalSpeed();
+    	vitH = 0;
+    	vitV = 0;
     }
 
     /**
@@ -245,21 +253,42 @@ public final class FlatcraftGame {
      * Fait creuser le joueur vers le bas.
      */
     public void digDown() {
-        // TODO Implémentez cette méthode.
+        Cell x = getCellOf(player);
+        int hori = x.getRow();
+        int vert = x.getColumn();
+        int cible = hori +1;
+        Cell y = map.getAt(cible, vert);
+        dig(y);
+        move(player);
+        
+        
+        
     }
 
     /**
      * Fait creuser le joueur vers la gauche.
      */
     public void digLeft() {
-        // TODO Implémentez cette méthode.
+    	Cell x = getCellOf(player);
+        int hori = x.getRow();
+        int vert = x.getColumn();
+        int cible = vert -1;
+        Cell y = map.getAt(hori, cible);
+        dig(y);
+        move(player);
     }
 
     /**
      * Fait creuser le joueur vers la droite.
      */
     public void digRight() {
-        // TODO Implémentez cette méthode.
+    	Cell x = getCellOf(player);
+        int hori = x.getRow();
+        int vert = x.getColumn();
+        int cible = vert +1;
+        Cell y = map.getAt(hori, cible);
+        dig(y);
+        move(player);
     }
 
     /**
@@ -268,7 +297,11 @@ public final class FlatcraftGame {
      * @param toDig La cellule sur laquelle creuser.
      */
     private void dig(Cell toDig) {
-        // TODO Implémentez cette méthode.
+        if (toDig.dig(player)) {
+        	toDig.replaceBy(cellFactory.createSky());
+        }
+        	
+        
     }
 
     /**
