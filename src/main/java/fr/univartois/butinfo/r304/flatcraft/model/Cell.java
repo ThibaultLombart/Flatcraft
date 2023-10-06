@@ -98,6 +98,6 @@ public interface Cell {
      *
      * @return Si une ressource a été extraite.
      */
-    boolean dig(IMovable player);
+    boolean dig(Player player);
 
 }
