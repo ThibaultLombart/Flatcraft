@@ -218,7 +218,10 @@ public final class FlatcraftGame {
      * Interrompt le déplacement du joueur.
      */
     public void stopMoving() {
-        // TODO Implémentez cette méthode.
+    	double vitH = player.getHorizontalSpeed();
+    	double vitV = player.getVerticalSpeed();
+    	vitH = 0;
+    	vitV = 0;
     }
 
     /**
