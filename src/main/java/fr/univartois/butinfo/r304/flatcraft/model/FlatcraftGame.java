@@ -262,7 +262,7 @@ public final class FlatcraftGame {
         int hori = x.getRow();
         int vert = x.getColumn();
         int cible = vert -1;
-        Cell y = map.getAt(cible, hori);
+        Cell y = map.getAt(hori, cible);
         dig(y);
         move(player);
     }
@@ -275,7 +275,7 @@ public final class FlatcraftGame {
         int hori = x.getRow();
         int vert = x.getColumn();
         int cible = vert +1;
-        Cell y = map.getAt(cible, hori);
+        Cell y = map.getAt(hori, cible);
         dig(y);
         move(player);
     }
