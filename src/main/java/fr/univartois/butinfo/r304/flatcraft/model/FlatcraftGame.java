@@ -242,7 +242,16 @@ public final class FlatcraftGame {
      * Fait creuser le joueur vers le bas.
      */
     public void digDown() {
-        // TODO Implémentez cette méthode.
+        Cell x = getCellOf(player);
+        int hori = x.getRow();
+        int vert = x.getColumn();
+        int cible = hori +1;
+        Cell y = map.getAt(cible, vert);
+        dig(y);
+        move(player);
+        
+        
+        
     }
 
     /**
