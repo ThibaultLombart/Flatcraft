@@ -258,14 +258,26 @@ public final class FlatcraftGame {
      * Fait creuser le joueur vers la gauche.
      */
     public void digLeft() {
-        // TODO Implémentez cette méthode.
+    	Cell x = getCellOf(player);
+        int hori = x.getRow();
+        int vert = x.getColumn();
+        int cible = vert -1;
+        Cell y = map.getAt(cible, hori);
+        dig(y);
+        move(player);
     }
 
     /**
      * Fait creuser le joueur vers la droite.
      */
     public void digRight() {
-        // TODO Implémentez cette méthode.
+    	Cell x = getCellOf(player);
+        int hori = x.getRow();
+        int vert = x.getColumn();
+        int cible = vert +1;
+        Cell y = map.getAt(cible, hori);
+        dig(y);
+        move(player);
     }
 
     /**
