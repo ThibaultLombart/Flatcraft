@@ -19,7 +19,7 @@ public class MapGenerator {
     
     public static SimpleGameMap createMapGen(int hauteur, int largeur, CellFactory cellFactory) {
         
-        SimpleGameMap map = new SimpleGameMap();
+        
         
     }
 
