@@ -16,9 +16,10 @@ import fr.univartois.butinfo.r304.flatcraft.model.CellFactory;
  *
  * @version 0.1.0
  */
-public class MapGenerator {
+public class MapGenerator implements IGenerate{
     
-    public static SimpleGameMap createMapGen(int hauteur, int largeur, CellFactory cellFactory) {
+    @Override
+	public SimpleGameMap createMapGen(int hauteur, int largeur, CellFactory cellFactory) {
         
         SimpleGameMap map = new SimpleGameMap(hauteur,largeur,20);
         
