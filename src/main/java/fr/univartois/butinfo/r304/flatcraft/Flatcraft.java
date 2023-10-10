@@ -55,7 +55,7 @@ public final class Flatcraft extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // On commence par charger la vue et son contrôleur.
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/flatcraft.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/flatcraft.fxml"));
         Parent viewContent = fxmlLoader.load();
         FlatcraftController controller = fxmlLoader.getController();
         controller.setStage(stage);

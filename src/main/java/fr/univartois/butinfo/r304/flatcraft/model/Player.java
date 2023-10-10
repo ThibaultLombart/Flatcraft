@@ -19,7 +19,7 @@ public class Player extends AbstractMovable{
 	
 	public Player(FlatcraftGame game, int x, int y, Sprite sprite) {
 		super(game,x,y,sprite);
-		this.healthPoints = new SimpleIntegerProperty(0);
+		this.healthPoints = new SimpleIntegerProperty(20);
 		this.xpPoints = new SimpleIntegerProperty(0);
 	}
 

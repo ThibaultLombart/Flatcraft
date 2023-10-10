@@ -143,7 +143,7 @@ public final class FlatcraftGame {
         controller.prepare(map);
        
         // TODO On crée le joueur, qui se trouve sur le sol à gauche de la carte.
-        player = new Player(this, 0, this.height*(2/3), spriteStore.getSprite("player"));
+        player = new Player(this, 0, 19*16, spriteStore.getSprite("player"));
         movableObjects.add(player);
         controller.addMovable(player);
         // TODO On fait le lien entre les différentes propriétés et leur affichage.
@@ -196,8 +196,7 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers la gauche.
      */
     public void moveLeft() {
-    	double vit = player.getHorizontalSpeed();
-    	vit = -1;
+    	player.setHorizontalSpeed(-150);
     	move(player);
     }
 
@@ -205,8 +204,7 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers la droite.
      */
     public void moveRight() {
-    	double vit = player.getHorizontalSpeed();
-    	vit = +1;
+    	player.setHorizontalSpeed(150);
     	move(player);
     }
 
@@ -229,10 +227,8 @@ public final class FlatcraftGame {
      * Interrompt le déplacement du joueur.
      */
     public void stopMoving() {
-    	double vitH = player.getHorizontalSpeed();
-    	double vitV = player.getVerticalSpeed();
-    	vitH = 0;
-    	vitV = 0;
+    	player.setHorizontalSpeed(0);
+    	player.setVerticalSpeed(0);
     }
 
     /**

@@ -25,9 +25,9 @@ public class GenerateCell extends AbstractCell{
 	@Override
 	public boolean move(IMovable movable) {
 		// TODO Auto-generated method stub
-		if (this.getResource().equals(null)) {
-			movable.setX(this.getSprite().getHeight() * this.getRow()); 
-			movable.setY(this.getSprite().getWidth() * this.getColumn());
+		if (this.getResource() == null) {
+			movable.setY(this.getSprite().getHeight() * this.getRow()); 
+			movable.setX(this.getSprite().getWidth() * this.getColumn());
 			return true;
 		}
 		return false;
@@ -37,7 +37,7 @@ public class GenerateCell extends AbstractCell{
 	public boolean dig(Player player) {
 		// TODO Auto-generated method stub
 		this.getResource().dig();
-		if(this.getResource().equals(0)) {
+		if(this.getResource().getHardness() == 0) {
 			player.addItem(this.getResource());
 			return true;
 		}

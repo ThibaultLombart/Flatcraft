@@ -20,13 +20,13 @@ public class MapGenerator {
     
     public static SimpleGameMap createMapGen(int hauteur, int largeur, CellFactory cellFactory) {
         
-        SimpleGameMap map = new SimpleGameMap(hauteur,largeur,64);
+        SimpleGameMap map = new SimpleGameMap(hauteur,largeur,20);
         
         for (int i = 0; i < hauteur; i++) {
             for (int y = 0; y < largeur; y++) {
-                if(i < hauteur*(2/3)) {
+                if(i > 20) {
                     map.setAt(i, y, cellFactory.createSubSoil());
-                } else if (i == 64) {
+                } else if (i == 20) {
                     map.setAt(i, y, cellFactory.createSoilSurface());
                 } else {
                     map.setAt(i, y, cellFactory.createSky());
