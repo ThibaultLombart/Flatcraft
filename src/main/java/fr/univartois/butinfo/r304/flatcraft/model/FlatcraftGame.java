@@ -51,7 +51,7 @@ public final class FlatcraftGame {
      */
     private IFlatcraftController controller;
     
-    public IGenerate generate;
+    private IGenerate generate;
 
     /**
      * L'instance e {@link ISpriteStore} utilisée pour créer les sprites du jeu.
