@@ -19,6 +19,7 @@ package fr.univartois.butinfo.r304.flatcraft.model;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
@@ -49,6 +50,8 @@ public final class FlatcraftGame {
      * Le contrôleur de l'application.
      */
     private IFlatcraftController controller;
+    
+    public IGenerate generate;
 
     /**
      * L'instance e {@link ISpriteStore} utilisée pour créer les sprites du jeu.
@@ -133,6 +136,10 @@ public final class FlatcraftGame {
     public void setController(IFlatcraftController controller) {
         this.controller = controller;
     }
+    
+    public void setGenerate(IGenerate generate) {
+        this.generate = generate;
+    }
 
     /**
      * Prépare la partie de Flatcraft avant qu'elle ne démarre.
@@ -164,7 +171,7 @@ public final class FlatcraftGame {
         int hauteur = this.height / 16;
         int largeur = this.width / 16;
         
-        return MapGenerator.createMapGen(hauteur,largeur,this.cellFactory);
+        return generate.createMapGen(height, width, cellFactory);
         
         
     }
