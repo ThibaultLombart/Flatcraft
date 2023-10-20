@@ -35,13 +35,16 @@ public class Mob extends AbstractMovable {
     
     private Sprite spriteGauche;
     
-    public Mob(FlatcraftGame game, double xPosition, double yPosition, Sprite spriteDroit,Sprite spriteGauche, EMob type) {
+    private IDeplacementMob strategie;
+    
+    public Mob(FlatcraftGame game, double xPosition, double yPosition, Sprite spriteDroit,Sprite spriteGauche, EMob type, IDeplacementMob strategie) {
         // TODO Auto-generated constructor stub.
         super(game, xPosition, yPosition, spriteDroit);
         this.type = type;
         this.spriteDroit = spriteDroit;
         this.spriteGauche = spriteGauche;
         this.healthPoints = type.getHealth();
+        this.strategie = strategie;
     }
     
     public int getHealthPoints() {
@@ -52,7 +55,10 @@ public class Mob extends AbstractMovable {
         this.healthPoints=healthPoints;
     }
     
-    
+    public boolean move(long delta) {
+        strategie.deplacement(this);
+        return super.move(delta);
+    }
 
 }
 
