@@ -171,7 +171,7 @@ public final class FlatcraftGame {
         int hauteur = this.height / 16;
         int largeur = this.width / 16;
         
-        return generate.createMapGen(height, width, cellFactory);
+        return generate.createMapGen(hauteur, largeur, cellFactory);
         
         
     }
