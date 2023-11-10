@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import fr.univartois.butinfo.r304.flatcraft.controller.FlatcraftController;
+import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteEnd;
 import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteNether;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.Terrils;
