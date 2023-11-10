@@ -65,7 +65,7 @@ public final class Flatcraft extends Application {
         // On commence par charger la vue et son contrôleur.
     	Random r = new Random();
     	int typeTerrils = r.nextInt(4);
-    	int typeArbre = r.nextInt(9);
+    	int tailleArbre = r.nextInt(5)+4;
     	int nbArbre = r.nextInt(6);
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/flatcraft.fxml"));
         Parent viewContent = fxmlLoader.load();
@@ -75,7 +75,7 @@ public final class Flatcraft extends Application {
         // On crée ensuite le jeu, que l'on lie au contrôleur.
         // TODO Utiliser ici la bonne factory pour créer les objets du jeu.
         FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, new SpriteStore(), new ChooseSprite());
-        game.setGenerate(new Terrils(new MapGenerator(), typeTerrils));
+        game.setGenerate(new Arbre(new MapGenerator(), tailleArbre,nbArbre));
         controller.setGame(game);
         game.setController(controller);
         game.prepare();
