@@ -19,6 +19,7 @@ package fr.univartois.butinfo.r304.flatcraft;
 import java.io.IOException;
 
 import fr.univartois.butinfo.r304.flatcraft.controller.FlatcraftController;
+import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteEnd;
 import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteNether;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
@@ -66,7 +67,7 @@ public final class Flatcraft extends Application {
         // On crée ensuite le jeu, que l'on lie au contrôleur.
         // TODO Utiliser ici la bonne factory pour créer les objets du jeu.
         
-        FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, new SpriteStore(), new ChooseSpriteNether());
+        FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, new SpriteStore(), new ChooseSpriteEnd());
         game.setGenerate(new MapGenerator());
         controller.setGame(game);
         game.setController(controller);

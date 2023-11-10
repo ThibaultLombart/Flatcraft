@@ -19,7 +19,7 @@ public class ChooseSpriteEnd implements CellFactory {
 
 	@Override
 	public Cell createSky() {
-		return new GenerateCell(this.spriteStore.getSprite("gui_formbg"));
+		return new GenerateCell(this.spriteStore.getSprite("default_coal_block"));
 
 	}
 
