@@ -21,6 +21,9 @@ import java.util.Random;
 
 import fr.univartois.butinfo.r304.flatcraft.controller.FlatcraftController;
 import fr.univartois.butinfo.r304.flatcraft.model.ChooseSprite;
+import fr.univartois.butinfo.r304.flatcraft.model.Arbre;
+import fr.univartois.butinfo.r304.flatcraft.model.ChooseSprite;
+import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteEnd;
 import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteNether;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.Terrils;
@@ -63,6 +66,8 @@ public final class Flatcraft extends Application {
         // On commence par charger la vue et son contrôleur.
     	Random r = new Random();
     	int typeTerrils = r.nextInt(4);
+    	int typeArbre = r.nextInt(9);
+    	int nbArbre = r.nextInt(6);
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/flatcraft.fxml"));
         Parent viewContent = fxmlLoader.load();
         FlatcraftController controller = fxmlLoader.getController();

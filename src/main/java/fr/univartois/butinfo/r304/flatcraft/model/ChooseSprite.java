@@ -53,7 +53,7 @@ public class ChooseSprite implements CellFactory {
         	return new GenerateCell(this.spriteStore.getSprite("default_tree"));
 		}
         if (chance <= 6 && chance > 4) {
-        	return new GenerateCell(this.spriteStore.getSprite("default_acasia_tree"));
+        	return new GenerateCell(this.spriteStore.getSprite("default_acacia_tree"));
 		}
 		return new GenerateCell(this.spriteStore.getSprite("default_aspen_tree"));
 	}
@@ -67,7 +67,7 @@ public class ChooseSprite implements CellFactory {
         	return new GenerateCell(this.spriteStore.getSprite("default_leaves"));
 		}
         if (chance <= 6 && chance > 4) {
-        	return new GenerateCell(this.spriteStore.getSprite("default_acasia_leaves"));
+        	return new GenerateCell(this.spriteStore.getSprite("default_acacia_leaves"));
 		}
 		return new GenerateCell(this.spriteStore.getSprite("default_aspen_leaves"));
 	}

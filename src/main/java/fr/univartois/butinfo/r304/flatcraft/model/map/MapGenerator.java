@@ -34,8 +34,7 @@ public class MapGenerator implements IGenerate{
                 }
                 
             }
-        }
-        
+        }   
         return map;
 
     }
