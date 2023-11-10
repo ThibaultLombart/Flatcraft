@@ -26,6 +26,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteEnd;
 import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteNether;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.Terrils;
+import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.application.Application;
@@ -64,9 +65,14 @@ public final class Flatcraft extends Application {
     public void start(Stage stage) throws IOException {
         // On commence par charger la vue et son contrôleur.
     	Random r = new Random();
-    	int typeTerrils = r.nextInt(4);
-    	int tailleArbre = r.nextInt(5)+4;
-    	int nbArbre = r.nextInt(6);
+    	int typeTerrils = r.nextInt(10);
+    	int typeArbre = r.nextInt(3,9);
+    	int nbArbre = r.nextInt(5,6);
+    	
+    	boolean terril = true;
+    	boolean arbre = true;
+    	
+    	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/flatcraft.fxml"));
         Parent viewContent = fxmlLoader.load();
         FlatcraftController controller = fxmlLoader.getController();
@@ -75,7 +81,18 @@ public final class Flatcraft extends Application {
         // On crée ensuite le jeu, que l'on lie au contrôleur.
         // TODO Utiliser ici la bonne factory pour créer les objets du jeu.
         FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, new SpriteStore(), new ChooseSprite());
-        game.setGenerate(new Arbre(new MapGenerator(), tailleArbre,nbArbre));
+        
+        IGenerate map = new MapGenerator();
+        
+        
+        if(terril) {
+            map = new Terrils(map,typeTerrils);
+        }
+        if(arbre) {
+            map = new Arbre(map,typeArbre,nbArbre);
+        }
+
+        game.setGenerate(map);
         controller.setGame(game);
         game.setController(controller);
         game.prepare();

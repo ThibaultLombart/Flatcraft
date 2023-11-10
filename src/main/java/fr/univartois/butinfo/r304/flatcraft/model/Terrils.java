@@ -2,36 +2,38 @@ package fr.univartois.butinfo.r304.flatcraft.model;
 
 import java.util.Random;
 
+import fr.univartois.butinfo.r304.flatcraft.model.decorator.GenerateDecorator;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
 import fr.univartois.butinfo.r304.flatcraft.model.map.SimpleGameMap;
 
-public class Terrils implements IGenerate{
+public class Terrils extends GenerateDecorator implements IGenerate{
 	
-	IGenerate map; 
+	private IGenerate map; 
 	 
-	int taille; 
+	private int taille; 
 	
 	public Terrils(IGenerate map, int taille) {
+	    super(map);
 		this.map = map;
 		this.taille = taille;
 	}
 	
 	@Override
 	public SimpleGameMap createMapGen(int hauteur, int largeur, CellFactory cellFactory) {
-		var mapGenere = map.createMapGen(hauteur, largeur, cellFactory);
+	    SimpleGameMap newMap = super.createMapGen(hauteur, largeur, cellFactory);
 		
 		Random r = new Random();
-        int posInit = r.nextInt(mapGenere.getWidth());
+        int posInit = r.nextInt(newMap.getWidth());
         int compteur = 1;
         for(int i = 1; i < taille; i++) {
         	compteur += 2;
         }
 		
-		int h = mapGenere.getSoilHeight()-1;
+		int h = newMap.getSoilHeight()-1;
 		int l = posInit;
 		for(int i = 0; i < taille; i ++) {
 			for (int y = 0; y < compteur; y++) {
-				mapGenere.setAt(h, l+y, cellFactory.createSubSoil());
+			    newMap.setAt(h, l+y, cellFactory.createSubSoil());
 			}
 			l += 1;
 			h -= 1;
@@ -67,7 +69,7 @@ public class Terrils implements IGenerate{
 		}
 		 */
 		
-		return mapGenere;
+		return newMap;
 	}
 
 }
