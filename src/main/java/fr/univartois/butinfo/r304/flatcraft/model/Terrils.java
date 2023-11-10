@@ -22,38 +22,51 @@ public class Terrils implements IGenerate{
 		
 		Random r = new Random();
         int posInit = r.nextInt(mapGenere.getWidth());
+        int compteur = 1;
+        for(int i = 1; i < taille; i++) {
+        	compteur += 2;
+        }
 		
-		int h = mapGenere.getSoilHeight();
+		int h = mapGenere.getSoilHeight()-1;
 		int l = posInit;
-		if(taille == 3) {
+		for(int i = 0; i < taille; i ++) {
+			for (int y = 0; y < compteur; y++) {
+				mapGenere.setAt(h, l+y, cellFactory.createSubSoil());
+			}
+			l += 1;
+			h -= 1;
+			compteur -= 2;
+		}
+		
+		/*
+		 * if(taille == 3) {
 			for (int i = 0; i < 5; i++) {
-				mapGenere.setAt(h, l, cellFactory.createSubSoil());
-				l += 1;
+				mapGenere.setAt(h, l+i, cellFactory.createSubSoil());
 			}
-			l = posInit + 2;
-			h = mapGenere.getSoilHeight() + 1;
+			l = l + 1;
+			h -= 1;
 			for (int i = 0; i < 3; i++) {
-				mapGenere.setAt(h, l, cellFactory.createSubSoil());
-				l += 1;
+				mapGenere.setAt(h, l+i, cellFactory.createSubSoil());
 			}
-			l = posInit + 1;
-			h = mapGenere.getSoilHeight() + 1;
+			l = l + 1;
+			h -= 1;
 			mapGenere.setAt(h, l, cellFactory.createSubSoil());
 		}
 		
 		if(taille == 2) {
 			for (int i = 0; i < 3; i++) {
-				mapGenere.setAt(h, l, cellFactory.createSubSoil());
-				l += 1;
+				mapGenere.setAt(h, l+i, cellFactory.createSubSoil());
 			}
-			l = posInit + 2;
-			h = mapGenere.getSoilHeight() + 1;
+			l = l + 1;
+			h -= 1;
 			mapGenere.setAt(h, l, cellFactory.createSubSoil());
 			}		
 		
 		if(taille == 1) {
-			mapGenere.setAt(h, l, cellFactory.createSubSoil());
+			mapGenere.setAt(h, l+1, cellFactory.createSubSoil());
 		}
+		 */
+		
 		return mapGenere;
 	}
 
