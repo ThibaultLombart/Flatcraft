@@ -6,25 +6,29 @@ import fr.univartois.butinfo.r304.flatcraft.model.map.SimpleGameMap;
 import java.util.Random;
 public class Arbre implements IGenerate {
 
-	public static final int MAX_HAUTEUR = 8;
-	
-	public static final int NB_ARBRES = 5;
+
 	
 	private IGenerate map ;
 
-	public Arbre(IGenerate map) {
+	private int tailleMax;
+	
+	private int nbArbres;
+	
+	public Arbre(IGenerate map, int tailleMax, int nbArbres) {
 		super();
 		this.map = map;
+		this.tailleMax = tailleMax;
+		this.nbArbres = nbArbres;
 	}
 
 	@Override
 	public SimpleGameMap createMapGen(int hauteur, int largeur, CellFactory cellFactory) {
 		SimpleGameMap newMap = this.map.createMapGen(hauteur, largeur, cellFactory);
 		
-		for (int i = 0; i<NB_ARBRES; i++) {
+		for (int i = 0; i<this.nbArbres; i++) {
 			Random r = new Random();
 			int pos = r.nextInt(newMap.getWidth()-1);
-			int taille = r.nextInt(4,MAX_HAUTEUR);
+			int taille = r.nextInt(4,this.tailleMax);
 		    	for (int j = 0; j < taille; j++) {
 		    		System.out.println("j :"+j);
 		        		newMap.setAt(newMap.getSoilHeight()-j-1, pos , cellFactory.createTrunk());
