@@ -21,6 +21,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.DeplacementLineaire;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.EMob;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.Mob;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.IntegerProperty;
@@ -153,6 +156,18 @@ public final class FlatcraftGame {
         player = new Player(this, 0, 19*16, spriteStore.getSprite("player"));
         movableObjects.add(player);
         controller.addMovable(player);
+        
+        /*
+         *  MOBS
+         * 
+         *  Mob cochon = new Mob(this, 50, 19*16, spriteStore.getSprite(EMob.COCHON.getSpriteDroit()),spriteStore.getSprite(EMob.COCHON.getSpriteGauche()),EMob.COCHON,new DeplacementLineaire());
+            movableObjects.add(cochon);
+            controller.addMovable(cochon);
+            cochon.move(10);
+         * 
+         */
+        
+        
         // TODO On fait le lien entre les différentes propriétés et leur affichage.
         controller.bindTime(this.time);
         controller.bindLevel(this.level);
