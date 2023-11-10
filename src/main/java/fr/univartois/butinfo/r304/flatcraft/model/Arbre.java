@@ -1,21 +1,22 @@
 package fr.univartois.butinfo.r304.flatcraft.model;
 
+import fr.univartois.butinfo.r304.flatcraft.model.decorator.GenerateDecorator;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.model.map.SimpleGameMap;
 import java.util.Random;
-public class Arbre implements IGenerate {
+public class Arbre extends GenerateDecorator implements IGenerate {
 
 
 	
-	private IGenerate map ;
+	private IGenerate map;
 
 	private int tailleMax;
 	
 	private int nbArbres;
 	
 	public Arbre(IGenerate map, int tailleMax, int nbArbres) {
-		super();
+		super(map);
 		this.map = map;
 		this.tailleMax = tailleMax;
 		this.nbArbres = nbArbres;
@@ -23,7 +24,7 @@ public class Arbre implements IGenerate {
 
 	@Override
 	public SimpleGameMap createMapGen(int hauteur, int largeur, CellFactory cellFactory) {
-		SimpleGameMap newMap = this.map.createMapGen(hauteur, largeur, cellFactory);
+		SimpleGameMap newMap = super.createMapGen(hauteur, largeur, cellFactory);
 		
 		for (int i = 0; i<this.nbArbres; i++) {
 			Random r = new Random();
