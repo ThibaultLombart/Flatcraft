@@ -43,5 +43,6 @@ public class GenerateCell extends AbstractCell{
 		}
 		return false;
 	}
+
 	
 }

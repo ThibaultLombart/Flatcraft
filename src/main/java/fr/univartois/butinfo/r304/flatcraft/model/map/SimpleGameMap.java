@@ -117,7 +117,7 @@ public final class SimpleGameMap implements GameMap {
      */
     @Override
     public Cell getAt(int row, int column) {
-        if (((row < 0) || (height <= row)) || ((column < 0) || (width <= column))) {
+        if ((row < 0) || (height <= row) || (column < 0) || (width <= column)) {
             throw new IllegalArgumentException("Incorrect cell location!");
         }
         return cells[row][column];
@@ -131,7 +131,7 @@ public final class SimpleGameMap implements GameMap {
      */
     @Override
     public void setAt(int row, int column, Cell cell) {
-        if (((row < 0) || (height <= row)) || ((column < 0) || (width <= column))) {
+        if ((row < 0) || (height <= row) || (column < 0) || (width <= column)) {
             throw new IllegalArgumentException("Incorrect cell location!");
         }
         cells[row][column].replaceBy(cell);
