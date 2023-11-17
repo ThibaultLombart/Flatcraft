@@ -9,7 +9,35 @@ import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
 public class ChooseSpriteEnd implements CellFactory {
 	
+	/**
+	 * L'attribut spriteStore...
+	 */
 	private ISpriteStore spriteStore;
+	
+	   /**
+     * L'attribut chooseSprite...
+     */
+    private static ChooseSpriteEnd chooseSpriteEnd;
+
+    
+    /**
+     * Crée une nouvelle instance de ChooseSpriteEnd.
+     */
+    private ChooseSpriteEnd() {
+        // TODO Auto-generated constructor stub.
+    }
+    
+    /**
+     * Donne l'attribut chooseSprite de cette instance de ChooseSpriteEnd.
+     *
+     * @return L'attribut chooseSprite de cette instance de ChooseSpriteEnd.
+     */
+    public static ChooseSpriteEnd getChooseSpriteEnd() {
+        if(chooseSpriteEnd == null) {
+            chooseSpriteEnd = new ChooseSpriteEnd();
+        }
+        return chooseSpriteEnd;
+    }
 	
 	@Override
 	public void setSpriteStore(ISpriteStore spriteStore) {
