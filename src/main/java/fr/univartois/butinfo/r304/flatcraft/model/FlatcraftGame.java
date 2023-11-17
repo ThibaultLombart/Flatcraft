@@ -342,6 +342,10 @@ public final class FlatcraftGame {
         // On récupère enfin la cellule à cette position dans la carte.
         return map.getAt(row, column);
     }
+
+	public CellFactory getCellFactory() {
+		return cellFactory;
+	}
     
     
     
