@@ -9,7 +9,38 @@ import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
 public class ChooseSprite implements CellFactory {
 	
+	/**
+	 * L'attribut spriteStore...
+	 */
 	private ISpriteStore spriteStore;
+	
+	/**
+	 * L'attribut chooseSprite...
+	 */
+	private static ChooseSprite chooseSprite;
+	
+	
+	
+    /**
+     * Crée une nouvelle instance de ChooseSprite.
+     */
+    private ChooseSprite() {
+        // TODO Auto-generated constructor stub.
+    }
+    
+    /**
+     * Donne l'attribut chooseSprite de cette instance de ChooseSprite.
+     *
+     * @return L'attribut chooseSprite de cette instance de ChooseSprite.
+     */
+    public static ChooseSprite getChooseSprite() {
+        if(chooseSprite == null) {
+            chooseSprite = new ChooseSprite();
+        }
+        return chooseSprite;
+    }
+    
+	
 	
 	@Override
 	public void setSpriteStore(ISpriteStore spriteStore) {
@@ -71,5 +102,6 @@ public class ChooseSprite implements CellFactory {
 		}
 		return new GenerateCell(this.spriteStore.getSprite("default_aspen_leaves"));
 	}
+
 
 }
