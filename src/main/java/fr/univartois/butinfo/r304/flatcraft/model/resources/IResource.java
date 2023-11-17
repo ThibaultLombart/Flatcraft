@@ -8,6 +8,6 @@ public interface IResource {
 	
 	IResource nouvelleDurete(Cell cellule);
 
-	void ajoutInventaire(Player joueur, Resource ressource);
+	boolean ajoutInventaire(Player joueur, Resource ressource);
 	
 }

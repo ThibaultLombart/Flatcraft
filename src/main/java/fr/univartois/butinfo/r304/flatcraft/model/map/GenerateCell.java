@@ -36,12 +36,9 @@ public class GenerateCell extends AbstractCell{
 	@Override
 	public boolean dig(Player player) {
 		// TODO Auto-generated method stub
-		this.getResource().dig();
-		if(this.getResource().getHardness() == 0) {
-			player.addItem(this.getResource());
-			return true;
-		}
-		return false;
+		this.getResource().dig(this);
+		return this.getResource().getHardness().ajoutInventaire(player, getResource());
+			
 	}
 
 	

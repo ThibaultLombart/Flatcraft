@@ -3,6 +3,7 @@ package fr.univartois.butinfo.r304.flatcraft.model;
 import java.util.Random;
 
 import fr.univartois.butinfo.r304.flatcraft.model.map.GenerateCell;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource3;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
@@ -59,25 +60,25 @@ public class ChooseSpriteNether implements CellFactory {
 		
         
         
-        return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_desert_stone"),"NetherRack"),ToolType.NO_TOOL,1));
+        return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_desert_stone"),"NetherRack"),ToolType.NO_TOOL,new EtatResource3(this)));
 		
 	}
 	@Override
 	public Cell createSubSoil() {
 		// TODO Auto-generated method stub
-		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_desert_stone"),"NetherRack"),ToolType.NO_TOOL,1));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_desert_stone"),"NetherRack"),ToolType.NO_TOOL,new EtatResource3(this)));
 	}
 
 	@Override
 	public Cell createTrunk() {
 		// TODO Auto-generated method stub
-		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_brick"),"Brick"),ToolType.NO_TOOL,1));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_brick"),"Brick"),ToolType.NO_TOOL,new EtatResource3(this)));
 	}
 	
 	@Override
 	public Cell createLeaves() {
 		// TODO Auto-generated method stub
-		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_brick"),"Brick"),ToolType.NO_TOOL,1));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_brick"),"Brick"),ToolType.NO_TOOL,new EtatResource3(this)));
 	}
 
 }
