@@ -9,7 +9,36 @@ import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
 public class ChooseSpriteNether implements CellFactory {
 	
-private ISpriteStore spriteStore;
+    /**
+     * L'attribut spriteStore...
+     */
+    private ISpriteStore spriteStore;
+    
+    /**
+     * L'attribut chooseSprite...
+     */
+    private static ChooseSpriteNether chooseSpriteNether;
+    
+    
+    
+    /**
+     * Crée une nouvelle instance de ChooseSpriteNether.
+     */
+    private ChooseSpriteNether() {
+        // TODO Auto-generated constructor stub.
+    }
+    
+    /**
+     * Donne l'attribut chooseSprite de cette instance de ChooseSpriteNether.
+     *
+     * @return L'attribut chooseSprite de cette instance de ChooseSpriteNether.
+     */
+    public static ChooseSpriteNether getChooseSpriteNether() {
+        if(chooseSpriteNether == null) {
+            chooseSpriteNether = new ChooseSpriteNether();
+        }
+        return chooseSpriteNether;
+    }
 	
 	@Override
 	public void setSpriteStore(ISpriteStore spriteStore) {

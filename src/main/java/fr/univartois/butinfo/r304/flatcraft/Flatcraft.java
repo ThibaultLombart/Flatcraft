@@ -44,6 +44,9 @@ import javafx.stage.Stage;
  */
 public final class Flatcraft extends Application {
 	
+	/**
+	 * L'attribut game...
+	 */
 	private FlatcraftGame game;
 
     /**
@@ -80,9 +83,9 @@ public final class Flatcraft extends Application {
 
         // On crée ensuite le jeu, que l'on lie au contrôleur.
         // TODO Utiliser ici la bonne factory pour créer les objets du jeu.
-        FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, new SpriteStore(), new ChooseSprite());
+        FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, SpriteStore.getSpriteStore(), ChooseSprite.getChooseSprite());
         
-        IGenerate map = new MapGenerator();
+        IGenerate map = MapGenerator.getMapGenerator();
         
         
         if(terril) {
@@ -115,6 +118,15 @@ public final class Flatcraft extends Application {
     public static void main(String[] args) {
         
     	launch();
+    }
+
+    /**
+     * Donne l'attribut game de cette instance de Flatcraft.
+     *
+     * @return L'attribut game de cette instance de Flatcraft.
+     */
+    public FlatcraftGame getGame() {
+        return game;
     }
 
 }
