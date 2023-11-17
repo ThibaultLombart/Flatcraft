@@ -29,7 +29,7 @@ import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
  *
  * @version 0.1.0
  */
-public final class Resource {
+public final class Resource{
 
     /**
      * Le nom unique identifiant le type de cette ressource.
@@ -51,7 +51,10 @@ public final class Resource {
      * Il s'agit du nombre de coups devant être appliqués avec un outil pour extraire
      * cette ressource depuis la map.
      */
+    
     private int hardness;
+    
+    
 
     /**
      * Crée une nouvelle instance de Resource.
