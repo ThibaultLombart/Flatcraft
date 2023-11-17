@@ -1,0 +1,78 @@
+/**
+ * Ce fichier fait partie du projet projet-2023-2024.
+ *
+ * (c) 2023 thibault.lombart
+ * Tous droits réservés.
+ */
+
+package fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory;
+
+import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
+
+/**
+ * Le type ResourceInInventory
+ *
+ * @author thibault.lombart
+ *
+ * @version 0.1.0
+ */
+public class ResourceInInventory implements IState {
+    
+    /**
+     * L'attribut sprite...
+     */
+    private Sprite sprite;
+    
+    /**
+     * L'attribut name...
+     */
+    private String name;
+    
+    
+    /**
+     * Crée une nouvelle instance de ResourceInInventory.
+     * @param sprite Sprite
+     * @param name Name
+     */
+    public ResourceInInventory(Sprite sprite, String name) {
+        // TODO Auto-generated constructor stub.
+        this.sprite = sprite;
+        this.name = name;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.IState#nextState()
+     */
+    @Override
+    public IState nextState() {
+        // TODO Auto-generated method stub.
+        return this;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.IState#getSprite()
+     */
+    @Override
+    public Sprite getSprite() {
+        // TODO Auto-generated method stub.
+        return this.sprite;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.IState#getName()
+     */
+    @Override
+    public String getName() {
+        // TODO Auto-generated method stub.
+        return name;
+    }
+    
+    
+}
+

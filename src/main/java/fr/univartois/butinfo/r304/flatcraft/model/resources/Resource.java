@@ -18,6 +18,7 @@ package fr.univartois.butinfo.r304.flatcraft.model.resources;
 
 import java.util.Objects;
 
+import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.IState;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
 /**
@@ -31,15 +32,11 @@ import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
  */
 public final class Resource{
 
-    /**
-     * Le nom unique identifiant le type de cette ressource.
-     */
-    private final String name;
 
     /**
      * Le sprite représentant cette ressource.
      */
-    private final Sprite sprite;
+    private final IState state;
 
     /**
      * Le type d'outils nécessaire pour extraire cette ressource de la carte.
@@ -60,19 +57,18 @@ public final class Resource{
      * Crée une nouvelle instance de Resource.
      *
      * @param name Le nom unique identifiant le type de la ressource.
-     * @param sprite Le sprite représentant la ressource.
+     * @param state L'état state pour les textures
      * @param toolType Le type d'outils nécessaire pour extraire la ressource de la carte.
      * @param hardness La dureté initiale de la ressource.
      *
      * @throws IllegalArgumentException Si la valeur de {@code hardness} est négative.
      */
-    public Resource(String name, Sprite sprite, ToolType toolType, int hardness) {
+    public Resource(IState state, ToolType toolType, int hardness) {
         if (hardness < 0) {
             throw new IllegalArgumentException("Resource hardness should be non-negative!");
         }
 
-        this.name = name;
-        this.sprite = sprite;
+        this.state = state;
         this.toolType = toolType;
         this.hardness = hardness;
     }
@@ -83,7 +79,7 @@ public final class Resource{
      * @return Le nom de cette ressource.
      */
     public String getName() {
-        return name;
+        return state.getName();
     }
 
     /**
@@ -92,7 +88,7 @@ public final class Resource{
      * @return Le sprite représentant cette ressource.
      */
     public Sprite getSprite() {
-        return sprite;
+        return state.getSprite();
     }
 
     /**
@@ -146,7 +142,7 @@ public final class Resource{
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(state.getName());
     }
 
     /*
@@ -157,7 +153,7 @@ public final class Resource{
     @Override
     public boolean equals(Object other) {
         if (other instanceof Resource resource) {
-            return name.equals(resource.name);
+            return state.getName().equals(resource.state.getName());
         }
         return false;
     }
