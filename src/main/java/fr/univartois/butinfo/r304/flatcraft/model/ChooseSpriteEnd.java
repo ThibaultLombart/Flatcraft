@@ -4,6 +4,7 @@ import java.util.Random;
 
 import fr.univartois.butinfo.r304.flatcraft.model.map.GenerateCell;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource3;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
@@ -64,8 +65,11 @@ public class ChooseSpriteEnd implements CellFactory {
 		return new GenerateCell(this.spriteStore.getSprite("default_water"));
 	}
 	@Override
-	public Cell createSubSoil() {
+	public Cell createSubSoil(int i) {
 		// TODO Auto-generated method stub
+		if(i == 44) {
+			return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_bedrock"),"Bedrock"),ToolType.NO_TOOL,new EtatResourceUnbreakable(this)));
+		}
 		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_sandstone"),"Endstone"),ToolType.NO_TOOL,new EtatResource3(this)));
 	}
 
