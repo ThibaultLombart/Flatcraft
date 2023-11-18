@@ -18,6 +18,7 @@ package fr.univartois.butinfo.r304.flatcraft.model.resources;
 
 import java.util.Objects;
 
+import fr.univartois.butinfo.r304.flatcraft.model.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.IState;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
@@ -49,7 +50,7 @@ public final class Resource{
      * cette ressource depuis la map.
      */
     
-    private int hardness;
+    private IResource hardness;
     
     
 
@@ -63,11 +64,7 @@ public final class Resource{
      *
      * @throws IllegalArgumentException Si la valeur de {@code hardness} est négative.
      */
-    public Resource(IState state, ToolType toolType, int hardness) {
-        if (hardness < 0) {
-            throw new IllegalArgumentException("Resource hardness should be non-negative!");
-        }
-
+    public Resource(IState state, ToolType toolType, IResource hardness) {
         this.state = state;
         this.toolType = toolType;
         this.hardness = hardness;
@@ -107,7 +104,7 @@ public final class Resource{
      *
      * @return La dureté de cette ressource.
      */
-    public int getHardness() {
+    public IResource getHardness() {
         return hardness;
     }
 
@@ -118,11 +115,8 @@ public final class Resource{
      * @throws IllegalStateException Si la dureté de la ressource est déjà égale
      *         à {@code 0}.
      */
-    public void dig() {
-        if (hardness <= 0) {
-            throw new IllegalStateException("Cannot dig resource with 0 hardness!");
-        }
-        hardness--;
+    public void dig(Cell cellule) {
+        hardness = hardness.nouvelleDurete(cellule);
     }
 
     /**

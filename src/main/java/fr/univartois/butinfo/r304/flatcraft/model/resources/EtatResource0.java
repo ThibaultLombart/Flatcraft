@@ -19,8 +19,9 @@ public class EtatResource0 implements IResource {
 	}
 
 	@Override
-	public void ajoutInventaire(Player joueur, Resource resource) {
+	public boolean ajoutInventaire(Player joueur, Resource resource) {
 		joueur.addItem(resource);
+		return true;
 	}
 
 }

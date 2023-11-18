@@ -18,7 +18,8 @@ public class EtatResource5 implements IResource {
 	}
 
 	@Override
-	public void ajoutInventaire(Player joueur, Resource resource) {
+	public boolean ajoutInventaire(Player joueur, Resource resource) {
+		return false;
 	}
 
 }
