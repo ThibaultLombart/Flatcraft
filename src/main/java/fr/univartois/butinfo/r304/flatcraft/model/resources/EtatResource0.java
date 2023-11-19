@@ -20,6 +20,7 @@ public class EtatResource0 implements IResource {
 
 	@Override
 	public boolean ajoutInventaire(Player joueur, Resource resource) {
+		resource.setState(resource.getState().nextState());
 		joueur.addItem(resource);
 		return true;
 	}

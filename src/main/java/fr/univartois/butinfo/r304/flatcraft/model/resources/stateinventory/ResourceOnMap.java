@@ -60,6 +60,7 @@ public class ResourceOnMap implements IState {
     public ResourceOnMap(Sprite sprite, String name) {
         // TODO Auto-generated constructor stub.
         this.sprite = sprite;
+        this.name = name;
     }
 
     /*
