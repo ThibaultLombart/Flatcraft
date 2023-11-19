@@ -30,27 +30,28 @@ public class Arbre extends GenerateDecorator implements IGenerate {
 			Cell trunk = cellFactory.createTrunk();
 			Cell leaves = cellFactory.createLeaves();
 			Random r = new Random();
-			int pos = r.nextInt(newMap.getWidth()-1);
-			System.out.println(nbArbres);
+			int pos = r.nextInt(1,newMap.getWidth()-1);
 			int taille = r.nextInt(this.tailleMax/2)+4;
-			System.out.println(taille);
 		    	for (int j = 0; j < taille; j++) {
 		        		newMap.setAt(newMap.getSoilHeight()-j-1, pos , trunk);
 		    	}
 		    	for(int h = taille; h > taille-3; h--) {
 		    			for (int p = pos-2; p <= pos+2; p++) {
-		    				if (p == pos-2 || p == pos+2) {
-		    					newMap.setAt(newMap.getSoilHeight()-h-3, p, leaves);
+		    				if(p < largeur && p > 0) {
+		    					if (p == pos-2 || p == pos+2) {
+			    					newMap.setAt(newMap.getSoilHeight()-h-3, p, leaves);
+			    				}
+			    				else if (p == pos-1 || p == pos+1) {
+			    					newMap.setAt(newMap.getSoilHeight()-h-3, p, leaves);
+			    					newMap.setAt(newMap.getSoilHeight()-h-5, p, leaves);
+			    				}
+			    				else {
+			    					newMap.setAt(newMap.getSoilHeight()-h-3, p, leaves);
+			    					newMap.setAt(newMap.getSoilHeight()-h-5, p, leaves);
+			    					newMap.setAt(newMap.getSoilHeight()-h-7, p, leaves);
+			    				}
 		    				}
-		    				else if (p == pos-1 || p == pos+1) {
-		    					newMap.setAt(newMap.getSoilHeight()-h-3, p, leaves);
-		    					newMap.setAt(newMap.getSoilHeight()-h-5, p, leaves);
-		    				}
-		    				else {
-		    					newMap.setAt(newMap.getSoilHeight()-h-3, p, leaves);
-		    					newMap.setAt(newMap.getSoilHeight()-h-5, p, leaves);
-		    					newMap.setAt(newMap.getSoilHeight()-h-7, p, leaves);
-		    				}
+		    				
 		    			}
 		    		}
 		   

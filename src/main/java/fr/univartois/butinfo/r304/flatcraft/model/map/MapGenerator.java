@@ -45,7 +45,7 @@ public class MapGenerator implements IGenerate{
         for (int i = 0; i < hauteur; i++) {
             for (int y = 0; y < largeur; y++) {
                 if(i > 20) {
-                    map.setAt(i, y, cellFactory.createSubSoil());
+                    map.setAt(i, y, cellFactory.createSubSoil(i));
                 } else if (i == 20) {
                     map.setAt(i, y, cellFactory.createSoilSurface());
                 } else {

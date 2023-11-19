@@ -4,25 +4,24 @@ import fr.univartois.butinfo.r304.flatcraft.model.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.CellFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.Player;
 
-
-public class EtatResource0 implements IResource {
+public class EtatResourceUnbreakable implements IResource {
 	
 	private CellFactory sprite;
 	
-	public EtatResource0(CellFactory sprite) {
+	public EtatResourceUnbreakable(CellFactory sprite) {
 		this.sprite = sprite;
 	}
 
+	@Override
 	public IResource nouvelleDurete(Cell cellule) {
-		cellule.replaceBy(sprite.createSky());
-		return this;		
+		// TODO Auto-generated method stub
+		return this;
 	}
 
 	@Override
-	public boolean ajoutInventaire(Player joueur, Resource resource) {
-		resource.setState(resource.getState().nextState());
-		joueur.addItem(resource);
-		return true;
+	public boolean ajoutInventaire(Player joueur, Resource ressource) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

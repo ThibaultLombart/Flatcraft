@@ -37,7 +37,7 @@ public final class Resource{
     /**
      * Le sprite représentant cette ressource.
      */
-    private final IState state;
+    private IState state;
 
     /**
      * Le type d'outils nécessaire pour extraire cette ressource de la carte.
@@ -69,8 +69,20 @@ public final class Resource{
         this.toolType = toolType;
         this.hardness = hardness;
     }
+    
+    
 
-    /**
+    public IState getState() {
+		return state;
+	}
+    
+    public void setState(IState state) {
+    	this.state = state;
+    }
+
+
+
+	/**
      * Donne le nom unique identifiant le type de cette ressource.
      *
      * @return Le nom de cette ressource.

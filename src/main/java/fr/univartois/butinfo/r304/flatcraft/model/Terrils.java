@@ -33,7 +33,10 @@ public class Terrils extends GenerateDecorator implements IGenerate{
 		int l = posInit;
 		for(int i = 0; i < taille; i ++) {
 			for (int y = 0; y < compteur; y++) {
-			    newMap.setAt(h, l+y, cellFactory.createSubSoil());
+				if(l+y < largeur) {
+					newMap.setAt(h, l+y, cellFactory.createSubSoil(h));
+				}
+			    
 			}
 			l += 1;
 			h -= 1;
