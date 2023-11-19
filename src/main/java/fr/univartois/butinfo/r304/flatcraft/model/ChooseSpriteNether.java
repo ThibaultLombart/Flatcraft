@@ -51,7 +51,7 @@ public class ChooseSpriteNether implements CellFactory {
 
 	@Override
 	public Cell createSky() {
-		return new GenerateCell(this.spriteStore.getSprite("default_lava"));
+		return new GenerateCell(this.spriteStore.getSprite("default_nether_sky"));
 
 	}
 
@@ -61,7 +61,7 @@ public class ChooseSpriteNether implements CellFactory {
 		
         
         
-        return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_desert_stone"),"NetherRack"),ToolType.NO_TOOL,new EtatResource3(this)));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_crimson"),"Crimson"),ToolType.NO_TOOL,new EtatResource3(this)));
 		
 	}
 	@Override
@@ -70,19 +70,19 @@ public class ChooseSpriteNether implements CellFactory {
 		if(i == 44) {
 			return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_bedrock"),"Bedrock"),ToolType.NO_TOOL,new EtatResourceUnbreakable(this)));
 		}
-		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_desert_stone"),"NetherRack"),ToolType.NO_TOOL,new EtatResource3(this)));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_netherrack"),"Netherrack"),ToolType.MEDIUM_TOOL,new EtatResource3(this)));
 	}
 
 	@Override
 	public Cell createTrunk() {
 		// TODO Auto-generated method stub
-		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_brick"),"Brick"),ToolType.NO_TOOL,new EtatResource3(this)));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_crimson_wood"),"Crimson Wood"),ToolType.NO_TOOL,new EtatResource3(this)));
 	}
 	
 	@Override
 	public Cell createLeaves() {
 		// TODO Auto-generated method stub
-		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_brick"),"Brick"),ToolType.NO_TOOL,new EtatResource3(this)));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_nether_wart_block"),"Nether Wart Block"),ToolType.NO_TOOL,new EtatResource3(this)));
 	}
 
 }
