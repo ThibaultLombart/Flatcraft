@@ -172,13 +172,22 @@ public final class FlatcraftGame {
         // TODO On fait le lien entre les différentes propriétés et leur affichage.
         controller.bindTime(this.time);
         controller.bindLevel(this.level);
+        controller.bindInventory(this.getPlayer().getInventory());
         controller.bindHealth(player.getHealthPoints());
         controller.bindXP(player.getXpPoints());
         // On démarre l'animation du jeu.
         animation.start();
     }
 
-    /**
+    public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	/**
      * Crée la carte du jeu.
      *
      * @return La carte du jeu créée.
