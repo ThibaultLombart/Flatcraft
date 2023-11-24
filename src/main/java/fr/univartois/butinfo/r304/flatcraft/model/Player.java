@@ -70,4 +70,10 @@ public class Player extends AbstractMovable{
 		}
 		return Optional.empty();
 	}
+
+	public ObservableMap<Resource, Integer> getInventory() {
+		return inventory;
+	}
+	
+	
 }
