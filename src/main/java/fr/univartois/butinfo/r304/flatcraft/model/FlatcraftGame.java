@@ -19,15 +19,12 @@ package fr.univartois.butinfo.r304.flatcraft.model;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-<<<<<<< HEAD
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.DeplacementLineaire;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.EMob;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.Mob;
-=======
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
->>>>>>> 548194fe7e9e68ac88f413225d2c178611d48e52
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.IntegerProperty;
