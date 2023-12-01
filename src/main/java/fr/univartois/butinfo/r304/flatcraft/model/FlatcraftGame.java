@@ -16,17 +16,29 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model;
 
+import java.awt.Taskbar.State;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftAndFurnace;
+import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftFurnaceObject;
+import fr.univartois.butinfo.r304.flatcraft.model.craft.RuleParser;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.DeplacementLineaire;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.EMob;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.Mob;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource3;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
+import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
@@ -61,6 +73,10 @@ public final class FlatcraftGame {
      * L'instance e {@link ISpriteStore} utilisée pour créer les sprites du jeu.
      */
     private ISpriteStore spriteStore;
+    
+    private CraftFurnaceObject craft;
+    
+    private CraftFurnaceObject furnace;
 
     /**
      * L'instance de {@link CellFactory} utilisée pour créer les cellules du jeu.
@@ -96,6 +112,28 @@ public final class FlatcraftGame {
      * L'animation simulant le temps qui passe dans le jeu.
      */
     private FlatcraftAnimation animation = new FlatcraftAnimation(this, movableObjects);
+    
+    private final static Map<String, Sprite> MAPCRAFTSPRITE = Map.of("wood",SpriteStore.getSpriteStore().getSprite("default_wood"),
+            "stick",SpriteStore.getSpriteStore().getSprite("default_stick"),
+            "woodpick",SpriteStore.getSpriteStore().getSprite("default_tool_woodpick"),
+            "woodaxe",SpriteStore.getSpriteStore().getSprite("default_tool_woodaxe"),
+            "stonepick",SpriteStore.getSpriteStore().getSprite("default_tool_stonepick"),
+            "stoneaxe",SpriteStore.getSpriteStore().getSprite("default_tool_stoneaxe"),
+            "steelpick",SpriteStore.getSpriteStore().getSprite("default_tool_steelpick"));
+    
+    private final static Map<String, String> MAPCRAFTNAME = Map.of("woodpick","Wood Pickaxe",
+            "woodaxe","Wood Axe",
+            "stonepick","Stone Pickaxe",
+            "stoneaxe","Stone Axe",
+            "steelpick","Steel Pickaxe");
+   
+    private final static Map<String, Sprite> MAPCOOKSPRITE = Map.of("gold_lingot",SpriteStore.getSpriteStore().getSprite("default_gold_ingot"),
+            "steel_lingot",SpriteStore.getSpriteStore().getSprite("default_steel_ingot"),
+            "copper_lingot",SpriteStore.getSpriteStore().getSprite("default_copper_ingot"));
+    
+    private final static Map<String, String> MAPCOOKNAME = Map.of("gold_lingot","Gold Lingot",
+            "steel_lingot","Steel Lingot",
+            "copper_lingot","Copper Lingot");
 
     /**
      * Crée une nouvelle instance de FlatcraftGame.
@@ -174,6 +212,17 @@ public final class FlatcraftGame {
         controller.bindLevel(this.level);
         controller.bindHealth(player.getHealthPoints());
         controller.bindXP(player.getXpPoints());
+        
+        
+        RuleParser parser1 = new RuleParser("src/main/resources/fr/univartois/butinfo/r304/flatcraft/model/craft/craftrules.txt");
+        this.craft = parser1.build();
+        
+        RuleParser parser2 = new RuleParser("src/main/resources/fr/univartois/butinfo/r304/flatcraft/model/craft/furnacerules.txt");
+        this.furnace = parser2.build();
+        
+        
+        
+        
         // On démarre l'animation du jeu.
         animation.start();
     }
@@ -359,8 +408,37 @@ public final class FlatcraftGame {
      * @return La ressource produite.
      */
     public Resource craft(Resource[][] inputResources) {
-        // TODO Vous devez compléter cette méthode.
-        throw new UnsupportedOperationException("Pas encore implémentée !");
+        
+        String res = "";
+        for (Resource[] resources : inputResources) {
+            for(Resource resource : resources) {
+                res += resource.getInternalName() + "_";
+            }
+        }
+        res = res.substring(0, res.length() - 1);
+        
+        
+        String nomItemCraft = "";
+        int quantite = 0;
+        for(CraftAndFurnace craftUnite : craft.getListCraft()) {
+            if(craftUnite.getRule().equals(res)) {
+                nomItemCraft = craftUnite.getProduct();
+                quantite = craftUnite.getQuantity();
+                break;
+            }
+                
+               
+        }
+            
+        if (quantite != 0) {
+            Sprite spriteItem = MAPCRAFTSPRITE.get(nomItemCraft);
+            String nomExterne = MAPCRAFTNAME.get(nomItemCraft);
+            
+            return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory));
+        } else {
+            controller.displayError("Erreur, Il n'existe pas de craft.");
+            return null;
+        }
     }
 
     /**
@@ -373,8 +451,29 @@ public final class FlatcraftGame {
      * @return La ressource produite.
      */
     public Resource cook(Resource fuel, Resource resource) {
-        // TODO Vous devez compléter cette méthode.
-        throw new UnsupportedOperationException("Pas encore implémentée !");
+        
+        String res = resource.getInternalName();
+        
+        String nomItemCook = "";
+        int quantite = 0;
+        for(CraftAndFurnace cookUnite : furnace.getListCraft()) {
+            if(cookUnite.getRule().equals(res)) {
+                nomItemCook = cookUnite.getProduct();
+                quantite = cookUnite.getQuantity();
+                break;
+            }
+                
+               
+        }
+        if (quantite != 0) {
+            Sprite spriteItem = MAPCOOKSPRITE.get(nomItemCook);
+            String nomExterne = MAPCOOKNAME.get(nomItemCook);
+            
+            return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory));
+        } else {
+            controller.displayError("Erreur, Il n'existe pas de cuisson pour cet item.");
+            return null;
+        }
     }
 
 }
