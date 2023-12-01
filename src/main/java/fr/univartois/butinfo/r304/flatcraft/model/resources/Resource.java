@@ -57,7 +57,6 @@ public final class Resource{
     /**
      * Crée une nouvelle instance de Resource.
      *
-
      * @param state L'état state pour les textures
      * @param toolType Le type d'outils nécessaire pour extraire la ressource de la carte.
      * @param hardness La dureté initiale de la ressource.
