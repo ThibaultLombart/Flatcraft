@@ -32,10 +32,6 @@ public class ComplicatedObjectBuilderCraft {
         // TODO Auto-generated constructor stub.
     }
     
-    
-    
-    
-    
     /**
      * @return nouvelle instance
      * 
@@ -51,11 +47,6 @@ public class ComplicatedObjectBuilderCraft {
     public void withCraft(CraftAndFurnace item) {
         this.listCraft.add(item);
     }
-
-
-
-
-
     
     /**
      * Donne l'attribut listCraft de cette instance de ComplicatedObjectBuilderCraft.

@@ -17,7 +17,12 @@
 package fr.univartois.butinfo.r304.flatcraft.model;
 
 import java.awt.Taskbar.State;
+
 import java.util.ArrayList;
+
+import java.io.IOException;
+import java.net.URL;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -227,11 +232,22 @@ public final class FlatcraftGame {
         controller.bindHealth(player.getHealthPoints());
         controller.bindXP(player.getXpPoints());
         
-        
-        RuleParser parser1 = new RuleParser("src/main/resources/fr/univartois/butinfo/r304/flatcraft/model/craft/craftrules.txt");
+        RuleParser parser1 = new RuleParser("craftrules.txt");
+        try {
+            parser1.parse();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block.
+            throw new RuntimeException(e);
+        }
         this.craft = parser1.build();
         
-        RuleParser parser2 = new RuleParser("src/main/resources/fr/univartois/butinfo/r304/flatcraft/model/craft/furnacerules.txt");
+        RuleParser parser2 = new RuleParser("furnacerules.txt");
+        try {
+            parser2.parse();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block.
+            throw new RuntimeException(e);
+        }
         this.furnace = parser2.build();
         
         
@@ -448,6 +464,8 @@ public final class FlatcraftGame {
         }
         res = res.substring(0, res.length() - 1);
         
+        System.out.println(res);
+        
         
         String nomItemCraft = "";
         int quantite = 0;
@@ -460,8 +478,16 @@ public final class FlatcraftGame {
         }
             
         if (quantite != 0) {
-            Sprite spriteItem = MAPCRAFTSPRITE.get(nomItemCraft);
-            String nomExterne = MAPCRAFTNAME.get(nomItemCraft);
+            Sprite spriteItem;
+            String nomExterne;
+            System.out.println(nomItemCraft);
+            spriteItem = MAPCRAFTSPRITE.get(nomItemCraft);
+            if(MAPCRAFTNAME.containsKey(nomItemCraft)) {
+                nomExterne = MAPCRAFTNAME.get(nomItemCraft);
+            } else {
+                nomExterne = nomItemCraft;
+            }
+            
             
             return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory));
         } else {
@@ -495,8 +521,14 @@ public final class FlatcraftGame {
                
         }
         if (quantite != 0) {
+            String nomExterne;
             Sprite spriteItem = MAPCOOKSPRITE.get(nomItemCook);
-            String nomExterne = MAPCOOKNAME.get(nomItemCook);
+            if(MAPCOOKNAME.containsKey(nomItemCook)) {
+                nomExterne = MAPCOOKNAME.get(nomItemCook);
+            } else {
+                nomExterne = nomItemCook;
+            }
+            
             
             return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory));
         } else {
