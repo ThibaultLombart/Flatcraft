@@ -17,9 +17,17 @@ package fr.univartois.butinfo.r304.flatcraft.model.craft;
  */
 public class CraftAndFurnace{
     
+    /**
+     * L'attribut rule...
+     * L'attribut product...
+     */
     private String rule,product;
-    private int quantity;
     
+    
+    /**
+     * L'attribut quantity...
+     */
+    private int quantity;
     
     /**
      * Crée une nouvelle instance de Craft.
@@ -33,8 +41,6 @@ public class CraftAndFurnace{
         this.product = product;
         this.quantity = quantity;
     }
-
-
     
     /**
      * Donne l'attribut rule de cette instance de Craft.

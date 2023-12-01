@@ -140,7 +140,7 @@ public class ChooseSprite implements CellFactory {
 		Random r = new Random();
         int chance = r.nextInt(8);
         if (chance <= 4) {
-        	return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_tree"),"Oak Wood"),ToolType.NO_TOOL,new EtatResource3(this)));
+        	return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_tree"),"Tree"),ToolType.NO_TOOL,new EtatResource3(this)));
 		}
         if (chance <= 6 && chance > 4) {
         	return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_acacia_tree"),"Acacia Wood"),ToolType.NO_TOOL,new EtatResource3(this)));
