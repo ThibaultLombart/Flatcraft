@@ -421,7 +421,11 @@ public final class FlatcraftGame {
         String res = "";
         for (Resource[] resources : inputResources) {
             for(Resource resource : resources) {
-                res += resource.getInternalName() + "_";
+                if(resource == null) {
+                    res += "empty_";
+                } else {
+                    res += resource.getInternalName() + "_";
+                }
             }
         }
         res = res.substring(0, res.length() - 1);
@@ -435,8 +439,6 @@ public final class FlatcraftGame {
                 quantite = craftUnite.getQuantity();
                 break;
             }
-                
-               
         }
             
         if (quantite != 0) {
