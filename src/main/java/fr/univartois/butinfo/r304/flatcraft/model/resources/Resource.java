@@ -57,7 +57,7 @@ public final class Resource{
     /**
      * Crée une nouvelle instance de Resource.
      *
-     * @param name Le nom unique identifiant le type de la ressource.
+
      * @param state L'état state pour les textures
      * @param toolType Le type d'outils nécessaire pour extraire la ressource de la carte.
      * @param hardness La dureté initiale de la ressource.
@@ -89,6 +89,16 @@ public final class Resource{
      */
     public String getName() {
         return state.getName();
+    }
+    
+    /**
+     * Donne le nom unique identifiant le type de cette ressource.
+     *
+     * @return Le nom de cette ressource.
+     */
+    public String getInternalName() {
+        String name = state.getName().toLowerCase().replaceAll(" ", "_");
+        return name;
     }
 
     /**

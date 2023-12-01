@@ -33,6 +33,8 @@ public final class RuleParser {
      * Le nom du fichier depuis lequel les règles doivent être lues.
      */
     private final String fileName;
+    
+    private final ComplicatedObjectBuilderCraft builder = ComplicatedObjectBuilderCraft.newInstance();
 
     /**
      * Crée une nouvelle instance de RuleParser.
@@ -53,7 +55,12 @@ public final class RuleParser {
                 new InputStreamReader(getClass().getResourceAsStream(fileName)))) {
             for (String line = reader.readLine(); line != null; line = reader.readLine()) {
                 String[] splitted = line.split("=");
-                addRule(splitted[0], splitted[1]);
+                int quantity = 1;
+                String[] splittedAfter = splitted[1].split(" ");
+                if(splittedAfter.length > 1) {
+                    quantity += Integer.parseInt(splittedAfter[1]);
+                }
+                addRule(splitted[0], splitted[1], quantity);
             }
         }
     }
@@ -63,9 +70,17 @@ public final class RuleParser {
      *
      * @param rule La règle à ajouter.
      * @param product Le résultat de l'application de la règle.
+     * @param quantity Quantité
      */
-    private void addRule(String rule, String product) {
+    private void addRule(String rule, String product, int quantity) {
         // TODO Ajoutez ici le code propre à votre application pour gérer les règles.
+        CraftAndFurnace craft = new CraftAndFurnace(rule,product,quantity);
+        builder.withCraft(craft);
+    
+    }
+    
+    public CraftFurnaceObject build() {
+        return new CraftFurnaceObject(builder);
     }
 
 }

@@ -34,7 +34,7 @@ public class ResourceOnMap implements IState {
             SpriteStore.getSpriteStore().getSprite("default_stone"),SpriteStore.getSpriteStore().getSprite("default_cobble"));
     
     private final static Map<String, String> NEXTSTRING = Map.of("Copper Ore", "Copper Lump",
-            "Iron Ore", "Iron Lump",
+            "Iron Ore", "Steel Lump",
             "Coal Ore", "Coal Lump",
             "Diamond Ore", "Diamond",
             "Mese Ore", "Mese Crystal Fragment",
