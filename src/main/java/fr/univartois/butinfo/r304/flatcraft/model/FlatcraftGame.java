@@ -17,6 +17,7 @@
 package fr.univartois.butinfo.r304.flatcraft.model;
 
 import java.awt.Taskbar.State;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -87,7 +88,7 @@ public final class FlatcraftGame {
      * La carte du jeu, sur laquelle le joueur évolue.
      */
     private GameMap map;
-
+    
     /**
      * Le temps écoulé depuis le début de la partie.
      */
@@ -112,6 +113,8 @@ public final class FlatcraftGame {
      * L'animation simulant le temps qui passe dans le jeu.
      */
     private FlatcraftAnimation animation = new FlatcraftAnimation(this, movableObjects);
+    
+    private List<GameMap> worldList = new ArrayList<GameMap>();
     
     private final static Map<String, Sprite> MAPCRAFTSPRITE = Map.of("wood",SpriteStore.getSpriteStore().getSprite("default_wood"),
             "stick",SpriteStore.getSpriteStore().getSprite("default_stick"),
@@ -187,9 +190,19 @@ public final class FlatcraftGame {
      * Prépare la partie de Flatcraft avant qu'elle ne démarre.
      */
     public void prepare() {
-        // On crée la carte du jeu.
-        map = createMap();
-        controller.prepare(map);
+        GameMap map = createMap(cellFactory);
+    	GameMap end = createMap(ChooseSpriteEnd.getChooseSpriteEnd());
+    	GameMap nether = createMap(ChooseSpriteNether.getChooseSpriteNether());
+    	
+    
+    	// On crée la carte du jeu.
+        setMap(map);
+        
+        controller.prepare(getMap());
+        
+        worldList.add(map);
+        worldList.add(end);
+        worldList.add(nether);
        
         // TODO On crée le joueur, qui se trouve sur le sol à gauche de la carte.
         player = new Player(this, 0, 19*16, spriteStore.getSprite("player"));
@@ -228,7 +241,11 @@ public final class FlatcraftGame {
         animation.start();
     }
 
-    public Player getPlayer() {
+    public GameMap getMap() {
+		return map;
+	}
+
+	public Player getPlayer() {
 		return player;
 	}
 
@@ -238,10 +255,11 @@ public final class FlatcraftGame {
 
 	/**
      * Crée la carte du jeu.
+	 * @param cellFactory2 
      *
      * @return La carte du jeu créée.
      */
-    private GameMap createMap() {
+    private GameMap createMap(CellFactory cellFactory2) {
         int hauteur = this.height / 16;
         int largeur = this.width / 16;
         
@@ -296,8 +314,8 @@ public final class FlatcraftGame {
      */
     private void move(IMovable movable) {
         Cell currentCell = getCellOf(movable);
-        for (int row = currentCell.getRow() + 1; row < map.getHeight(); row++) {
-            Cell below = map.getAt(row, currentCell.getColumn());
+        for (int row = currentCell.getRow() + 1; row < getMap().getHeight(); row++) {
+            Cell below = getMap().getAt(row, currentCell.getColumn());
             if (!below.move(movable)) {
                 break;
             }
@@ -334,7 +352,7 @@ public final class FlatcraftGame {
         int hori = x.getRow();
         int vert = x.getColumn();
         int cible = hori +1;
-        Cell y = map.getAt(cible, vert);
+        Cell y = getMap().getAt(cible, vert);
         dig(y);
         move(player);
         
@@ -350,7 +368,7 @@ public final class FlatcraftGame {
         int hori = x.getRow();
         int vert = x.getColumn();
         int cible = vert -1;
-        Cell y = map.getAt(hori, cible);
+        Cell y = getMap().getAt(hori, cible);
         dig(y);
         move(player);
     }
@@ -363,7 +381,7 @@ public final class FlatcraftGame {
         int hori = x.getRow();
         int vert = x.getColumn();
         int cible = vert +1;
-        Cell y = map.getAt(hori, cible);
+        Cell y = getMap().getAt(hori, cible);
         dig(y);
         move(player);
     }
@@ -399,7 +417,7 @@ public final class FlatcraftGame {
         int column = midX / spriteStore.getSpriteSize();
 
         // On récupère enfin la cellule à cette position dans la carte.
-        return map.getAt(row, column);
+        return getMap().getAt(row, column);
     }
 
 
@@ -486,5 +504,9 @@ public final class FlatcraftGame {
             return null;
         }
     }
+
+	private void setMap(GameMap map) {
+		this.map = map;
+	}
 
 }
