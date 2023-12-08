@@ -1,10 +1,9 @@
-package fr.univartois.butinfo.r304.flatcraft.model;
+package fr.univartois.butinfo.r304.flatcraft.model.map;
 
 import java.util.Random;
 
+import fr.univartois.butinfo.r304.flatcraft.model.CellFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.decorator.GenerateDecorator;
-import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
-import fr.univartois.butinfo.r304.flatcraft.model.map.SimpleGameMap;
 
 public class Terrils extends GenerateDecorator implements IGenerate{
 	
