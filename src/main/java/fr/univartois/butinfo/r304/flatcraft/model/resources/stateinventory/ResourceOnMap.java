@@ -7,7 +7,6 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
