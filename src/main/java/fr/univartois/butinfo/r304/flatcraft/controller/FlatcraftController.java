@@ -334,7 +334,7 @@ public final class FlatcraftController implements IFlatcraftController {
     @FXML
     private void showCraftTable() throws IOException {
         // On charge la vue et son contrôleur.
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/crafttable.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/crafttable.fxml"));
         Parent viewContent = fxmlLoader.load();
         CraftTableController controller = fxmlLoader.getController();
 
@@ -356,7 +356,7 @@ public final class FlatcraftController implements IFlatcraftController {
     @FXML
     private void showFurnace() throws IOException {
         // On charge la vue et son contrôleur.
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/furnace.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/furnace.fxml"));
         Parent viewContent = fxmlLoader.load();
         FurnaceController controller = fxmlLoader.getController();
 
