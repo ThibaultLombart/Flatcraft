@@ -16,6 +16,7 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model;
 
+import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.ObjectProperty;

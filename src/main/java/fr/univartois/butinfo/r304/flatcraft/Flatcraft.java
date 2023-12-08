@@ -20,14 +20,12 @@ import java.io.IOException;
 import java.util.Random;
 
 import fr.univartois.butinfo.r304.flatcraft.controller.FlatcraftController;
-import fr.univartois.butinfo.r304.flatcraft.model.Arbre;
-import fr.univartois.butinfo.r304.flatcraft.model.ChooseSprite;
-import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteEnd;
-import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteNether;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
-import fr.univartois.butinfo.r304.flatcraft.model.Terrils;
+import fr.univartois.butinfo.r304.flatcraft.model.map.Arbre;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
+import fr.univartois.butinfo.r304.flatcraft.model.map.Terrils;
+import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
