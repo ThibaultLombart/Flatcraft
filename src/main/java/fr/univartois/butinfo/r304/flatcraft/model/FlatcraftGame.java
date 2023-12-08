@@ -16,38 +16,25 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model;
 
-import java.awt.Taskbar.State;
-
-import java.util.ArrayList;
-
 import java.io.IOException;
-import java.net.URL;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftAndFurnace;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftFurnaceObject;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.RuleParser;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
-import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
-import fr.univartois.butinfo.r304.flatcraft.model.movables.DeplacementLineaire;
-import fr.univartois.butinfo.r304.flatcraft.model.movables.EMob;
-import fr.univartois.butinfo.r304.flatcraft.model.movables.Mob;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource3;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.image.Image;
 
 /**
  * La classe {@link FlatcraftGame} permet de gérer une partie du jeu Flatcraft.
