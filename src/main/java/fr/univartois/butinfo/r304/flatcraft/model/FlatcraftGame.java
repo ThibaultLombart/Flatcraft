@@ -119,7 +119,7 @@ public final class FlatcraftGame {
      */
     private FlatcraftAnimation animation = new FlatcraftAnimation(this, movableObjects);
     
-    private List<GameMap> worldList = new ArrayList<GameMap>();
+    private List<GameMap> worldList = new ArrayList<>();
     
     private final static Map<String, Sprite> MAPCRAFTSPRITE = Map.of("wood",SpriteStore.getSpriteStore().getSprite("default_wood"),
             "stick",SpriteStore.getSpriteStore().getSprite("default_stick"),
@@ -127,13 +127,17 @@ public final class FlatcraftGame {
             "woodaxe",SpriteStore.getSpriteStore().getSprite("default_tool_woodaxe"),
             "stonepick",SpriteStore.getSpriteStore().getSprite("default_tool_stonepick"),
             "stoneaxe",SpriteStore.getSpriteStore().getSprite("default_tool_stoneaxe"),
-            "steelpick",SpriteStore.getSpriteStore().getSprite("default_tool_steelpick"));
+            "steelpick",SpriteStore.getSpriteStore().getSprite("default_tool_steelpick"),
+            "netherportal",SpriteStore.getSpriteStore().getSprite("default_netherportal"),
+            "endportal",SpriteStore.getSpriteStore().getSprite("default_endportal"));
     
     private final static Map<String, String> MAPCRAFTNAME = Map.of("woodpick","Wood Pickaxe",
             "woodaxe","Wood Axe",
             "stonepick","Stone Pickaxe",
             "stoneaxe","Stone Axe",
-            "steelpick","Steel Pickaxe");
+            "steelpick","Steel Pickaxe",
+            "netherportal","Nether Portal",
+            "endportal","End Portal");
    
     private final static Map<String, Sprite> MAPCOOKSPRITE = Map.of("gold_lingot",SpriteStore.getSpriteStore().getSprite("default_gold_ingot"),
             "steel_lingot",SpriteStore.getSpriteStore().getSprite("default_steel_ingot"),

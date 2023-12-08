@@ -19,9 +19,13 @@ public class CraftAndFurnace{
     
     /**
      * L'attribut rule...
+     */
+    private String rule;
+    
+    /**
      * L'attribut product...
      */
-    private String rule,product;
+    private String product;
     
     
     /**
