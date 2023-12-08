@@ -22,8 +22,6 @@ import java.util.Random;
 import fr.univartois.butinfo.r304.flatcraft.controller.FlatcraftController;
 import fr.univartois.butinfo.r304.flatcraft.model.Arbre;
 import fr.univartois.butinfo.r304.flatcraft.model.ChooseSprite;
-import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteEnd;
-import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteNether;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.Terrils;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
@@ -58,7 +56,8 @@ public final class Flatcraft extends Application {
      * La hauteur (en pixels) de la fenêtre affichant le jeu.
      */
     private static final int GAME_HEIGHT = 720;
-
+    
+    Random r = new Random();
     /*
      * (non-Javadoc)
      *
@@ -67,14 +66,10 @@ public final class Flatcraft extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // On commence par charger la vue et son contrôleur.
-    	Random r = new Random();
+    	
     	int typeTerrils = r.nextInt(10);
     	int typeArbre = r.nextInt(3,9);
     	int nbArbre = r.nextInt(5,6);
-    	
-    	boolean terril = true;
-    	boolean arbre = true;
-    	
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/flatcraft.fxml"));
         Parent viewContent = fxmlLoader.load();
@@ -82,23 +77,19 @@ public final class Flatcraft extends Application {
         controller.setStage(stage);
 
         // On crée ensuite le jeu, que l'on lie au contrôleur.
-        // TODO Utiliser ici la bonne factory pour créer les objets du jeu.
-        FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, SpriteStore.getSpriteStore(), ChooseSprite.getChooseSprite());
+
+        FlatcraftGame gameTmp = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, SpriteStore.getSpriteStore(), ChooseSprite.getChooseSprite());
         
         IGenerate map = MapGenerator.getMapGenerator();
         
-        
-        if(terril) {
-            map = new Terrils(map,typeTerrils);
-        }
-        if(arbre) {
-            map = new Arbre(map,typeArbre,nbArbre);
-        }
+        map = new Terrils(map,typeTerrils);
+        map = new Arbre(map,typeArbre,nbArbre);
+     
 
-        game.setGenerate(map);
-        controller.setGame(game);
-        game.setController(controller);
-        game.prepare();
+        gameTmp.setGenerate(map);
+        controller.setGame(gameTmp);
+        gameTmp.setController(controller);
+        gameTmp.prepare();
 
         // On peut maintenant afficher la scène et la fenêtre.
         Scene scene = new Scene(viewContent, GAME_WIDTH, GAME_HEIGHT);

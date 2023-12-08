@@ -249,18 +249,20 @@ public abstract class AbstractMovable implements IMovable {
         double newY = updatePosition(yPosition.get(), verticalSpeed, delta, 0, limitMaxY);
         yPosition.set(newY);
 
+        boolean res = true; 
+        
         if ((newX == 0) || (newX == limitMaxX)) {
             // L'objet a atteint la limite sur l'axe x.
-            return false;
+            res = false;
         }
 
         if ((newY == 0) || (newY == limitMaxY)) {
             // L'objet a atteint la limite sur l'axe y.
-            return false;
+        	res = false;
         }
 
         // L'objet n'a atteint aucune limite
-        return true;
+        return res;
     }
 
     /**

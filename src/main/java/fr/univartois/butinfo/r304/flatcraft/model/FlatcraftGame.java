@@ -16,38 +16,25 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model;
 
-import java.awt.Taskbar.State;
-
 import java.util.ArrayList;
-
 import java.io.IOException;
-import java.net.URL;
-
+import java.io.UncheckedIOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftAndFurnace;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftFurnaceObject;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.RuleParser;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
-import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
-import fr.univartois.butinfo.r304.flatcraft.model.movables.DeplacementLineaire;
-import fr.univartois.butinfo.r304.flatcraft.model.movables.EMob;
-import fr.univartois.butinfo.r304.flatcraft.model.movables.Mob;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource3;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.image.Image;
 
 /**
  * La classe {@link FlatcraftGame} permet de gérer une partie du jeu Flatcraft.
@@ -121,7 +108,7 @@ public final class FlatcraftGame {
     
     private List<GameMap> worldList = new ArrayList<>();
     
-    private final static Map<String, Sprite> MAPCRAFTSPRITE = Map.of("wood",SpriteStore.getSpriteStore().getSprite("default_wood"),
+    private static final Map<String, Sprite> MAPCRAFTSPRITE = Map.of("wood",SpriteStore.getSpriteStore().getSprite("default_wood"),
             "stick",SpriteStore.getSpriteStore().getSprite("default_stick"),
             "woodpick",SpriteStore.getSpriteStore().getSprite("default_tool_woodpick"),
             "woodaxe",SpriteStore.getSpriteStore().getSprite("default_tool_woodaxe"),
@@ -131,7 +118,7 @@ public final class FlatcraftGame {
             "netherportal",SpriteStore.getSpriteStore().getSprite("default_netherportal"),
             "endportal",SpriteStore.getSpriteStore().getSprite("default_endportal"));
     
-    private final static Map<String, String> MAPCRAFTNAME = Map.of("woodpick","Wood Pickaxe",
+    private static final Map<String, String> MAPCRAFTNAME = Map.of("woodpick","Wood Pickaxe",
             "woodaxe","Wood Axe",
             "stonepick","Stone Pickaxe",
             "stoneaxe","Stone Axe",
@@ -139,11 +126,11 @@ public final class FlatcraftGame {
             "netherportal","Nether Portal",
             "endportal","End Portal");
    
-    private final static Map<String, Sprite> MAPCOOKSPRITE = Map.of("gold_lingot",SpriteStore.getSpriteStore().getSprite("default_gold_ingot"),
+    private static final Map<String, Sprite> MAPCOOKSPRITE = Map.of("gold_lingot",SpriteStore.getSpriteStore().getSprite("default_gold_ingot"),
             "steel_lingot",SpriteStore.getSpriteStore().getSprite("default_steel_ingot"),
             "copper_lingot",SpriteStore.getSpriteStore().getSprite("default_copper_ingot"));
     
-    private final static Map<String, String> MAPCOOKNAME = Map.of("gold_lingot","Gold Lingot",
+    private static final Map<String, String> MAPCOOKNAME = Map.of("gold_lingot","Gold Lingot",
             "steel_lingot","Steel Lingot",
             "copper_lingot","Copper Lingot");
 
@@ -198,22 +185,22 @@ public final class FlatcraftGame {
     /**
      * Prépare la partie de Flatcraft avant qu'elle ne démarre.
      */
-    public void prepare() {
-        GameMap map = createMap(cellFactory);
+    public void prepare(){
+        GameMap overworld = createMap(cellFactory);
     	GameMap end = createMap(ChooseSpriteEnd.getChooseSpriteEnd());
     	GameMap nether = createMap(ChooseSpriteNether.getChooseSpriteNether());
     	
     
     	// On crée la carte du jeu.
-        setMap(map);
+        setMap(overworld);
         
         controller.prepare(getMap());
         
-        worldList.add(map);
+        worldList.add(overworld);
         worldList.add(end);
         worldList.add(nether);
        
-        // TODO On crée le joueur, qui se trouve sur le sol à gauche de la carte.
+
         player = new Player(this, 0, 19*16, spriteStore.getSprite("player"));
         movableObjects.add(player);
         controller.addMovable(player);
@@ -229,7 +216,7 @@ public final class FlatcraftGame {
          */
         
         
-        // TODO On fait le lien entre les différentes propriétés et leur affichage.
+
         controller.bindTime(this.time);
         controller.bindLevel(this.level);
         controller.bindInventory(this.getPlayer().getInventory());
@@ -240,8 +227,8 @@ public final class FlatcraftGame {
         try {
             parser1.parse();
         } catch (IOException e) {
-            // TODO Auto-generated catch block.
-            throw new RuntimeException(e);
+
+            throw new UncheckedIOException(e);
         }
         this.craft = parser1.build();
         
@@ -249,8 +236,7 @@ public final class FlatcraftGame {
         try {
             parser2.parse();
         } catch (IOException e) {
-            // TODO Auto-generated catch block.
-            throw new RuntimeException(e);
+        	throw new UncheckedIOException(e);
         }
         this.furnace = parser2.build();
         
@@ -300,7 +286,7 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers le haut.
      */
     public void moveUp() {
-    	
+    	throw new UnsupportedOperationException();
     }
     
 
@@ -308,7 +294,7 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers le bas.
      */
     public void moveDown() {
-    	
+    	throw new UnsupportedOperationException();
     }
 
     /**
@@ -354,14 +340,14 @@ public final class FlatcraftGame {
      * Fait sauter le joueur.
      */
     public void jump() {
-        // TODO Cette méthode vous sera fournie ultérieurement.
+    	throw new UnsupportedOperationException();
     }
 
     /**
      * Fait creuser le joueur vers le haut.
      */
     public void digUp() {
-        // TODO Nous reviendrons plus tard sur cette méthode.
+    	throw new UnsupportedOperationException();
     }
 
     /**
@@ -456,25 +442,22 @@ public final class FlatcraftGame {
      */
     public Resource craft(Resource[][] inputResources) {
         
-        String res = "";
+        StringBuilder res = new StringBuilder();
         for (Resource[] resources : inputResources) {
             for(Resource resource : resources) {
                 if(resource == null) {
-                    res += "empty_";
+                    res.append("empty_");
                 } else {
-                    res += resource.getInternalName() + "_";
+                    res.append(resource.getInternalName() + "_");
                 }
             }
         }
-        res = res.substring(0, res.length() - 1);
-        
-        System.out.println(res);
-        
+        res = res.deleteCharAt(res.length()-1);    
         
         String nomItemCraft = "";
         int quantite = 0;
         for(CraftAndFurnace craftUnite : craft.getListCraft()) {
-            if(craftUnite.getRule().equals(res)) {
+            if(craftUnite.getRule().equals(res.toString())) {
                 nomItemCraft = craftUnite.getProduct();
                 quantite = craftUnite.getQuantity();
                 break;
@@ -484,7 +467,6 @@ public final class FlatcraftGame {
         if (quantite != 0) {
             Sprite spriteItem;
             String nomExterne;
-            System.out.println(nomItemCraft);
             spriteItem = MAPCRAFTSPRITE.get(nomItemCraft);
             if(MAPCRAFTNAME.containsKey(nomItemCraft)) {
                 nomExterne = MAPCRAFTNAME.get(nomItemCraft);

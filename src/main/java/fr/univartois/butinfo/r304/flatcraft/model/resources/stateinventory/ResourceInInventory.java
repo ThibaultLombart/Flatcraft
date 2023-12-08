@@ -35,7 +35,6 @@ public class ResourceInInventory implements IState {
      * @param name Name
      */
     public ResourceInInventory(Sprite sprite, String name) {
-        // TODO Auto-generated constructor stub.
         this.sprite = sprite;
         this.name = name;
     }
@@ -47,7 +46,6 @@ public class ResourceInInventory implements IState {
      */
     @Override
     public IState nextState() {
-        // TODO Auto-generated method stub.
         return this;
     }
 
@@ -58,7 +56,6 @@ public class ResourceInInventory implements IState {
      */
     @Override
     public Sprite getSprite() {
-        // TODO Auto-generated method stub.
         return this.sprite;
     }
 
@@ -69,7 +66,6 @@ public class ResourceInInventory implements IState {
      */
     @Override
     public String getName() {
-        // TODO Auto-generated method stub.
         return name;
     }
     

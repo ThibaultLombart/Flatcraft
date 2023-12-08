@@ -12,6 +12,7 @@ import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
 public class ChooseSpriteEnd implements CellFactory {
 	
+	Random r = new Random();
 	/**
 	 * L'attribut spriteStore...
 	 */
@@ -27,7 +28,7 @@ public class ChooseSpriteEnd implements CellFactory {
      * Crée une nouvelle instance de ChooseSpriteEnd.
      */
     private ChooseSpriteEnd() {
-        // TODO Auto-generated constructor stub.
+
     }
     
     /**
@@ -44,7 +45,7 @@ public class ChooseSpriteEnd implements CellFactory {
 	
 	@Override
 	public void setSpriteStore(ISpriteStore spriteStore) {
-		// TODO Auto-generated method stub
+
 		this.spriteStore = spriteStore;
 	}
 
@@ -56,8 +57,7 @@ public class ChooseSpriteEnd implements CellFactory {
 
 	@Override
 	public Cell createSoilSurface() {
-		// TODO Auto-generated method stub
-		Random r = new Random();
+
         int chance = r.nextInt(4);
         if (chance <= 3) {
         	return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_endstone"),"Endstone"),ToolType.MEDIUM_TOOL,new EtatResource3(this)));
@@ -66,8 +66,6 @@ public class ChooseSpriteEnd implements CellFactory {
 	}
 	@Override
 	public Cell createSubSoil(int i) {
-		// TODO Auto-generated method stub
-		Random r = new Random();
         int chance;
 		if(i == 44) {
 			return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_bedrock"),"Bedrock"),ToolType.NO_TOOL,new EtatResourceUnbreakable(this)));
@@ -83,13 +81,13 @@ public class ChooseSpriteEnd implements CellFactory {
 
 	@Override
 	public Cell createTrunk() {
-		// TODO Auto-generated method stub
+
         return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_chorus_plant"),"Chorus Plant"),ToolType.NO_TOOL,new EtatResource3(this)));
 	}
 	
 	@Override
 	public Cell createLeaves() {
-		// TODO Auto-generated method stub
+
 		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_chorus_flower"),"Chorus Leaves"),ToolType.NO_TOOL,new EtatResource3(this)));
 	}
 

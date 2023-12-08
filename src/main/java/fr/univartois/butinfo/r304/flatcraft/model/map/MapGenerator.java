@@ -25,7 +25,6 @@ public class MapGenerator implements IGenerate{
      * Crée une nouvelle instance de MapGenerator.
      */
     private MapGenerator() {
-        // TODO Auto-generated constructor stub.
     }
     
     public static MapGenerator getMapGenerator() {

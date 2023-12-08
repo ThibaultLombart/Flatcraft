@@ -155,7 +155,7 @@ public final class CraftTableController {
             boolean success = false;
 
             if (dragboard.hasString() && dragboard.hasImage()) {
-                // TODO Remplacez cette affectation par la récupération de la ressource dans l'inventaire du joueur.
+
             	
                 Optional<Resource> resource = this.game.getPlayer().getItem(dragboard.getString());
                 if (resource.isPresent()) {
@@ -183,7 +183,7 @@ public final class CraftTableController {
 
         // Lorsque la ressource est déposée, elle est retirée de l'inventaire du joueur.
         imageView.setOnDragDone(event -> {
-            // TODO Retirez de l'inventaire du joueur la ressource ayant été déposée.
+
         	this.game.getPlayer().removeItem(resources[row][column]);
             event.consume();
         });
@@ -249,7 +249,7 @@ public final class CraftTableController {
         // On retire toutes les ressources déposées sur la table de craft.
         for (int i = 0; i < resources.length; i++) {
             for (int j = 0; j < resources[i].length; j++) {
-                // TODO Remettez les ressources non null dans l'inventaire du joueur.
+
             	if (resources[i][j]!= null) {
             		this.game.getPlayer().addItem(resources[i][j]);
             	}

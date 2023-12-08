@@ -24,7 +24,6 @@ public class DeplacementLineaire implements IDeplacementMob {
      */
     @Override
     public void deplacement(AbstractMovable entity) {
-        // TODO Auto-generated method stub.
         entity.setHorizontalSpeed(100);
     }
 

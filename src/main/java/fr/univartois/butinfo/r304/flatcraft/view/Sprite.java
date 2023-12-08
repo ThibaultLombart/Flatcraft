@@ -71,5 +71,5 @@ public final class Sprite {
     public Image getImage() {
         return image;
     }
-
+   
 }
