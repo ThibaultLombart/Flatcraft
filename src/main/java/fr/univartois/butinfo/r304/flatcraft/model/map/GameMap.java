@@ -14,7 +14,9 @@
  * Tous droits réservés.
  */
 
-package fr.univartois.butinfo.r304.flatcraft.model;
+package fr.univartois.butinfo.r304.flatcraft.model.map;
+
+import fr.univartois.butinfo.r304.flatcraft.model.Cell;
 
 /**
  * L'interface {@link GameMap} définit le contrat à remplir par les différentes

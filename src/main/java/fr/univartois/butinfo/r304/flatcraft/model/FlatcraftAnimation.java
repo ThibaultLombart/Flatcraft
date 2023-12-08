@@ -18,6 +18,7 @@ package fr.univartois.butinfo.r304.flatcraft.model;
 
 import java.util.List;
 
+import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import javafx.animation.AnimationTimer;
 
 /**

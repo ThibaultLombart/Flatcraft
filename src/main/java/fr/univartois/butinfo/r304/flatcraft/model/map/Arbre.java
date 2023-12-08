@@ -1,9 +1,12 @@
-package fr.univartois.butinfo.r304.flatcraft.model;
+package fr.univartois.butinfo.r304.flatcraft.model.map;
 
-import fr.univartois.butinfo.r304.flatcraft.model.decorator.GenerateDecorator;
-import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
-import fr.univartois.butinfo.r304.flatcraft.model.map.SimpleGameMap;
+
 import java.util.Random;
+
+import fr.univartois.butinfo.r304.flatcraft.model.Cell;
+import fr.univartois.butinfo.r304.flatcraft.model.CellFactory;
+import fr.univartois.butinfo.r304.flatcraft.model.decorator.GenerateDecorator;
+
 public class Arbre extends GenerateDecorator implements IGenerate {
 
 	Random r = new Random();

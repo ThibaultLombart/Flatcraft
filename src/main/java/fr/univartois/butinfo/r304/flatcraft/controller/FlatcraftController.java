@@ -22,9 +22,9 @@ import java.util.Map;
 
 import fr.univartois.butinfo.r304.flatcraft.model.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
-import fr.univartois.butinfo.r304.flatcraft.model.GameMap;
 import fr.univartois.butinfo.r304.flatcraft.model.IFlatcraftController;
-import fr.univartois.butinfo.r304.flatcraft.model.IMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.map.GameMap;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ResourceInInventory;
 import javafx.beans.binding.Bindings;
@@ -334,7 +334,7 @@ public final class FlatcraftController implements IFlatcraftController {
     @FXML
     private void showCraftTable() throws IOException {
         // On charge la vue et son contrôleur.
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/crafttable.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/crafttable.fxml"));
         Parent viewContent = fxmlLoader.load();
         CraftTableController controller = fxmlLoader.getController();
 
@@ -356,7 +356,7 @@ public final class FlatcraftController implements IFlatcraftController {
     @FXML
     private void showFurnace() throws IOException {
         // On charge la vue et son contrôleur.
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/furnace.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/furnace.fxml"));
         Parent viewContent = fxmlLoader.load();
         FurnaceController controller = fxmlLoader.getController();
 
