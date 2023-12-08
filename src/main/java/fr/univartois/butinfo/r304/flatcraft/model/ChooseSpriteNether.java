@@ -1,7 +1,5 @@
 package fr.univartois.butinfo.r304.flatcraft.model;
 
-import java.util.Random;
-
 import fr.univartois.butinfo.r304.flatcraft.model.map.GenerateCell;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource3;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;

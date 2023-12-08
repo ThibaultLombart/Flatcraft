@@ -1,6 +1,5 @@
 package fr.univartois.butinfo.r304.flatcraft.model;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import fr.univartois.butinfo.r304.flatcraft.model.movables.AbstractMovable;
