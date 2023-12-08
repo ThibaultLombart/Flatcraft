@@ -16,16 +16,35 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model;
 
+import java.awt.Taskbar.State;
+
+import java.util.ArrayList;
+
+import java.io.IOException;
+import java.net.URL;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftAndFurnace;
+import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftFurnaceObject;
+import fr.univartois.butinfo.r304.flatcraft.model.craft.RuleParser;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.DeplacementLineaire;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.EMob;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.Mob;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource3;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
+import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
@@ -60,6 +79,10 @@ public final class FlatcraftGame {
      * L'instance e {@link ISpriteStore} utilisée pour créer les sprites du jeu.
      */
     private ISpriteStore spriteStore;
+    
+    private CraftFurnaceObject craft;
+    
+    private CraftFurnaceObject furnace;
 
     /**
      * L'instance de {@link CellFactory} utilisée pour créer les cellules du jeu.
@@ -70,7 +93,7 @@ public final class FlatcraftGame {
      * La carte du jeu, sur laquelle le joueur évolue.
      */
     private GameMap map;
-
+    
     /**
      * Le temps écoulé depuis le début de la partie.
      */
@@ -95,6 +118,34 @@ public final class FlatcraftGame {
      * L'animation simulant le temps qui passe dans le jeu.
      */
     private FlatcraftAnimation animation = new FlatcraftAnimation(this, movableObjects);
+    
+    private List<GameMap> worldList = new ArrayList<>();
+    
+    private final static Map<String, Sprite> MAPCRAFTSPRITE = Map.of("wood",SpriteStore.getSpriteStore().getSprite("default_wood"),
+            "stick",SpriteStore.getSpriteStore().getSprite("default_stick"),
+            "woodpick",SpriteStore.getSpriteStore().getSprite("default_tool_woodpick"),
+            "woodaxe",SpriteStore.getSpriteStore().getSprite("default_tool_woodaxe"),
+            "stonepick",SpriteStore.getSpriteStore().getSprite("default_tool_stonepick"),
+            "stoneaxe",SpriteStore.getSpriteStore().getSprite("default_tool_stoneaxe"),
+            "steelpick",SpriteStore.getSpriteStore().getSprite("default_tool_steelpick"),
+            "netherportal",SpriteStore.getSpriteStore().getSprite("default_netherportal"),
+            "endportal",SpriteStore.getSpriteStore().getSprite("default_endportal"));
+    
+    private final static Map<String, String> MAPCRAFTNAME = Map.of("woodpick","Wood Pickaxe",
+            "woodaxe","Wood Axe",
+            "stonepick","Stone Pickaxe",
+            "stoneaxe","Stone Axe",
+            "steelpick","Steel Pickaxe",
+            "netherportal","Nether Portal",
+            "endportal","End Portal");
+   
+    private final static Map<String, Sprite> MAPCOOKSPRITE = Map.of("gold_lingot",SpriteStore.getSpriteStore().getSprite("default_gold_ingot"),
+            "steel_lingot",SpriteStore.getSpriteStore().getSprite("default_steel_ingot"),
+            "copper_lingot",SpriteStore.getSpriteStore().getSprite("default_copper_ingot"));
+    
+    private final static Map<String, String> MAPCOOKNAME = Map.of("gold_lingot","Gold Lingot",
+            "steel_lingot","Steel Lingot",
+            "copper_lingot","Copper Lingot");
 
     /**
      * Crée une nouvelle instance de FlatcraftGame.
@@ -148,9 +199,19 @@ public final class FlatcraftGame {
      * Prépare la partie de Flatcraft avant qu'elle ne démarre.
      */
     public void prepare() {
-        // On crée la carte du jeu.
-        map = createMap();
-        controller.prepare(map);
+        GameMap map = createMap(cellFactory);
+    	GameMap end = createMap(ChooseSpriteEnd.getChooseSpriteEnd());
+    	GameMap nether = createMap(ChooseSpriteNether.getChooseSpriteNether());
+    	
+    
+    	// On crée la carte du jeu.
+        setMap(map);
+        
+        controller.prepare(getMap());
+        
+        worldList.add(map);
+        worldList.add(end);
+        worldList.add(nether);
        
         // TODO On crée le joueur, qui se trouve sur le sol à gauche de la carte.
         player = new Player(this, 0, 19*16, spriteStore.getSprite("player"));
@@ -171,18 +232,54 @@ public final class FlatcraftGame {
         // TODO On fait le lien entre les différentes propriétés et leur affichage.
         controller.bindTime(this.time);
         controller.bindLevel(this.level);
+        controller.bindInventory(this.getPlayer().getInventory());
         controller.bindHealth(player.getHealthPoints());
         controller.bindXP(player.getXpPoints());
+        
+        RuleParser parser1 = new RuleParser("craftrules.txt");
+        try {
+            parser1.parse();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block.
+            throw new RuntimeException(e);
+        }
+        this.craft = parser1.build();
+        
+        RuleParser parser2 = new RuleParser("furnacerules.txt");
+        try {
+            parser2.parse();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block.
+            throw new RuntimeException(e);
+        }
+        this.furnace = parser2.build();
+        
+        
+        
+        
         // On démarre l'animation du jeu.
         animation.start();
     }
 
-    /**
+    public GameMap getMap() {
+		return map;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	/**
      * Crée la carte du jeu.
+	 * @param cellFactory2 
      *
      * @return La carte du jeu créée.
      */
-    private GameMap createMap() {
+    private GameMap createMap(CellFactory cellFactory2) {
         int hauteur = this.height / 16;
         int largeur = this.width / 16;
         
@@ -192,8 +289,8 @@ public final class FlatcraftGame {
     }
 
     /**
-     * Indique à cette partie de Flatcraft qu'une nouvelle heure s'est écoulée (dans le
-     * jeu).
+     * Indique à cette partie de Flatcraft qu'une nouvelle heure s'est écoulée
+     * (dans le jeu).
      */
     void oneHour() {
         time.set((time.get() + 1) % 24);
@@ -237,8 +334,8 @@ public final class FlatcraftGame {
      */
     private void move(IMovable movable) {
         Cell currentCell = getCellOf(movable);
-        for (int row = currentCell.getRow() + 1; row < map.getHeight(); row++) {
-            Cell below = map.getAt(row, currentCell.getColumn());
+        for (int row = currentCell.getRow() + 1; row < getMap().getHeight(); row++) {
+            Cell below = getMap().getAt(row, currentCell.getColumn());
             if (!below.move(movable)) {
                 break;
             }
@@ -275,7 +372,7 @@ public final class FlatcraftGame {
         int hori = x.getRow();
         int vert = x.getColumn();
         int cible = hori +1;
-        Cell y = map.getAt(cible, vert);
+        Cell y = getMap().getAt(cible, vert);
         dig(y);
         move(player);
         
@@ -291,7 +388,7 @@ public final class FlatcraftGame {
         int hori = x.getRow();
         int vert = x.getColumn();
         int cible = vert -1;
-        Cell y = map.getAt(hori, cible);
+        Cell y = getMap().getAt(hori, cible);
         dig(y);
         move(player);
     }
@@ -304,7 +401,7 @@ public final class FlatcraftGame {
         int hori = x.getRow();
         int vert = x.getColumn();
         int cible = vert +1;
-        Cell y = map.getAt(hori, cible);
+        Cell y = getMap().getAt(hori, cible);
         dig(y);
         move(player);
     }
@@ -340,10 +437,112 @@ public final class FlatcraftGame {
         int column = midX / spriteStore.getSpriteSize();
 
         // On récupère enfin la cellule à cette position dans la carte.
-        return map.getAt(row, column);
+        return getMap().getAt(row, column);
     }
+
+
+	public CellFactory getCellFactory() {
+		return cellFactory;
+	}
     
     
-    
+    /**
+     * Crée une nouvelle ressource à l'aide d'un ensemble de ressources, en suivant les
+     * règles de la table de craft.
+     *
+     * @param inputResources Les ressources déposées sur la table de craft.
+     *
+     * @return La ressource produite.
+     */
+    public Resource craft(Resource[][] inputResources) {
+        
+        String res = "";
+        for (Resource[] resources : inputResources) {
+            for(Resource resource : resources) {
+                if(resource == null) {
+                    res += "empty_";
+                } else {
+                    res += resource.getInternalName() + "_";
+                }
+            }
+        }
+        res = res.substring(0, res.length() - 1);
+        
+        System.out.println(res);
+        
+        
+        String nomItemCraft = "";
+        int quantite = 0;
+        for(CraftAndFurnace craftUnite : craft.getListCraft()) {
+            if(craftUnite.getRule().equals(res)) {
+                nomItemCraft = craftUnite.getProduct();
+                quantite = craftUnite.getQuantity();
+                break;
+            }
+        }
+            
+        if (quantite != 0) {
+            Sprite spriteItem;
+            String nomExterne;
+            System.out.println(nomItemCraft);
+            spriteItem = MAPCRAFTSPRITE.get(nomItemCraft);
+            if(MAPCRAFTNAME.containsKey(nomItemCraft)) {
+                nomExterne = MAPCRAFTNAME.get(nomItemCraft);
+            } else {
+                nomExterne = nomItemCraft;
+            }
+            
+            
+            return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory));
+        } else {
+            controller.displayError("Erreur, Il n'existe pas de craft.");
+            return null;
+        }
+    }
+
+    /**
+     * Crée une nouvelle ressource à l'aide d'un combustible et d'une ressource, en suivant les
+     * règles du fourneau.
+     *
+     * @param fuel Le matériau combustible utilisé dans le fourneau.
+     * @param resource La ressource à transformer.
+     *
+     * @return La ressource produite.
+     */
+    public Resource cook(Resource fuel, Resource resource) {
+        
+        String res = resource.getInternalName();
+        
+        String nomItemCook = "";
+        int quantite = 0;
+        for(CraftAndFurnace cookUnite : furnace.getListCraft()) {
+            if(cookUnite.getRule().equals(res)) {
+                nomItemCook = cookUnite.getProduct();
+                quantite = cookUnite.getQuantity();
+                break;
+            }
+                
+               
+        }
+        if (quantite != 0) {
+            String nomExterne;
+            Sprite spriteItem = MAPCOOKSPRITE.get(nomItemCook);
+            if(MAPCOOKNAME.containsKey(nomItemCook)) {
+                nomExterne = MAPCOOKNAME.get(nomItemCook);
+            } else {
+                nomExterne = nomItemCook;
+            }
+            
+            
+            return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory));
+        } else {
+            controller.displayError("Erreur, Il n'existe pas de cuisson pour cet item.");
+            return null;
+        }
+    }
+
+	private void setMap(GameMap map) {
+		this.map = map;
+	}
 
 }

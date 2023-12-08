@@ -3,13 +3,45 @@ package fr.univartois.butinfo.r304.flatcraft.model;
 import java.util.Random;
 
 import fr.univartois.butinfo.r304.flatcraft.model.map.GenerateCell;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource3;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
 public class ChooseSpriteNether implements CellFactory {
 	
-private ISpriteStore spriteStore;
+    /**
+     * L'attribut spriteStore...
+     */
+    private ISpriteStore spriteStore;
+    
+    /**
+     * L'attribut chooseSprite...
+     */
+    private static ChooseSpriteNether chooseSpriteNether;
+    
+    
+    
+    /**
+     * Crée une nouvelle instance de ChooseSpriteNether.
+     */
+    private ChooseSpriteNether() {
+        // TODO Auto-generated constructor stub.
+    }
+    
+    /**
+     * Donne l'attribut chooseSprite de cette instance de ChooseSpriteNether.
+     *
+     * @return L'attribut chooseSprite de cette instance de ChooseSpriteNether.
+     */
+    public static ChooseSpriteNether getChooseSpriteNether() {
+        if(chooseSpriteNether == null) {
+            chooseSpriteNether = new ChooseSpriteNether();
+        }
+        return chooseSpriteNether;
+    }
 	
 	@Override
 	public void setSpriteStore(ISpriteStore spriteStore) {
@@ -19,7 +51,7 @@ private ISpriteStore spriteStore;
 
 	@Override
 	public Cell createSky() {
-		return new GenerateCell(this.spriteStore.getSprite("default_lava"));
+		return new GenerateCell(this.spriteStore.getSprite("default_nether_sky"));
 
 	}
 
@@ -29,33 +61,28 @@ private ISpriteStore spriteStore;
 		
         
         
-        return new GenerateCell(new Resource("NetherRack",this.spriteStore.getSprite("default_desert_stone"),ToolType.NO_TOOL,1));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_crimson"),"Crimson"),ToolType.NO_TOOL,new EtatResource3(this)));
 		
 	}
 	@Override
-	public Cell createSubSoil() {
+	public Cell createSubSoil(int i) {
 		// TODO Auto-generated method stub
-		return new GenerateCell(new Resource("NetherRack",this.spriteStore.getSprite("default_desert_stone"),ToolType.NO_TOOL,1));
+		if(i == 44) {
+			return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_bedrock"),"Bedrock"),ToolType.NO_TOOL,new EtatResourceUnbreakable(this)));
+		}
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_netherrack"),"Netherrack"),ToolType.MEDIUM_TOOL,new EtatResource3(this)));
 	}
 
 	@Override
 	public Cell createTrunk() {
 		// TODO Auto-generated method stub
-		Random r = new Random();
-        int chance = r.nextInt(8);
-        if (chance <= 4) {
-        	return new GenerateCell(this.spriteStore.getSprite("default_brick"));
-		}
-		return new GenerateCell(this.spriteStore.getSprite("default_brick"));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_crimson_wood"),"Crimson Wood"),ToolType.NO_TOOL,new EtatResource3(this)));
 	}
 	
 	@Override
 	public Cell createLeaves() {
 		// TODO Auto-generated method stub
-		Random r = new Random();
-        
-        
-		return new GenerateCell(this.spriteStore.getSprite("default_brick"));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_nether_wart_block"),"Nether Wart Block"),ToolType.NO_TOOL,new EtatResource3(this)));
 	}
 
 }

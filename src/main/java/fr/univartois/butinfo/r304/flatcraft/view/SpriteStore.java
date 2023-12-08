@@ -38,6 +38,31 @@ public final class SpriteStore implements ISpriteStore {
      * {@link Sprite} déjà chargées.
      */
     private final Map<String, Sprite> spriteCache = new HashMap<>();
+    
+    /**
+     * L'attribut spriteStore pour le singleton
+     */
+    private static SpriteStore spriteStore = null;
+    
+    
+    /**
+     * Crée une nouvelle instance de SpriteStore.
+     */
+    private SpriteStore() {
+        // TODO Auto-generated constructor stub.
+    }
+    
+    /**
+     * Donne l'attribut spriteStore de cette instance de SpriteStore.
+     *
+     * @return L'attribut spriteStore de cette instance de SpriteStore.
+     */
+    public static SpriteStore getSpriteStore() {
+        if(spriteStore == null) {
+            spriteStore = new SpriteStore();
+        }
+        return spriteStore;
+    }
 
     /*
      * (non-Javadoc)
@@ -78,5 +103,7 @@ public final class SpriteStore implements ISpriteStore {
             throw new NoSuchElementException("Could not load image " + name, e);
         }
     }
+
+    
 
 }

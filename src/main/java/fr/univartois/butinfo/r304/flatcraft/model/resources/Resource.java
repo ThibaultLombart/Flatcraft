@@ -18,6 +18,8 @@ package fr.univartois.butinfo.r304.flatcraft.model.resources;
 
 import java.util.Objects;
 
+import fr.univartois.butinfo.r304.flatcraft.model.Cell;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.IState;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
 /**
@@ -29,17 +31,13 @@ import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
  *
  * @version 0.1.0
  */
-public final class Resource {
+public final class Resource{
 
-    /**
-     * Le nom unique identifiant le type de cette ressource.
-     */
-    private final String name;
 
     /**
      * Le sprite représentant cette ressource.
      */
-    private Sprite sprite;
+    private IState state;
 
     /**
      * Le type d'outils nécessaire pour extraire cette ressource de la carte.
@@ -51,35 +49,54 @@ public final class Resource {
      * Il s'agit du nombre de coups devant être appliqués avec un outil pour extraire
      * cette ressource depuis la map.
      */
-    private int hardness;
+    
+    private IResource hardness;
+    
+    
 
     /**
      * Crée une nouvelle instance de Resource.
      *
-     * @param name Le nom unique identifiant le type de la ressource.
-     * @param sprite Le sprite représentant la ressource.
+     * @param state L'état state pour les textures
      * @param toolType Le type d'outils nécessaire pour extraire la ressource de la carte.
      * @param hardness La dureté initiale de la ressource.
      *
      * @throws IllegalArgumentException Si la valeur de {@code hardness} est négative.
      */
-    public Resource(String name, Sprite sprite, ToolType toolType, int hardness) {
-        if (hardness < 0) {
-            throw new IllegalArgumentException("Resource hardness should be non-negative!");
-        }
-
-        this.name = name;
-        this.sprite = sprite;
+    public Resource(IState state, ToolType toolType, IResource hardness) {
+        this.state = state;
         this.toolType = toolType;
         this.hardness = hardness;
     }
+    
+    
 
-    /**
+    public IState getState() {
+		return state;
+	}
+    
+    public void setState(IState state) {
+    	this.state = state;
+    }
+
+
+
+	/**
      * Donne le nom unique identifiant le type de cette ressource.
      *
      * @return Le nom de cette ressource.
      */
     public String getName() {
+        return state.getName();
+    }
+    
+    /**
+     * Donne le nom unique identifiant le type de cette ressource.
+     *
+     * @return Le nom de cette ressource.
+     */
+    public String getInternalName() {
+        String name = state.getName().toLowerCase().replaceAll(" ", "_");
         return name;
     }
 
@@ -89,7 +106,7 @@ public final class Resource {
      * @return Le sprite représentant cette ressource.
      */
     public Sprite getSprite() {
-        return sprite;
+        return state.getSprite();
     }
 
     /**
@@ -108,7 +125,7 @@ public final class Resource {
      *
      * @return La dureté de cette ressource.
      */
-    public int getHardness() {
+    public IResource getHardness() {
         return hardness;
     }
 
@@ -116,24 +133,11 @@ public final class Resource {
      * Donne un coup sur cette ressource pour l'extraire de la carte.
      * Cela réduit sa dureté.
      *
-     * @throws IllegalStateException Si la dureté de la ressource est déjà égale à
-     *         {@code 0}.
+     * @throws IllegalStateException Si la dureté de la ressource est déjà égale
+     *         à {@code 0}.
      */
-    public void dig() {
-        if (hardness <= 0) {
-            throw new IllegalStateException("Cannot dig resource with 0 hardness!");
-        }
-        hardness--;
-    }
-
-    /**
-     * Donne la ressource obtenue lorsque cette ressource est extraite de la carte.
-     * Par défaut, la ressource obtenue ne change pas.
-     *
-     * @return La ressource obtenue après son extraction.
-     */
-    public Resource digBlock() {
-        return this;
+    public void dig(Cell cellule) {
+        hardness = hardness.nouvelleDurete(cellule);
     }
 
     /*
@@ -143,7 +147,7 @@ public final class Resource {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(state.getName());
     }
 
     /*
@@ -154,7 +158,7 @@ public final class Resource {
     @Override
     public boolean equals(Object other) {
         if (other instanceof Resource resource) {
-            return name.equals(resource.name);
+            return state.getName().equals(resource.state.getName());
         }
         return false;
     }

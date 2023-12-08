@@ -59,7 +59,7 @@ public interface CellFactory {
      *
      * @return La cellule créée.
      */
-    Cell createSubSoil();
+    Cell createSubSoil(int i);
 
     /**
      * Crée une cellule représentant le tronc d'un arbre.

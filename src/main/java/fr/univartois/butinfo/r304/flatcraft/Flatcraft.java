@@ -17,10 +17,16 @@
 package fr.univartois.butinfo.r304.flatcraft;
 
 import java.io.IOException;
+import java.util.Random;
 
 import fr.univartois.butinfo.r304.flatcraft.controller.FlatcraftController;
+import fr.univartois.butinfo.r304.flatcraft.model.Arbre;
+import fr.univartois.butinfo.r304.flatcraft.model.ChooseSprite;
+import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteEnd;
 import fr.univartois.butinfo.r304.flatcraft.model.ChooseSpriteNether;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
+import fr.univartois.butinfo.r304.flatcraft.model.Terrils;
+import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.application.Application;
@@ -38,6 +44,9 @@ import javafx.stage.Stage;
  */
 public final class Flatcraft extends Application {
 	
+	/**
+	 * L'attribut game...
+	 */
 	private FlatcraftGame game;
 
     /**
@@ -58,16 +67,35 @@ public final class Flatcraft extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // On commence par charger la vue et son contrôleur.
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/flatcraft.fxml"));
+    	Random r = new Random();
+    	int typeTerrils = r.nextInt(10);
+    	int typeArbre = r.nextInt(3,9);
+    	int nbArbre = r.nextInt(5,6);
+    	
+    	boolean terril = true;
+    	boolean arbre = true;
+    	
+    	
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/flatcraft.fxml"));
         Parent viewContent = fxmlLoader.load();
         FlatcraftController controller = fxmlLoader.getController();
         controller.setStage(stage);
 
         // On crée ensuite le jeu, que l'on lie au contrôleur.
         // TODO Utiliser ici la bonne factory pour créer les objets du jeu.
+        FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, SpriteStore.getSpriteStore(), ChooseSprite.getChooseSprite());
         
-        FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, new SpriteStore(), new ChooseSpriteNether());
-        game.setGenerate(new MapGenerator());
+        IGenerate map = MapGenerator.getMapGenerator();
+        
+        
+        if(terril) {
+            map = new Terrils(map,typeTerrils);
+        }
+        if(arbre) {
+            map = new Arbre(map,typeArbre,nbArbre);
+        }
+
+        game.setGenerate(map);
         controller.setGame(game);
         game.setController(controller);
         game.prepare();
@@ -90,6 +118,15 @@ public final class Flatcraft extends Application {
     public static void main(String[] args) {
         
     	launch();
+    }
+
+    /**
+     * Donne l'attribut game de cette instance de Flatcraft.
+     *
+     * @return L'attribut game de cette instance de Flatcraft.
+     */
+    public FlatcraftGame getGame() {
+        return game;
     }
 
 }

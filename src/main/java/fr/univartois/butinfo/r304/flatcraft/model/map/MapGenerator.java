@@ -18,6 +18,25 @@ import fr.univartois.butinfo.r304.flatcraft.model.CellFactory;
  */
 public class MapGenerator implements IGenerate{
     
+    private static MapGenerator mapGenerator = null;
+    
+    
+    /**
+     * Crée une nouvelle instance de MapGenerator.
+     */
+    private MapGenerator() {
+        // TODO Auto-generated constructor stub.
+    }
+    
+    public static MapGenerator getMapGenerator() {
+        if(mapGenerator == null) {
+            mapGenerator = new MapGenerator();
+        }
+        return mapGenerator;
+    }
+    
+    
+    
     @Override
 	public SimpleGameMap createMapGen(int hauteur, int largeur, CellFactory cellFactory) {
         
@@ -26,7 +45,7 @@ public class MapGenerator implements IGenerate{
         for (int i = 0; i < hauteur; i++) {
             for (int y = 0; y < largeur; y++) {
                 if(i > 20) {
-                    map.setAt(i, y, cellFactory.createSubSoil());
+                    map.setAt(i, y, cellFactory.createSubSoil(i));
                 } else if (i == 20) {
                     map.setAt(i, y, cellFactory.createSoilSurface());
                 } else {
@@ -34,8 +53,7 @@ public class MapGenerator implements IGenerate{
                 }
                 
             }
-        }
-        
+        }   
         return map;
 
     }
