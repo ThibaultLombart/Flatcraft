@@ -8,7 +8,6 @@
 package fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory;
 
 import java.util.Map;
-
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 
@@ -24,7 +23,7 @@ public class ResourceOnMap implements IState {
     /**
      * L'attribut NEXTSPRITE...
      */
-    private final static Map<Sprite, Sprite> NEXTSPRITE = Map.of(SpriteStore.getSpriteStore().getSprite("default_mineral_gold"),SpriteStore.getSpriteStore().getSprite("default_gold_lump"),
+    private static final Map<Sprite, Sprite> NEXTSPRITE = Map.of(SpriteStore.getSpriteStore().getSprite("default_mineral_gold"),SpriteStore.getSpriteStore().getSprite("default_gold_lump"),
             SpriteStore.getSpriteStore().getSprite("default_mineral_copper"),SpriteStore.getSpriteStore().getSprite("default_copper_lump"),
             SpriteStore.getSpriteStore().getSprite("default_mineral_iron"),SpriteStore.getSpriteStore().getSprite("default_iron_lump"),
             SpriteStore.getSpriteStore().getSprite("default_mineral_coal"),SpriteStore.getSpriteStore().getSprite("default_coal_lump"),
@@ -32,7 +31,7 @@ public class ResourceOnMap implements IState {
             SpriteStore.getSpriteStore().getSprite("default_mineral_mese"),SpriteStore.getSpriteStore().getSprite("default_mese_crystal_fragment"),
             SpriteStore.getSpriteStore().getSprite("default_stone"),SpriteStore.getSpriteStore().getSprite("default_cobble"));
     
-    private final static Map<String, String> NEXTSTRING = Map.of("Copper Ore", "Copper Lump",
+    private static final Map<String, String> NEXTSTRING = Map.of("Copper Ore", "Copper Lump",
             "Iron Ore", "Steel Lump",
             "Coal Ore", "Coal Lump",
             "Diamond Ore", "Diamond",
@@ -57,7 +56,6 @@ public class ResourceOnMap implements IState {
      * @param name name
      */
     public ResourceOnMap(Sprite sprite, String name) {
-        // TODO Auto-generated constructor stub.
         this.sprite = sprite;
         this.name = name;
     }
@@ -69,7 +67,6 @@ public class ResourceOnMap implements IState {
      */
     @Override
     public IState nextState() {
-        // TODO Auto-generated method stub.
         Sprite resSprite = sprite;
         if(NEXTSPRITE.containsKey(sprite)) {
             resSprite = NEXTSPRITE.get(sprite);
@@ -89,7 +86,6 @@ public class ResourceOnMap implements IState {
      */
     @Override
     public Sprite getSprite() {
-        // TODO Auto-generated method stub.
         return this.sprite;
     }
 
@@ -100,7 +96,6 @@ public class ResourceOnMap implements IState {
      */
     @Override
     public String getName() {
-        // TODO Auto-generated method stub.
         return name;
     }
 

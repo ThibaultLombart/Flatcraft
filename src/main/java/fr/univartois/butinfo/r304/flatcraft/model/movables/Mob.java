@@ -7,6 +7,8 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model.movables;
 
+import java.util.Objects;
+
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
@@ -28,20 +30,19 @@ public class Mob extends AbstractMovable {
      */
     private int healthPoints;
     
-    private EMob type;
+   // private EMob type;
     
-    private Sprite spriteDroit;
+   // private Sprite spriteDroit;
     
-    private Sprite spriteGauche;
+   // private Sprite spriteGauche;
     
     private IDeplacementMob strategie;
     
     public Mob(FlatcraftGame game, double xPosition, double yPosition, Sprite spriteDroit,Sprite spriteGauche, EMob type, IDeplacementMob strategie) {
-        // TODO Auto-generated constructor stub.
         super(game, xPosition, yPosition, spriteDroit);
-        this.type = type;
-        this.spriteDroit = spriteDroit;
-        this.spriteGauche = spriteGauche;
+        // this.type = type;
+        // this.spriteDroit = spriteDroit;
+        // this.spriteGauche = spriteGauche;
         this.healthPoints = type.getHealth();
         this.strategie = strategie;
     }
@@ -54,10 +55,32 @@ public class Mob extends AbstractMovable {
         this.healthPoints=healthPoints;
     }
     
+    @Override
     public boolean move(long delta) {
         strategie.deplacement(this);
         return super.move(delta);
     }
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(healthPoints, strategie);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Mob other = (Mob) obj;
+		return healthPoints == other.healthPoints && Objects.equals(strategie, other.strategie);
+	}
+
+    
 }
 

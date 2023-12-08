@@ -49,7 +49,6 @@ public final class SpriteStore implements ISpriteStore {
      * Crée une nouvelle instance de SpriteStore.
      */
     private SpriteStore() {
-        // TODO Auto-generated constructor stub.
     }
     
     /**

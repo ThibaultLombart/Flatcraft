@@ -15,7 +15,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.Resou
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
 public class ChooseSprite implements CellFactory {
-	
+	Random r = new Random();
 	/**
 	 * L'attribut spriteStore...
 	 */
@@ -32,7 +32,7 @@ public class ChooseSprite implements CellFactory {
      * Crée une nouvelle instance de ChooseSprite.
      */
     private ChooseSprite() {
-        // TODO Auto-generated constructor stub.
+
     }
     
     /**
@@ -51,14 +51,12 @@ public class ChooseSprite implements CellFactory {
 	
 	@Override
 	public void setSpriteStore(ISpriteStore spriteStore) {
-		// TODO Auto-generated method stub
+
 		this.spriteStore = spriteStore;
 	}
 
 	@Override
 	public Cell createSky() {
-		// TODO Auto-generated method stub
-		Random r = new Random();
         int chance = r.nextInt(4);
         if (chance <= 3) {
         	return new GenerateCell(this.spriteStore.getSprite("default_ice"));
@@ -68,8 +66,6 @@ public class ChooseSprite implements CellFactory {
 
 	@Override
 	public Cell createSoilSurface() {
-		// TODO Auto-generated method stub
-		Random r = new Random();
         int chance = r.nextInt(4);
         if (chance <= 3) {
         	return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_grass"),"Grass"),ToolType.NO_TOOL,new EtatResource3(this)));
@@ -79,8 +75,6 @@ public class ChooseSprite implements CellFactory {
 	
 	@Override
 	public Cell createSubSoil(int i) {
-		// TODO Auto-generated method stub
-		Random r = new Random();
 		int chance;
 		if(i == 44) {
 			return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_bedrock"),"Bedrock"),ToolType.NO_TOOL,new EtatResourceUnbreakable(this)));
@@ -137,8 +131,6 @@ public class ChooseSprite implements CellFactory {
 
 	@Override
 	public Cell createTrunk() {
-		// TODO Auto-generated method stub
-		Random r = new Random();
         int chance = r.nextInt(8);
         if (chance <= 4) {
         	return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_tree"),"Tree"),ToolType.NO_TOOL,new EtatResource3(this)));
@@ -151,8 +143,6 @@ public class ChooseSprite implements CellFactory {
 
 	@Override
 	public Cell createLeaves() {
-		// TODO Auto-generated method stub
-		Random r = new Random();
         int chance = r.nextInt(8);
         if (chance <= 4) {
         	return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_leaves"),"Oak Leaves"),ToolType.NO_TOOL,new EtatResource3(this)));

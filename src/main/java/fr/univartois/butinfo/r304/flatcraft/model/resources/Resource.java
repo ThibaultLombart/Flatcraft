@@ -96,8 +96,7 @@ public final class Resource{
      * @return Le nom de cette ressource.
      */
     public String getInternalName() {
-        String name = state.getName().toLowerCase().replaceAll(" ", "_");
-        return name;
+        return state.getName().toLowerCase().replace(" ", "_");
     }
 
     /**

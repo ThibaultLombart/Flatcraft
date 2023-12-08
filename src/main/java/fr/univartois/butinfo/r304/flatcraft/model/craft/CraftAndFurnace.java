@@ -40,7 +40,7 @@ public class CraftAndFurnace{
      * @param quantity Quantité
      */
     public CraftAndFurnace(String rule, String product, int quantity) {
-        // TODO Auto-generated constructor stub.
+
         this.rule = rule;
         this.product = product;
         this.quantity = quantity;

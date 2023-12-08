@@ -26,7 +26,7 @@ public abstract class GenerateDecorator implements IGenerate{
      * Crée une nouvelle instance de GenerateDecorator.
      * @param decorated
      */
-    public GenerateDecorator(IGenerate decorated) {
+    protected GenerateDecorator(IGenerate decorated) {
         this.decorated = decorated;
     }
     

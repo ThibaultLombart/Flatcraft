@@ -28,7 +28,7 @@ public class CraftFurnaceObject {
      * Crée une nouvelle instance de ComplicatedObject.
      */
     public CraftFurnaceObject(ComplicatedObjectBuilderCraft b) {
-        // TODO Auto-generated constructor stub.
+
         this.listCraft = b.getListCraft();
     }
 

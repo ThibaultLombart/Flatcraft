@@ -29,7 +29,7 @@ public class ComplicatedObjectBuilderCraft {
      * Crée une nouvelle instance de ComplicatedObjectBuilderCraft.
      */
     private ComplicatedObjectBuilderCraft() {
-        // TODO Auto-generated constructor stub.
+
     }
     
     /**
@@ -37,7 +37,6 @@ public class ComplicatedObjectBuilderCraft {
      * 
      */
     public static ComplicatedObjectBuilderCraft newInstance() {
-        // TODO Auto-generated method stub.
         return new ComplicatedObjectBuilderCraft();
     }
     
