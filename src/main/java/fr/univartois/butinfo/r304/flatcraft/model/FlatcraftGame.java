@@ -25,6 +25,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftAndFurnace;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftFurnaceObject;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.RuleParser;
+import fr.univartois.butinfo.r304.flatcraft.model.map.ChooseSpriteEnd;
+import fr.univartois.butinfo.r304.flatcraft.model.map.ChooseSpriteNether;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
