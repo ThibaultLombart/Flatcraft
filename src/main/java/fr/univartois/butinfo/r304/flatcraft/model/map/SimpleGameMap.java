@@ -17,7 +17,6 @@
 package fr.univartois.butinfo.r304.flatcraft.model.map;
 
 import fr.univartois.butinfo.r304.flatcraft.model.Cell;
-import fr.univartois.butinfo.r304.flatcraft.model.GameMap;
 
 /**
  * La classe {@link SimpleGameMap} propose une implémentation de base de {@link GameMap},
