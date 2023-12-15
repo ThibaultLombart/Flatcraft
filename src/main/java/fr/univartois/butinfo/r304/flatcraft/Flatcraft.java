@@ -57,7 +57,13 @@ public final class Flatcraft extends Application {
      */
     private static final int GAME_HEIGHT = 720;
     
-    Random r = new Random();
+    private static final Random r = new Random();
+    /**
+     * Le nombre de fois que la carte se "répète" horizontalement.
+     * Cela permet d'avoir une carte plus grande que la fenêtre.
+     */
+    private static final int MAP_REPEAT = 50;
+
     /*
      * (non-Javadoc)
      *
@@ -77,19 +83,19 @@ public final class Flatcraft extends Application {
         controller.setStage(stage);
 
         // On crée ensuite le jeu, que l'on lie au contrôleur.
-
-        FlatcraftGame gameTmp = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, SpriteStore.getSpriteStore(), ChooseSprite.getChooseSprite());
+        // TODO Utiliser ici la bonne factory pour créer les objets du jeu.
+        FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, MAP_REPEAT, SpriteStore.getSpriteStore(), ChooseSprite.getChooseSprite());
+        
         
         IGenerate map = MapGenerator.getMapGenerator();
         
         map = new Terrils(map,typeTerrils);
         map = new Arbre(map,typeArbre,nbArbre);
-     
-
-        gameTmp.setGenerate(map);
-        controller.setGame(gameTmp);
-        gameTmp.setController(controller);
-        gameTmp.prepare();
+        
+        game.setGenerate(map);
+        controller.setGame(game);
+        game.setController(controller);
+        game.prepare();
 
         // On peut maintenant afficher la scène et la fenêtre.
         Scene scene = new Scene(viewContent, GAME_WIDTH, GAME_HEIGHT);

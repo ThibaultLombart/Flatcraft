@@ -3,6 +3,7 @@ package fr.univartois.butinfo.r304.flatcraft.model;
 import java.util.Objects;
 import java.util.Optional;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.AbstractMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.IntegerProperty;
@@ -16,7 +17,7 @@ public class Player extends AbstractMovable{
 	
 	private IntegerProperty xpPoints;
 	
-	private ObservableMap<Resource, Integer> inventory = FXCollections.observableHashMap();
+	private ObservableMap<Inventoriable, Integer> inventory = FXCollections.observableHashMap();
 
 	
 	public Player(FlatcraftGame game, int x, int y, Sprite sprite) {
@@ -41,27 +42,27 @@ public class Player extends AbstractMovable{
 		this.xpPoints=xpPoints;
 	}
 
-	public void addItem(Resource res) {
-		if (this.inventory.containsKey(res)) {
-			this.inventory.put(res, this.inventory.get(res)+1);
+	public void addItem(Inventoriable product) {
+		if (this.inventory.containsKey(product)) {
+			this.inventory.put(product, this.inventory.get(product)+1);
 		}
 		else {
-			this.inventory.put(res, 1);
+			this.inventory.put(product, 1);
 		}
 	}
 	
-	public void removeItem(Resource res) {
-		if (this.inventory.containsKey(res)) {
-			if (this.inventory.get(res)<=1) {
-				this.inventory.remove(res);
+	public void removeItem(Inventoriable resources) {
+		if (this.inventory.containsKey(resources)) {
+			if (this.inventory.get(resources)<=1) {
+				this.inventory.remove(resources);
 			}
 			else {
-			this.inventory.put(res, this.inventory.get(res)-1);
+			this.inventory.put(resources, this.inventory.get(resources)-1);
 			}
 		}
 	}
 	
-	public Optional<Resource> getItem(String nom) {
+	public Optional<Inventoriable> getItem(String nom) {
 		Object[] inventoryTmp = this.inventory.keySet().toArray();
 		for (int i = 0; i < inventoryTmp.length; i++) {
 			Resource tmp = (Resource) inventoryTmp[i];
@@ -73,7 +74,7 @@ public class Player extends AbstractMovable{
 	}
 
 	
-	public ObservableMap<Resource, Integer> getInventory() {
+	public ObservableMap<Inventoriable, Integer> getInventory() {
 		return inventory;
 	}
 	
