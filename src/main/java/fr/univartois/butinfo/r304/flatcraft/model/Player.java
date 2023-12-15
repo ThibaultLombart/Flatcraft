@@ -18,6 +18,8 @@ public class Player extends AbstractMovable{
 	private IntegerProperty xpPoints;
 	
 	private ObservableMap<Inventoriable, Integer> inventory = FXCollections.observableHashMap();
+	
+	private Inventoriable wearItem;
 
 	
 	public Player(FlatcraftGame game, int x, int y, Sprite sprite) {
@@ -72,9 +74,29 @@ public class Player extends AbstractMovable{
 		}
 		return Optional.empty();
 	}
-
 	
-	public ObservableMap<Inventoriable, Integer> getInventory() {
+	
+    /**
+     * Donne l'attribut wearItem de cette instance de Player.
+     *
+     * @return L'attribut wearItem de cette instance de Player.
+     */
+    public Inventoriable getWearItem() {
+        return wearItem;
+    }
+
+    
+    /**
+     * Modifie l'attribut wearItem de cette instance de Player.
+     *
+     * @param wearItem La nouvelle valeur de l'attribut wearItem pour cette instance de Player.
+     */
+    public void setWearItem(Inventoriable wearItem) {
+        this.wearItem = wearItem;
+        this.setSprite(wearItem.getSprite());
+    }
+
+    public ObservableMap<Inventoriable, Integer> getInventory() {
 		return inventory;
 	}
 	
