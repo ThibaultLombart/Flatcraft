@@ -54,5 +54,7 @@ public interface Inventoriable {
      * @return
      */
     String getInternalName();
+    
+    int getQuantity();
 
 }

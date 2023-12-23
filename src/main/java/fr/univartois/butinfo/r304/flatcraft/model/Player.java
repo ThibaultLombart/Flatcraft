@@ -8,6 +8,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.movables.AbstractMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource3;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.MultipleResource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
@@ -55,12 +56,16 @@ public class Player extends AbstractMovable{
 	}
 
 	public void addItem(Inventoriable product) {
-		if (this.inventory.containsKey(product)) {
-			this.inventory.put(product, this.inventory.get(product)+1);
-		}
-		else {
-			this.inventory.put(product, 1);
-		}
+		Inventoriable actualProduct = product;
+		if (product instanceof MultipleResource) {
+	       actualProduct = ((MultipleResource) product).getResource();
+	    }
+
+	    if (this.inventory.containsKey(actualProduct)) {
+	        this.inventory.put(actualProduct, this.inventory.get(actualProduct) + product.getQuantity());
+	    } else {
+	        this.inventory.put(actualProduct, product.getQuantity());
+	    }
 	}
 	
 	public void removeItem(Inventoriable resources) {

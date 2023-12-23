@@ -37,6 +37,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.MultipleResource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
@@ -499,9 +500,12 @@ public final class FlatcraftGame {
             } else {
                 nomExterne = nomItemCraft;
             }
-            
-            
-            return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory));
+            if (quantite == 1 ) {
+            	return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory));
+            }
+            else {
+            	return new MultipleResource(new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory)),quantite);
+            }
         } else {
             controller.displayError("Erreur, Il n'existe pas de craft.");
             return null;
@@ -541,8 +545,7 @@ public final class FlatcraftGame {
                 nomExterne = nomItemCook;
             }
             
-            
-            return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory));
+            return (new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory)));
         } else {
             controller.displayError("Erreur, Il n'existe pas de cuisson pour cet item.");
             return null;
