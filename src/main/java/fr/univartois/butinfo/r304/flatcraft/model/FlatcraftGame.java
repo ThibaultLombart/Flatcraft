@@ -388,8 +388,10 @@ public final class FlatcraftGame {
         Cell target = next.get();
         // TODO Récupérer la ressource que le joueur a actuellement en main.
         Inventoriable inHand = null;
-        target.setResource(inHand);
-        // TODO Retirer la ressource de l'inventaire et de la main du joueur.
+        if (target.setResource(inHand)) {
+            // TODO Retirer la ressource de l'inventaire du joueur.
+            switchResource();
+        }
     }
 
     /**

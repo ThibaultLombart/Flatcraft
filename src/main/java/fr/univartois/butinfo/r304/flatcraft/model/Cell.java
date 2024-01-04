@@ -65,8 +65,10 @@ public interface Cell {
      * Modifie la ressource présente sur cette cellule sur la carte.
      *
      * @param resource La ressource à placer sur cette cellule.
+     *
+     * @return Si la ressource a pu être déposée.
      */
-    void setResource(Inventoriable resource);
+    boolean setResource(Inventoriable resource);
 
     /**
      * Donne la ressource présente sur cette cellule sur la carte.
