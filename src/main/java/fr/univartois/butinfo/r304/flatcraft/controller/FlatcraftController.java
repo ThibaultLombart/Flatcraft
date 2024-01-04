@@ -191,10 +191,10 @@ public final class FlatcraftController implements IFlatcraftController {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             KeyCode code = e.getCode();
             if (code.isArrowKey() && e.isAltDown()) {
-                dig(code);
+                pressKeyWithAlt(code);
 
             } else if (code.isArrowKey()) {
-                move(code);
+                pressKey(code);
             }
         });
 
@@ -311,13 +311,15 @@ public final class FlatcraftController implements IFlatcraftController {
     }
 
     /**
-     * Permet au joueur de se déplacer en utilisant une flèche directionnelle.
+     * Réagit à l'appui d'une touche unique sur le clavier.
      *
      * @param code Le code de la touche sur laquelle le joueur a appuyé.
      */
     @SuppressWarnings("incomplete-switch")
-    private void move(KeyCode code) {
+    private void pressKey(KeyCode code) {
         switch (code) {
+            case D -> game.dropResource();
+            case S -> game.switchResource();
             case UP -> game.moveUp();
             case DOWN -> game.moveDown();
             case LEFT -> game.moveLeft();
@@ -326,12 +328,12 @@ public final class FlatcraftController implements IFlatcraftController {
     }
 
     /**
-     * Permet au joueur de creuser en utilisant une flèche directionnelle.
+     * Réagit à l'appui simultanée sur une touche quelconque et la touche ALT du clavier.
      *
      * @param code Le code de la touche sur laquelle le joueur a appuyé.
      */
     @SuppressWarnings("incomplete-switch")
-    private void dig(KeyCode code) {
+    private void pressKeyWithAlt(KeyCode code) {
         switch (code) {
             case UP -> game.digUp();
             case DOWN -> game.digDown();

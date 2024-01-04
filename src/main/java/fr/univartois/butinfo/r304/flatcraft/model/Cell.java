@@ -16,6 +16,7 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model;
 
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.ObjectProperty;
@@ -59,6 +60,13 @@ public interface Cell {
      * @return La propriété contenant le sprite représentant cette cellule.
      */
     ObjectProperty<Sprite> getSpriteProperty();
+
+    /**
+     * Modifie la ressource présente sur cette cellule sur la carte.
+     *
+     * @param resource La ressource à placer sur cette cellule.
+     */
+    void setResource(Inventoriable resource);
 
     /**
      * Donne la ressource présente sur cette cellule sur la carte.
