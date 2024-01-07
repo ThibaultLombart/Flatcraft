@@ -114,4 +114,11 @@ public interface Cell {
     // TODO Remplacez le type de ce paramètre par le type correspondant à votre joueur.
     boolean dig(IMovable player);
 
+    /**
+     * Exécute l'action permise par la ressource contenue dans cette cellule.
+     * Cette méthode est sans effet si la cellule ne contient pas de ressource ou si la
+     * ressource ne propose pas d'action.
+     */
+    void execute();
+
 }

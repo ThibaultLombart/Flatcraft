@@ -132,6 +132,17 @@ public final class Resource implements Inventoriable {
     /*
      * (non-Javadoc)
      *
+     * @see fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable#execute()
+     */
+    @Override
+    public void execute() {
+        // On ne fait rien ici.
+        // Une ressource ne propose pas d'action par défaut.
+    }
+
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
