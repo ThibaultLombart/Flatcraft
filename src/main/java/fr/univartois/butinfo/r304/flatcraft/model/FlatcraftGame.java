@@ -409,4 +409,16 @@ public final class FlatcraftGame {
         // TODO Remplacer l'objet dans la main du joueur par inHand.
     }
 
+    /**
+     * Exécute l'action associée à la ressource située sur la cellule voisine de celle du
+     * joueur.
+     */
+    public void executeResource() {
+        Optional<Cell> next = getNextCellOf(player);
+        if (next.isPresent()) {
+            Cell cell = next.get();
+            cell.execute();
+        }
+    }
+
 }

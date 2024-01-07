@@ -320,6 +320,7 @@ public final class FlatcraftController implements IFlatcraftController {
         switch (code) {
             case D -> game.dropResource();
             case S -> game.switchResource();
+            case X -> game.executeResource();
             case UP -> game.moveUp();
             case DOWN -> game.moveDown();
             case LEFT -> game.moveLeft();
