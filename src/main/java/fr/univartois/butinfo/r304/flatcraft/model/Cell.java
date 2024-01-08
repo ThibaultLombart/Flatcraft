@@ -93,6 +93,15 @@ public interface Cell {
     void replaceBy(Cell cell);
 
     /**
+     * Vérifie si un objet mobile peut se trouver sur cette cellule.
+     *
+     * @param movable L'objet mobile.
+     *
+     * @return Si l'objet mobile peut se trouver sur cette cellule.
+     */
+    boolean accepts(IMovable movable);
+
+    /**
      * Déplace un objet mobile du jeu si cette cellule le permet.
      * Par exemple, si une cellule ne contient pas de ressource, l'objet peut "passer à
      * travers" cette cellule.

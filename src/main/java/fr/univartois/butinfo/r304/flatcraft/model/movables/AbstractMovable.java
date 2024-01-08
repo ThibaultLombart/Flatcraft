@@ -242,11 +242,17 @@ public abstract class AbstractMovable implements IMovable {
         // On met à jour la position de l'objet sur l'axe x.
         int limitMaxX = game.getWidth() - getWidth();
         double newX = updatePosition(xPosition.get(), horizontalSpeed, delta, 0, limitMaxX);
-        xPosition.set(newX);
 
         // On met à jour la position de l'objet sur l'axe y.
         int limitMaxY = game.getHeight() - getHeight();
         double newY = updatePosition(yPosition.get(), verticalSpeed, delta, 0, limitMaxY);
+
+        // On vérifie qu'il n'y a pas un obstacle.
+        if (!game.getCellAt((int) newX, (int) newY).accepts(this)) {
+            return false;
+        }
+
+        xPosition.set(newX);
         yPosition.set(newY);
 
         if ((newX == 0) || (newX == limitMaxX)) {

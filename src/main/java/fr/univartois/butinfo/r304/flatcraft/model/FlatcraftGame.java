@@ -311,10 +311,21 @@ public final class FlatcraftGame {
         // On commence par récupérer la position du centre de l'objet.
         int midX = movable.getX() + (movable.getWidth() / 2);
         int midY = movable.getY() + (movable.getHeight() / 2);
+        return getCellAt(midX, midY);
+    }
 
+    /**
+     * Donne la cellule à la position donnée sur la carte.
+     *
+     * @param x La position en x de la cellule.
+     * @param y La position en y de la cellule.
+     *
+     * @return La cellule à la position donnée.
+     */
+    public Cell getCellAt(int x, int y) {
         // On traduit cette position en position dans la carte.
-        int row = midY / spriteStore.getSpriteSize();
-        int column = midX / spriteStore.getSpriteSize();
+        int row = y / spriteStore.getSpriteSize();
+        int column = x / spriteStore.getSpriteSize();
 
         // On récupère enfin la cellule à cette position dans la carte.
         return map.getAt(row, column);
