@@ -506,7 +506,9 @@ public final class FlatcraftGame {
             else {
             	return new MultipleResource(new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory)),quantite);
             }
-        } else {
+
+            }
+         else {
             controller.displayError("Erreur, Il n'existe pas de craft.");
             return null;
         }
@@ -532,10 +534,9 @@ public final class FlatcraftGame {
                 nomItemCook = cookUnite.getProduct();
                 quantite = cookUnite.getQuantity();
                 break;
-            }
-                
-               
+            }        
         }
+        
         if (quantite != 0) {
             String nomExterne;
             Sprite spriteItem = MAPCOOKSPRITE.get(nomItemCook);
