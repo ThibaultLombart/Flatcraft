@@ -19,6 +19,8 @@ package fr.univartois.butinfo.r304.flatcraft.model.resources;
 import java.util.Objects;
 
 import fr.univartois.butinfo.r304.flatcraft.model.Cell;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatFuel;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.IResourceFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.IState;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
@@ -51,7 +53,7 @@ public final class Resource implements Inventoriable{
     
     private IResource hardness;
     
-    
+    private IResourceFuel fuel;
 
     /**
      * Crée une nouvelle instance de Resource.
@@ -62,10 +64,11 @@ public final class Resource implements Inventoriable{
      *
      * @throws IllegalArgumentException Si la valeur de {@code hardness} est négative.
      */
-    public Resource(IState state, ToolType toolType, IResource hardness) {
+    public Resource(IState state, ToolType toolType, IResource hardness, IResourceFuel fuel) {
         this.state = state;
         this.toolType = toolType;
         this.hardness = hardness;
+        this.fuel = fuel;
     }
     
     
@@ -163,6 +166,13 @@ public final class Resource implements Inventoriable{
         }
         return false;
     }
+
+
+
+
+	public IResourceFuel getFuel() {
+		return fuel;
+	}
 
 
 

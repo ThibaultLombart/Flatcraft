@@ -11,6 +11,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.MultipleResource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatNotFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
@@ -22,7 +23,7 @@ import javafx.collections.ObservableMap;
 
 public class Player extends AbstractMovable{
     
-    private static Inventoriable nothing = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("air"),"air"),ToolType.NO_TOOL,new EtatResourceUnbreakable(ChooseSprite.getChooseSprite()));
+    private static Inventoriable nothing = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("air"),"air"),ToolType.NO_TOOL,new EtatResourceUnbreakable(ChooseSprite.getChooseSprite()), new EtatNotFuel());
 
 	private IntegerProperty healthPoints;
 	

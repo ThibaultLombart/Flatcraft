@@ -8,6 +8,8 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource3;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatFuel;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatNotFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
@@ -62,28 +64,28 @@ public class ChooseSpriteNether implements CellFactory {
 		
         
         
-		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_crimson"),"Crimson"),ToolType.NO_TOOL,new EtatResource3(this)));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_crimson"),"Crimson"),ToolType.NO_TOOL,new EtatResource3(this), new EtatNotFuel()));
 		
 	}
 	@Override
 	public Cell createSubSoil(int i) {
 
 		if(i == 44) {
-			return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_bedrock"),"Bedrock"),ToolType.NO_TOOL,new EtatResourceUnbreakable(this)));
+			return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_bedrock"),"Bedrock"),ToolType.NO_TOOL,new EtatResourceUnbreakable(this), new EtatNotFuel()));
 		}
-		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_netherrack"),"Netherrack"),ToolType.MEDIUM_TOOL,new EtatResource3(this)));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_netherrack"),"Netherrack"),ToolType.MEDIUM_TOOL,new EtatResource3(this), new EtatNotFuel()));
 	}
 
 	@Override
 	public Cell createTrunk() {
 
-		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_crimson_wood"),"Crimson Wood"),ToolType.NO_TOOL,new EtatResource3(this)));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_crimson_wood"),"Crimson Wood"),ToolType.NO_TOOL,new EtatResource3(this), new EtatFuel()));
 	}
 	
 	@Override
 	public Cell createLeaves() {
 
-		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_nether_wart_block"),"Nether Wart Block"),ToolType.NO_TOOL,new EtatResource3(this)));
+		return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_nether_wart_block"),"Nether Wart Block"),ToolType.NO_TOOL,new EtatResource3(this), new EtatNotFuel()));
 	}
 
 }
