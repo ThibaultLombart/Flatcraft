@@ -2,22 +2,35 @@ package fr.univartois.butinfo.r304.flatcraft.model;
 
 import java.util.Objects;
 import java.util.Optional;
+
+import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSprite;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.AbstractMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource3;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.MultipleResource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
+import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
 public class Player extends AbstractMovable{
+    
+    private static Inventoriable nothing = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("air"),"air"),ToolType.NO_TOOL,new EtatResourceUnbreakable(ChooseSprite.getChooseSprite()));
 
 	private IntegerProperty healthPoints;
 	
 	private IntegerProperty xpPoints;
 	
 	private ObservableMap<Inventoriable, Integer> inventory = FXCollections.observableHashMap();
+	
+	private Inventoriable wearItem = nothing;
 
 	
 	public Player(FlatcraftGame game, int x, int y, Sprite sprite) {
@@ -43,12 +56,16 @@ public class Player extends AbstractMovable{
 	}
 
 	public void addItem(Inventoriable product) {
-		if (this.inventory.containsKey(product)) {
-			this.inventory.put(product, this.inventory.get(product)+1);
-		}
-		else {
-			this.inventory.put(product, 1);
-		}
+		Inventoriable actualProduct = product;
+		if (product instanceof MultipleResource) {
+	       actualProduct = ((MultipleResource) product).getResource();
+	    }
+
+	    if (this.inventory.containsKey(actualProduct)) {
+	        this.inventory.put(actualProduct, this.inventory.get(actualProduct) + product.getQuantity());
+	    } else {
+	        this.inventory.put(actualProduct, product.getQuantity());
+	    }
 	}
 	
 	public void removeItem(Inventoriable resources) {
@@ -72,9 +89,29 @@ public class Player extends AbstractMovable{
 		}
 		return Optional.empty();
 	}
-
 	
-	public ObservableMap<Inventoriable, Integer> getInventory() {
+	
+    /**
+     * Donne l'attribut wearItem de cette instance de Player.
+     *
+     * @return L'attribut wearItem de cette instance de Player.
+     */
+    public Inventoriable getWearItem() {
+        return wearItem;
+    }
+
+    
+    /**
+     * Modifie l'attribut wearItem de cette instance de Player.
+     *
+     * @param wearItem La nouvelle valeur de l'attribut wearItem pour cette instance de Player.
+     */
+    public void setWearItem(Inventoriable wearItem) {
+        this.wearItem = wearItem;
+        this.setSprite(wearItem.getSprite());
+    }
+
+    public ObservableMap<Inventoriable, Integer> getInventory() {
 		return inventory;
 	}
 	

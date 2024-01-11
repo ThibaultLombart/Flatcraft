@@ -13,7 +13,6 @@ public class EtatResourceUnbreakable implements IResource {
 
 	@Override
 	public IResource nouvelleDurete(Cell cellule) {
-
 		return this;
 	}
 

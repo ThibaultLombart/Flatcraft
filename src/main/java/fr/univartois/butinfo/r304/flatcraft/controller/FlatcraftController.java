@@ -26,8 +26,8 @@ import fr.univartois.butinfo.r304.flatcraft.model.IFlatcraftController;
 import fr.univartois.butinfo.r304.flatcraft.model.map.GameMap;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
+import fr.univartois.butinfo.r304.flatcraft.view.ResourceInInventoryWallon;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
-import fr.univartois.butinfo.r304.flatcraft.view.ResourceInInventory;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.MapChangeListener;
@@ -115,7 +115,7 @@ public final class FlatcraftController implements IFlatcraftController {
     /**
      * Les composants affichant les ressources actuellement dans l'inventaire du joueur.
      */
-    private Map<Inventoriable, ResourceInInventory> resourcesInInventory = new HashMap<>();
+    private Map<Inventoriable, ResourceInInventoryWallon> resourcesInInventory = new HashMap<>();
 
     /**
      * Associe à ce contrôleur la fenêtre dans laquelle se déroule le jeu.
@@ -278,7 +278,7 @@ public final class FlatcraftController implements IFlatcraftController {
         playerInventory.addListener((MapChangeListener<Inventoriable, Integer>) change -> {
             if (change.wasAdded() && !resourcesInInventory.containsKey(change.getKey())) {
                 // Il faut ajouter la ressource à l'affichage.
-                ResourceInInventory resource = new ResourceInInventory(change.getKey());
+            	ResourceInInventoryWallon resource = new ResourceInInventoryWallon(change.getKey());
                 resource.bind(Bindings.valueAt(playerInventory, change.getKey()));
                 resourcesInInventory.put(change.getKey(), resource);
                 dragResource(resource);
@@ -287,7 +287,7 @@ public final class FlatcraftController implements IFlatcraftController {
             } else if (change.wasRemoved() && (!change.wasAdded())
                     && (change.getValueRemoved() == 1)) {
                 // La ressource doit être retirée de l'affichage.
-                ResourceInInventory resource = resourcesInInventory.remove(change.getKey());
+            	ResourceInInventoryWallon resource = resourcesInInventory.remove(change.getKey());
                 inventory.getChildren().remove(resource.getNode());
             }
         });
@@ -390,7 +390,7 @@ public final class FlatcraftController implements IFlatcraftController {
      *
      * @param resource La ressource sur laquelle le glisser-déposer a été initié.
      */
-    private void dragResource(ResourceInInventory resource) {
+    private void dragResource(ResourceInInventoryWallon resource) {
         resource.getNode().setOnDragDetected(event -> {
             Dragboard dragboard = resource.getNode().startDragAndDrop(TransferMode.ANY);
             ClipboardContent content = new ClipboardContent();

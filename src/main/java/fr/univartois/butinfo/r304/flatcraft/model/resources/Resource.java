@@ -164,4 +164,12 @@ public final class Resource implements Inventoriable{
         return false;
     }
 
+
+
+	@Override
+	public int getQuantity() {
+		return 1;
+	}
+
+    
 }

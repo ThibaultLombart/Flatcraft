@@ -40,7 +40,7 @@ import javafx.scene.text.Font;
  *
  * @version 0.1.0
  */
-public final class ResourceInInventory {
+public final class ResourceInInventoryWallon {
 
     /**
      * La ressource stockée dans l'inventaire.
@@ -62,7 +62,7 @@ public final class ResourceInInventory {
      *
      * @param resource La ressource stockée dans l'inventaire.
      */
-    public ResourceInInventory(Inventoriable resource) {
+    public ResourceInInventoryWallon(Inventoriable resource) {
         this.resource = resource;
         this.count = new SimpleIntegerProperty(1);
         this.pane = new StackPane();

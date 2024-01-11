@@ -20,6 +20,7 @@ import java.util.Optional;
 
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.MultipleResource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -153,23 +154,39 @@ public final class CraftTableController {
         // On dépose la ressource au moment voulu.
         imageView.setOnDragDropped(event -> {
             Dragboard dragboard = event.getDragboard();
-            boolean success = false;
 
             if (dragboard.hasString() && dragboard.hasImage()) {
+                Optional<Inventoriable> optionalResource = this.game.getPlayer().getItem(dragboard.getString());
 
-            	
-                Optional<Inventoriable> resource = this.game.getPlayer().getItem(dragboard.getString());
-                if (resource.isPresent()) {
-                    resources[row][column] = resource.get();
+                if (optionalResource.isPresent()) {
+                    Inventoriable resource = optionalResource.get();
+
+                    // Si la ressource est un MultipleResource, ajoutez chaque élément séparément
+                    if (resource instanceof MultipleResource) {
+                        MultipleResource multipleResource = (MultipleResource) resource;
+                        for (int i = 0; i < multipleResource.getQuantity(); i++) {
+                            if (resources[row][column] == null) {
+                                Inventoriable innerResource = multipleResource.getResource();
+                                if (innerResource instanceof Resource) {
+                                    resources[row][column] = innerResource;
+                                }
+                            }
+                        }
+                    } else {
+                        if (resources[row][column] == null) {
+                            resources[row][column] = resource;
+                        }
+                    }
+
                     craftButton.setDisable(false);
                     clearButton.setDisable(false);
-                    success = true;
                 }
             }
 
-            event.setDropCompleted(success);
+            event.setDropCompleted(true);
             event.consume();
         });
+
 
         // On remet la vue dans son état d'origine après le survol.
         imageView.setOnDragExited(event -> {
@@ -206,7 +223,7 @@ public final class CraftTableController {
     private void craft() {
         // On crée la nouvelle ressource.
         product = game.craft(resources);
-
+        
         if (product != null) {
             // On affiche le produit obtenu.
             productView.setImage(product.getSprite().getImage());
@@ -225,7 +242,8 @@ public final class CraftTableController {
     @FXML
     private void addToInventory() {
     	this.game.getPlayer().addItem(product);
-        // Une fois la ressource ajoutée, il faut vider la table de craft.
+    	
+    	// Une fois la ressource ajoutée, il faut vider la table de craft.
         for (int i = 0; i < resources.length; i++) {
             for (int j = 0; j < resources[i].length; j++) {
                 resources[i][j] = null;
