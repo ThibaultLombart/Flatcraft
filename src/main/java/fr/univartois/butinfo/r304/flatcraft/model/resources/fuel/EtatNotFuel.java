@@ -1,11 +1,13 @@
 package fr.univartois.butinfo.r304.flatcraft.model.resources.fuel;
 
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
+
 public class EtatNotFuel implements IResourceFuel{
 
 	@Override
-	public boolean combustible() {
+	public Inventoriable combustible(Inventoriable ressource) {
 		// TODO Auto-generated method stub
-		return true;
+		return null;
 	}
 
 }
