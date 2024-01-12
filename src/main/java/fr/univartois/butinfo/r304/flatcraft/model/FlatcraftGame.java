@@ -35,9 +35,9 @@ import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.MultipleResource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
@@ -500,12 +500,9 @@ public final class FlatcraftGame {
             } else {
                 nomExterne = nomItemCraft;
             }
-            if (quantite == 1 ) {
-            	return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory));
-            }
-            else {
-            	return new MultipleResource(new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory)),quantite);
-            }
+            
+            
+            return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory), new EtatFuel());
         } else {
             controller.displayError("Erreur, Il n'existe pas de craft.");
             return null;
@@ -527,6 +524,12 @@ public final class FlatcraftGame {
         
         String nomItemCook = "";
         int quantite = 0;
+        
+        if (fuel.getFuel().combustible() == false) {
+        	controller.displayError("Erreur, Ce n'est pas un combustible.");
+            return null;
+		}
+        
         for(CraftAndFurnace cookUnite : furnace.getListCraft()) {
             if(cookUnite.getRule().equals(res)) {
                 nomItemCook = cookUnite.getProduct();
@@ -545,7 +548,8 @@ public final class FlatcraftGame {
                 nomExterne = nomItemCook;
             }
             
-            return (new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory)));
+            
+            return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory), new EtatFuel());
         } else {
             controller.displayError("Erreur, Il n'existe pas de cuisson pour cet item.");
             return null;
