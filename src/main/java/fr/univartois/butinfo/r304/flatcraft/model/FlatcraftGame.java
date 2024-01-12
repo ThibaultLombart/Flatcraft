@@ -525,11 +525,7 @@ public final class FlatcraftGame {
         String nomItemCook = "";
         int quantite = 0;
         
-        if (fuel.getFuel().combustible() == false) {
-        	controller.displayError("Erreur, Ce n'est pas un combustible.");
-            return null;
-		}
-        
+       
         for(CraftAndFurnace cookUnite : furnace.getListCraft()) {
             if(cookUnite.getRule().equals(res)) {
                 nomItemCook = cookUnite.getProduct();
@@ -549,7 +545,7 @@ public final class FlatcraftGame {
             }
             
             
-            return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory), new EtatFuel());
+            return fuel.getFuel().combustible(new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory), new EtatFuel()));
         } else {
             controller.displayError("Erreur, Il n'existe pas de cuisson pour cet item.");
             return null;
