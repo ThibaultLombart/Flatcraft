@@ -17,6 +17,7 @@
 package fr.univartois.butinfo.r304.flatcraft.model;
 
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.ObjectProperty;
@@ -62,6 +63,15 @@ public interface Cell {
     ObjectProperty<Sprite> getSpriteProperty();
 
     /**
+     * Modifie la ressource présente sur cette cellule sur la carte.
+     *
+     * @param resource La ressource à placer sur cette cellule.
+     *
+     * @return Si la ressource a pu être déposée.
+     */
+    boolean setResource(Inventoriable resource);
+
+    /**
      * Donne la ressource présente sur cette cellule sur la carte.
      *
      * @return La ressource présente sur cette cellule sur la carte.
@@ -84,6 +94,15 @@ public interface Cell {
     void replaceBy(Cell cell);
 
     /**
+     * Vérifie si un objet mobile peut se trouver sur cette cellule.
+     *
+     * @param movable L'objet mobile.
+     *
+     * @return Si l'objet mobile peut se trouver sur cette cellule.
+     */
+    boolean accepts(IMovable movable);
+
+    /**
      * Déplace un objet mobile du jeu si cette cellule le permet.
      * Par exemple, si une cellule ne contient pas de ressource, l'objet peut "passer à
      * travers" cette cellule.
@@ -104,5 +123,12 @@ public interface Cell {
      */
     boolean dig(Player player);
 
+
+    /**
+     * Exécute l'action permise par la ressource contenue dans cette cellule.
+     * Cette méthode est sans effet si la cellule ne contient pas de ressource ou si la
+     * ressource ne propose pas d'action.
+     */
+    void execute();
 
 }
