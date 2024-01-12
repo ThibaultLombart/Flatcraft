@@ -49,4 +49,15 @@ public class MultipleResource implements Inventoriable {
 		return resource.getFuel();
 	}
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable#execute()
+     */
+    @Override
+    public void execute() {
+        // TODO Auto-generated method stub.
+        
+    }
+
 }

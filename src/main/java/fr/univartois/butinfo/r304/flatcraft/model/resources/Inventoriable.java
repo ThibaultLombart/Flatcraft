@@ -59,4 +59,11 @@ public interface Inventoriable {
 	int getQuantity();
 	
 	IResourceFuel getFuel();
+	
+	/**
+     * Exécute l'action permise par cet élément.
+     * Cette méthode est sans effet sur les ressources qui ne proposent pas d'action.
+     */
+    void execute();
+
 }
