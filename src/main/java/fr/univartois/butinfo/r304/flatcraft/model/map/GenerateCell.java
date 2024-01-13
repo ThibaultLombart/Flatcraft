@@ -62,7 +62,9 @@ public class GenerateCell extends AbstractCell{
      */
     @Override
     public boolean accepts(IMovable movable) {
-        // TODO Auto-generated method stub.
+        if(this.getResource() == null) {
+        	return true;
+        }
         return false;
     }
 
