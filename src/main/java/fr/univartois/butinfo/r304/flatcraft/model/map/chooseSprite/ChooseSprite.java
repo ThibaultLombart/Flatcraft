@@ -91,11 +91,11 @@ public class ChooseSprite implements CellFactory {
 		if(i > 40) {
 			chance = r.nextInt(150);
 			if(chance < 2) {
-				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_diamond"),"Diamond Ore"),ToolType.MEDIUM_TOOL,new EtatResource4(this), new EtatNotFuel()));
+				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_diamond"),"Diamond"),ToolType.MEDIUM_TOOL,new EtatResource4(this), new EtatNotFuel()));
 			} else if (chance < 10){
-				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_gold"),"Gold Ore"),ToolType.MEDIUM_TOOL,new EtatResource3(this), new EtatNotFuel()));
+				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_gold"),"Gold Lump"),ToolType.MEDIUM_TOOL,new EtatResource3(this), new EtatNotFuel()));
 			} else if (chance < 15){
-				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_iron"),"Iron Ore"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
+				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_iron"),"Iron Lump"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
 			} else {
 				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_stone"),"Stone"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
 			}
@@ -103,11 +103,11 @@ public class ChooseSprite implements CellFactory {
 		if(i > 30) {
 			chance = r.nextInt(150);
 			if (chance < 2){
-				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_gold"),"Gold Ore"),ToolType.MEDIUM_TOOL,new EtatResource3(this), new EtatNotFuel()));
+				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_gold"),"Gold Lump"),ToolType.MEDIUM_TOOL,new EtatResource3(this), new EtatNotFuel()));
 			} else if (chance < 5){
-				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_iron"),"Iron Ore"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
+				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_iron"),"Iron Lump"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
 			}else if (chance < 15){
-				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_coal"),"Coal Ore"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
+				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_coal"),"Coal Lump"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatFuel()));
 			} else {
 				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_stone"),"Stone"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
 			}
@@ -116,7 +116,7 @@ public class ChooseSprite implements CellFactory {
 		if(i > 27) {
 			chance = r.nextInt(150);
 			if (chance < 15){
-				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_coal"),"Coal Ore"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
+				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_coal"),"Coal Ore"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatFuel()));
 			} else {
 				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_stone"),"Stone"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
 			}

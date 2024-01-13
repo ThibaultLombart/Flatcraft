@@ -2,8 +2,10 @@ package fr.univartois.butinfo.r304.flatcraft.model.map;
 
 import fr.univartois.butinfo.r304.flatcraft.model.Player;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
 public class GenerateCell extends AbstractCell{
@@ -51,7 +53,11 @@ public class GenerateCell extends AbstractCell{
      */
     @Override
     public boolean setResource(Inventoriable resource) {
-        // TODO Auto-generated method stub.
+    	if(this.getResource() == null && !(resource.getHardness() instanceof EtatResourceUnbreakable) ) {
+    		Resource resourceNew = new Resource(new ResourceOnMap(resource.getSprite(),resource.getName()),resource.getToolType(),resource.getHardness(),resource.getFuel());
+    		this.replaceBy(new GenerateCell(resourceNew));
+        	return true;
+        }
         return false;
     }
 

@@ -60,6 +60,8 @@ public interface Inventoriable {
 	
 	IResourceFuel getFuel();
 	
+	IResource getHardness();
+	
 	/**
      * Exécute l'action permise par cet élément.
      * Cette méthode est sans effet sur les ressources qui ne proposent pas d'action.

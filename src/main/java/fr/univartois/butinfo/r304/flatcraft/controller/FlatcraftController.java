@@ -194,7 +194,7 @@ public final class FlatcraftController implements IFlatcraftController {
             if (code.isArrowKey() && e.isAltDown()) {
                 pressKeyWithAlt(code);
 
-            } else if (code.isArrowKey()) {
+            } else {
                 pressKey(code);
             }
         });
