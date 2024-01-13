@@ -34,13 +34,18 @@ import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftFurnaceObject;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.RuleParser;
 import fr.univartois.butinfo.r304.flatcraft.model.map.GameMap;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
+import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSprite;
 import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSpriteEnd;
 import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSpriteNether;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource2;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.IResource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatFuel;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatNotFuel;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.IResourceFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
@@ -163,6 +168,20 @@ public final class FlatcraftGame {
             "steelpick","Steel Pickaxe",
             "netherportal","Nether Portal",
             "endportal","End Portal");
+    
+    private static final Map<String, ToolType> MAPCRAFTTOOLTYPE = Map.of("woodpick",ToolType.MEDIUM_TOOL,
+            "woodaxe",ToolType.MEDIUM_TOOL,
+            "stonepick",ToolType.HARD_TOOL,
+            "stoneaxe",ToolType.HARD_TOOL,
+            "steelpick",ToolType.HARD_TOOL);
+    
+    private final Map<String, IResource> MAPCRAFTHARDNESS = Map.of("wood",new EtatResource2(cellFactory));
+    
+    private final Map<String, IResourceFuel> MAPCRAFTFUEL = Map.of("wood",new EtatFuel(),
+    			"stick",new EtatFuel(),
+    			"woodpick",new EtatFuel(),
+    			"woodaxe",new EtatFuel());
+    
    
     private static final Map<String, Sprite> MAPCOOKSPRITE = Map.of("gold_lingot",SpriteStore.getSpriteStore().getSprite("default_gold_ingot"),
             "steel_lingot",SpriteStore.getSpriteStore().getSprite("default_steel_ingot"),
@@ -246,6 +265,7 @@ public final class FlatcraftGame {
         movableObjects.add(player);
         controller.addMovable(player);
         
+        
         /*
          *  MOBS
          * 
@@ -288,6 +308,10 @@ public final class FlatcraftGame {
         
         // On démarre l'animation du jeu.
         animation.start();
+        
+        Inventoriable woodpick = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("default_tool_woodpick"),"woodpick"),ToolType.MEDIUM_TOOL,new EtatResourceUnbreakable(ChooseSprite.getChooseSprite()), new EtatNotFuel());
+        player.setWearItem(woodpick);
+        player.addItem(woodpick);
     }
 
     public GameMap getMap() {
@@ -554,16 +578,29 @@ public final class FlatcraftGame {
             
         if (quantite != 0) {
             Sprite spriteItem;
-            String nomExterne;
+            String nomExterne = nomItemCraft;
+            ToolType toolType = ToolType.NO_TOOL;
             spriteItem = MAPCRAFTSPRITE.get(nomItemCraft);
+            
             if(MAPCRAFTNAME.containsKey(nomItemCraft)) {
                 nomExterne = MAPCRAFTNAME.get(nomItemCraft);
-            } else {
-                nomExterne = nomItemCraft;
             }
             
+            if(MAPCRAFTTOOLTYPE.containsKey(nomItemCraft)) {
+            	toolType = MAPCRAFTTOOLTYPE.get(nomItemCraft);
+            }
             
-            return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory), new EtatFuel());
+            IResource hardness = new EtatResourceUnbreakable(cellFactory);
+            if(MAPCRAFTHARDNESS.containsKey(nomItemCraft)) {
+            	hardness = MAPCRAFTHARDNESS.get(nomItemCraft);
+            }
+            
+            IResourceFuel fuel = new EtatNotFuel();
+            if(MAPCRAFTFUEL.containsKey(nomItemCraft)) {
+            	fuel = MAPCRAFTFUEL.get(nomItemCraft);
+            }
+            
+            return new Resource(new ResourceInInventory(spriteItem,nomExterne),toolType,hardness, fuel);
         } else {
             controller.displayError("Erreur, Il n'existe pas de craft.");
             return null;
@@ -582,6 +619,7 @@ public final class FlatcraftGame {
     public Inventoriable cook(Inventoriable fuel, Inventoriable resource) {
         
         String res = resource.getInternalName();
+        System.out.println(res);
         
         String nomItemCook = "";
         int quantite = 0;
@@ -622,6 +660,7 @@ public final class FlatcraftGame {
     public void dropResource() {
         // On commence par rechercher la cellule voisine de celle du joueur, si elle
         // existe.
+    	System.out.println("DDD");
         Optional<Cell> next = getNextCellOf(player);
         if (next.isEmpty()) {
             return;
@@ -629,10 +668,9 @@ public final class FlatcraftGame {
 
         // Le dépôt ne peut fonctionner que si la cellule ne contient pas de ressource.
         Cell target = next.get();
-        // TODO Récupérer la ressource que le joueur a actuellement en main.
-        Inventoriable inHand = null;
+        Inventoriable inHand = player.getWearItem();
         if (target.setResource(inHand)) {
-            // TODO Retirer la ressource de l'inventaire du joueur.
+            player.removeItem(inHand);
             switchResource();
         }
     }
@@ -642,14 +680,14 @@ public final class FlatcraftGame {
      * C'est la prochaine ressource dans l'inventaire qui est choisie.
      */
     public void switchResource() {
+    	System.out.println("PRINT S");
         if ((inventoryIterator == null) || (!inventoryIterator.hasNext())) {
-            // TODO Récupérer l'inventaire du joueur.
-            ObservableMap<Inventoriable, Integer> inventory = null;
+            ObservableMap<Inventoriable, Integer> inventory = player.getInventory();
             inventoryIterator = inventory.keySet().iterator();
         }
 
         Inventoriable inHand = inventoryIterator.next();
-        // TODO Remplacer l'objet dans la main du joueur par inHand.
+        player.setWearItem(inHand);
     }
 
     /**

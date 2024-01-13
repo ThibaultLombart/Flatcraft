@@ -60,4 +60,9 @@ public class MultipleResource implements Inventoriable {
         
     }
 
+	@Override
+	public IResource getHardness() {
+		return resource.getHardness();
+	}
+
 }
