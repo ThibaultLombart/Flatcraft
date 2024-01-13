@@ -75,7 +75,7 @@ public final class Flatcraft extends Application {
     	
     	int typeTerrils = r.nextInt(10);
     	int typeArbre = r.nextInt(3,9);
-    	int nbArbre = r.nextInt(5,6);
+    	int nbArbre = r.nextInt(50,150);
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/flatcraft.fxml"));
         Parent viewContent = fxmlLoader.load();

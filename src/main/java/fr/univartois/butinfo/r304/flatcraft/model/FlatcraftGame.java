@@ -256,6 +256,8 @@ public final class FlatcraftGame {
          * 
          */
         
+        controller.bindLeftAnchor(leftAnchor);
+        
         
 
         controller.bindTime(this.time);
@@ -307,8 +309,8 @@ public final class FlatcraftGame {
      * @return La carte du jeu créée.
      */
     private GameMap createMap(CellFactory cellFactory2) {
-        int hauteur = this.height / 16;
-        int largeur = this.width / 16;
+        int hauteur = getHeight() / 16;
+        int largeur = getWidth() / 16;
         
         return generate.createMapGen(hauteur, largeur, cellFactory);
         
