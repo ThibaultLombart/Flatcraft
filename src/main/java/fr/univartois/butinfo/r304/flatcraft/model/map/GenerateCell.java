@@ -1,21 +1,28 @@
 package fr.univartois.butinfo.r304.flatcraft.model.map;
 
+import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.Player;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Portal;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.PortalType;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
 public class GenerateCell extends AbstractCell{
-
+	
+	private Portal portal;
+	
 	public GenerateCell(int row, int column) {
 		super(row, column);
+
 	}
 
 	public GenerateCell(Resource resource) {
 		super(resource);
+
 	}
 
 	public GenerateCell(Sprite sprite) {
@@ -74,14 +81,27 @@ public class GenerateCell extends AbstractCell{
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.Cell#execute()
-     */
     @Override
-    public void execute() {
-        // TODO Auto-generated method stub.
-        
+    public void execute(FlatcraftGame game) {
+    	if (this.hasPortal()) {
+            game.changeDimension(this.portal.getPortalType());
+    	}
+    }
+
+	public Portal getPortal() {
+		return portal;
+	}
+
+	public void setPortal(Portal portal) {
+		this.portal = portal;
+	}
+    
+    public boolean hasPortal() {
+    	if (portal != null) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
     }
 }

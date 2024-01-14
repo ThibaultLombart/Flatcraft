@@ -129,6 +129,6 @@ public interface Cell {
      * Cette méthode est sans effet si la cellule ne contient pas de ressource ou si la
      * ressource ne propose pas d'action.
      */
-    void execute();
+    void execute(FlatcraftGame game);
 
 }

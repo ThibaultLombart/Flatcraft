@@ -33,12 +33,14 @@ import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftAndFurnace;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftFurnaceObject;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.RuleParser;
 import fr.univartois.butinfo.r304.flatcraft.model.map.GameMap;
+import fr.univartois.butinfo.r304.flatcraft.model.map.GenerateCell;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
 import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSprite;
 import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSpriteEnd;
 import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSpriteNether;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource2;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource5;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.IResource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
@@ -49,6 +51,8 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.IResourceFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.MultipleResource;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Portal;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.PortalType;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
@@ -247,20 +251,23 @@ public final class FlatcraftGame {
      * Prépare la partie de Flatcraft avant qu'elle ne démarre.
      */
     public void prepare(){
+        
+        ChooseSpriteEnd spriteEnd = ChooseSpriteEnd.getChooseSpriteEnd();
+        spriteEnd.setSpriteStore(spriteStore);
+        ChooseSpriteNether spriteNether = ChooseSpriteNether.getChooseSpriteNether();
+        spriteNether.setSpriteStore(spriteStore);
+        
         GameMap overworld = createMap(cellFactory);
-    	GameMap end = createMap(ChooseSpriteEnd.getChooseSpriteEnd());
-    	GameMap nether = createMap(ChooseSpriteNether.getChooseSpriteNether());
-    	
-    
-    	// On crée la carte du jeu.
-        setMap(overworld);
-        
-        controller.prepare(getMap());
-        
-        worldList.add(overworld);
+    	GameMap end = createMap(spriteEnd);
+    	GameMap nether = createMap(spriteNether);
+    	worldList.add(overworld);
         worldList.add(end);
         worldList.add(nether);
-       
+        
+    	// On crée la carte du jeu.
+        setMap(worldList.get(0));
+        
+        controller.prepare(getMap());
 
         player = new Player(this, 0, 19*16, spriteStore.getSprite("player"));
         movableObjects.add(player);
@@ -311,8 +318,12 @@ public final class FlatcraftGame {
         animation.start();
         
         Inventoriable woodpick = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("default_tool_woodpick"),"woodpick"),ToolType.MEDIUM_TOOL,new EtatResourceUnbreakable(ChooseSprite.getChooseSprite()), new EtatNotFuel());
+        Inventoriable portal = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("default_netherportal"), "netherportal"),ToolType.NO_TOOL,new EtatResource5(ChooseSprite.getChooseSprite()),new EtatNotFuel());
+        Inventoriable portal2 = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("default_endportal"), "endportal"),ToolType.NO_TOOL,new EtatResource5(ChooseSprite.getChooseSprite()),new EtatNotFuel());
         player.setWearItem(woodpick);
         player.addItem(woodpick);
+        player.addItem(portal);
+        player.addItem(portal2);
     }
 
     public GameMap getMap() {
@@ -336,7 +347,7 @@ public final class FlatcraftGame {
     private GameMap createMap(CellFactory cellFactory2) {
         int hauteur = getHeight() / 16;
         int largeur = getWidth() / 16;
-        
+        cellFactory = cellFactory2;
         return generate.createMapGen(hauteur, largeur, cellFactory);
         
         
@@ -390,6 +401,7 @@ public final class FlatcraftGame {
      */
     private void move(IMovable movable) {
         // On applique la gravité.
+    	
         Cell currentCell = getCellOf(movable);
         for (int row = currentCell.getRow() + 1; row < getMap().getHeight(); row++) {
             Cell below = getMap().getAt(row, currentCell.getColumn());
@@ -629,7 +641,6 @@ public final class FlatcraftGame {
         String nomItemCook = "";
         int quantite = 0;
         
-       
         for(CraftAndFurnace cookUnite : furnace.getListCraft()) {
             if(cookUnite.getRule().equals(res)) {
                 nomItemCook = cookUnite.getProduct();
@@ -658,26 +669,46 @@ public final class FlatcraftGame {
 	private void setMap(GameMap map) {
 		this.map = map;
 	}
+	
+	public void changeDimension(PortalType portalType) {
+	    switch (portalType) {
+	        case END:
+	        	System.out.println("end");
+	            setMap(worldList.get(1));
+	            break;
+	        case NETHER:
+	        	System.out.println("nether");
+	            setMap(worldList.get(2)); 
+	            break;
+	    }
+	    controller.prepare(getMap());
+	}
+	
     /**
      * Dépose sur la carte la ressource que le joueur a actuellement en main.
      */
-    public void dropResource() {
-        // On commence par rechercher la cellule voisine de celle du joueur, si elle
-        // existe.
-    	System.out.println("DDD");
-        Optional<Cell> next = getNextCellOf(player);
-        if (next.isEmpty()) {
-            return;
-        }
+	public void dropResource() {
+	    Optional<Cell> next = getNextCellOf(player);
+	    if (next.isEmpty()) {
+	        return;
+	    }
 
-        // Le dépôt ne peut fonctionner que si la cellule ne contient pas de ressource.
-        Cell target = next.get();
-        Inventoriable inHand = player.getWearItem();
-        if (target.setResource(inHand)) {
-            player.removeItem(inHand);
-            switchResource();
-        }
-    }
+	    Cell target = next.get();
+	    
+	    Inventoriable inHand = player.getWearItem();
+	    if ((inHand.getName().equals("endportal") || inHand.getName().equals("netherportal")) && target.setResource(inHand)) {
+	        PortalType portalType = inHand.getName().equals("endportal") ? PortalType.END : PortalType.NETHER;
+	        GenerateCell portalCell = (GenerateCell) target;
+	        portalCell.setPortal(new Portal(portalCell, portalType));
+	        player.removeItem(inHand);
+	        switchResource();
+	    }
+	    if (target.setResource(inHand)) {
+	        player.removeItem(inHand);
+	        switchResource();
+	    }
+	    
+	}
 
     /**
      * Modifie la ressource que l'utilisateur a actuellement en main.
@@ -702,7 +733,7 @@ public final class FlatcraftGame {
         Optional<Cell> next = getNextCellOf(player);
         if (next.isPresent()) {
             Cell cell = next.get();
-            cell.execute();
+            cell.execute(this);
         }
     }
 
