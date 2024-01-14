@@ -42,7 +42,7 @@ public class GenerateCell extends AbstractCell{
 	@Override
 	public boolean dig(Player player) {
 		Resource resource = this.getResource();
-		if(resource != null && 1 > (resource.getToolType().compareTo(player.getWearItem().getToolType()))) {
+		if(resource != null && 1 > (resource.getToolType().compareTo(player.getWearItem().getToolType())) && player.getWearItem().getHardness() instanceof EtatResourceUnbreakable) {
 			resource.dig(this);
 			this.move(player);
 			return resource.getHardness().ajoutInventaire(player, resource);
