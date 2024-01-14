@@ -246,7 +246,7 @@ public final class FlatcraftGame {
     public void setGenerate(IGenerate generate) {
         this.generate = generate;
     }
-
+    
     /**
      * Prépare la partie de Flatcraft avant qu'elle ne démarre.
      */
@@ -265,7 +265,7 @@ public final class FlatcraftGame {
         worldList.add(nether);
         
     	// On crée la carte du jeu.
-        setMap(worldList.get(0));
+        setMap(worldList.get(0),cellFactory);
         
         controller.prepare(getMap());
 
@@ -347,8 +347,7 @@ public final class FlatcraftGame {
     private GameMap createMap(CellFactory cellFactory2) {
         int hauteur = getHeight() / 16;
         int largeur = getWidth() / 16;
-        cellFactory = cellFactory2;
-        return generate.createMapGen(hauteur, largeur, cellFactory);
+        return generate.createMapGen(hauteur, largeur, cellFactory2);
         
         
     }
@@ -666,19 +665,20 @@ public final class FlatcraftGame {
         }
     }
 
-	private void setMap(GameMap map) {
+	private void setMap(GameMap map, CellFactory cellFactory2) {
 		this.map = map;
+		this.cellFactory = cellFactory2;
 	}
 	
 	public void changeDimension(PortalType portalType) {
 	    switch (portalType) {
 	        case END:
 	        	System.out.println("end");
-	            setMap(worldList.get(1));
+	            setMap(worldList.get(1),ChooseSpriteEnd.getChooseSpriteEnd());
 	            break;
 	        case NETHER:
 	        	System.out.println("nether");
-	            setMap(worldList.get(2)); 
+	            setMap(worldList.get(2),ChooseSpriteNether.getChooseSpriteNether()); 
 	            break;
 	    }
 	    controller.prepare(getMap());
@@ -696,14 +696,12 @@ public final class FlatcraftGame {
 	    Cell target = next.get();
 	    
 	    Inventoriable inHand = player.getWearItem();
-	    if ((inHand.getName().equals("endportal") || inHand.getName().equals("netherportal")) && target.setResource(inHand)) {
-	        PortalType portalType = inHand.getName().equals("endportal") ? PortalType.END : PortalType.NETHER;
-	        GenerateCell portalCell = (GenerateCell) target;
-	        portalCell.setPortal(new Portal(portalCell, portalType));
-	        player.removeItem(inHand);
-	        switchResource();
-	    }
 	    if (target.setResource(inHand)) {
+	    	if ((inHand.getName().equals("endportal") || inHand.getName().equals("netherportal"))) {
+		        PortalType portalType = inHand.getName().equals("endportal") ? PortalType.END : PortalType.NETHER;
+		        GenerateCell portalCell = (GenerateCell) target;
+		        portalCell.setPortal(new Portal(portalCell, portalType));
+		    }
 	        player.removeItem(inHand);
 	        switchResource();
 	    }
@@ -715,14 +713,16 @@ public final class FlatcraftGame {
      * C'est la prochaine ressource dans l'inventaire qui est choisie.
      */
     public void switchResource() {
-    	System.out.println("PRINT S");
         if ((inventoryIterator == null) || (!inventoryIterator.hasNext())) {
-            ObservableMap<Inventoriable, Integer> inventory = player.getInventory();
-            inventoryIterator = inventory.keySet().iterator();
+        	inventoryIterator = copyInventoryKeys().iterator();
         }
 
         Inventoriable inHand = inventoryIterator.next();
         player.setWearItem(inHand);
+    }
+    
+    private List<Inventoriable> copyInventoryKeys() {
+        return new ArrayList<>(player.getInventory().keySet());
     }
 
     /**
