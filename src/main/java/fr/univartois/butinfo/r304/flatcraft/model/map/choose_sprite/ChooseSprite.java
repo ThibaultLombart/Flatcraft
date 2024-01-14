@@ -17,6 +17,13 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatNotFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.state_inventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
+/**
+ * Le type ChooseSprite
+ *
+ * @author thibault
+ *
+ * @version 0.1.0
+ */
 public class ChooseSprite implements CellFactory {
 	
 	/**
@@ -29,8 +36,17 @@ public class ChooseSprite implements CellFactory {
 	 */
 	private static ChooseSprite chooseSprite;
 	
+	/**
+	 * L'attribut STONE...
+	 */
 	public static final String STONE = "Stone";
+	/**
+	 * L'attribut STONE_DEFAULT...
+	 */
 	public static final String STONE_DEFAULT = "default_stone";
+	/**
+	 * L'attribut RANDOM...
+	 */
 	public static final Random RANDOM = new Random();
 	
 	

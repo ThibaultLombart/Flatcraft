@@ -57,7 +57,10 @@ public final class Flatcraft extends Application {
      */
     private static final int GAME_HEIGHT = 720;
     
-    private static final Random r = new Random();
+    /**
+     * L'attribut RANDOM...
+     */
+    private static final Random RANDOM = new Random();
     /**
      * Le nombre de fois que la carte se "répète" horizontalement.
      * Cela permet d'avoir une carte plus grande que la fenêtre.
@@ -73,9 +76,9 @@ public final class Flatcraft extends Application {
     public void start(Stage stage) throws IOException {
         // On commence par charger la vue et son contrôleur.
     	
-    	int typeTerrils = r.nextInt(10);
-    	int typeArbre = r.nextInt(3,9);
-    	int nbArbre = r.nextInt(50,150);
+    	int typeTerrils = RANDOM.nextInt(10);
+    	int typeArbre = RANDOM.nextInt(3,9);
+    	int nbArbre = RANDOM.nextInt(50,150);
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/flatcraft.fxml"));
         Parent viewContent = fxmlLoader.load();

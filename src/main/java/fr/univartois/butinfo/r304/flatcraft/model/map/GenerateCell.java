@@ -10,20 +10,43 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.state_inventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
+/**
+ * Le type GenerateCell
+ *
+ * @author Thibault
+ *
+ * @version 0.1.0
+ */
 public class GenerateCell extends AbstractCell{
 	
+	/**
+	 * L'attribut portal...
+	 */
 	private Portal portal;
 	
+	/**
+	 * Crée une nouvelle instance de GenerateCell.
+	 * @param row ligne
+	 * @param column colonne
+	 */
 	public GenerateCell(int row, int column) {
 		super(row, column);
 
 	}
 
+	/**
+	 * Crée une nouvelle instance de GenerateCell.
+	 * @param resource resource
+	 */
 	public GenerateCell(Resource resource) {
 		super(resource);
 
 	}
 
+	/**
+	 * Crée une nouvelle instance de GenerateCell.
+	 * @param sprite sprite
+	 */
 	public GenerateCell(Sprite sprite) {
 		super(sprite);
 	}
@@ -87,14 +110,23 @@ public class GenerateCell extends AbstractCell{
     	}
     }
 
+	/**
+	 * @return portail
+	 */
 	public Portal getPortal() {
 		return portal;
 	}
 
+	/**
+	 * @param portal set portail
+	 */
 	public void setPortal(Portal portal) {
 		this.portal = portal;
 	}
     
+    /**
+     * @return verifie si portail
+     */
     public boolean hasPortal() {
     	return portal != null;
     }

@@ -31,6 +31,9 @@ public class ResourceOnMap implements IState {
             SpriteStore.getSpriteStore().getSprite("default_mineral_mese"),SpriteStore.getSpriteStore().getSprite("default_mese_crystal_fragment"),
             SpriteStore.getSpriteStore().getSprite("default_stone"),SpriteStore.getSpriteStore().getSprite("default_cobble"));
     
+    /**
+     * L'attribut NEXTSTRING...
+     */
     private static final Map<String, String> NEXTSTRING = Map.of("Copper Ore", "Copper Lump",
             "Iron Ore", "Steel Lump",
             "Coal Ore", "Coal Lump",

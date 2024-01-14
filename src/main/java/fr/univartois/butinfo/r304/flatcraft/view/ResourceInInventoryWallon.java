@@ -33,7 +33,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
- * La classe {@link ResourceInInventory} permet de représenter une ressource stockée dans
+ * La classe {@link ResourceInInventoryWallon} permet de représenter une ressource stockée dans
  * l'inventaire du joueur et affichée sur l'interface graphique.
  *
  * @author Romain Wallon

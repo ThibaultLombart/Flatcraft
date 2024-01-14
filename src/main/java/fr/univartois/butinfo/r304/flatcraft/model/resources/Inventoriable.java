@@ -52,14 +52,23 @@ public interface Inventoriable {
     ToolType getToolType();
 
     /**
-     * @return
+     * @return internal name
      */
     String getInternalName();
 
+	/**
+	 * @return quantity
+	 */
 	int getQuantity();
 	
+	/**
+	 * @return fuel
+	 */
 	IResourceFuel getFuel();
 	
+	/**
+	 * @return hardness
+	 */
 	IResource getHardness();
 	
 	/**

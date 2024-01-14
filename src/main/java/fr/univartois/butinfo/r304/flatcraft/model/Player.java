@@ -13,39 +13,82 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
+/**
+ * La classe Player
+ *
+ * @author Thibault Lombart
+ *
+ * @version 0.1.0
+ */
 public class Player extends AbstractMovable{
     
+	/**
+	 * L'attribut Points de vie
+	 */
 	private IntegerProperty healthPoints;
 	
+	/**
+	 * L'attribut Points d'xp
+	 */
 	private IntegerProperty xpPoints;
 	
+	/**
+	 * L'attribut Inventaire
+	 */
 	private ObservableMap<Inventoriable, Integer> inventory = FXCollections.observableHashMap();
 	
+	/**
+	 * L'attribut Item porté dans la main
+	 */
 	private Inventoriable wearItem;
 
 	
+	/**
+	 * Crée une nouvelle instance de Player.
+	 * @param game jeu
+	 * @param x position x
+	 * @param y position y
+	 * @param sprite sprite
+	 */
 	public Player(FlatcraftGame game, int x, int y, Sprite sprite) {
 		super(game,x,y,sprite);
 		this.healthPoints = new SimpleIntegerProperty(20);
 		this.xpPoints = new SimpleIntegerProperty(0);
 	}
 
+	/**
+	 * @return points de vie
+	 */
 	public IntegerProperty getHealthPoints() {
 		return healthPoints;
 	}
 
+	/**
+	 * @param healthPoints points de vie
+	 */
 	public void setHealthPoints(IntegerProperty healthPoints) {
 		this.healthPoints=healthPoints;
 	}
 
+	/**
+	 * @return xp
+	 */
 	public IntegerProperty getXpPoints() {
 		return xpPoints;
 	}
 
+	/**
+	 * @param xpPoints xp
+	 */
 	public void setXpPoints(IntegerProperty xpPoints) {
 		this.xpPoints=xpPoints;
 	}
 
+	/**
+	 * Ajouter un item dans l'inventaire
+	 * 
+	 * @param product item
+	 */
 	public void addItem(Inventoriable product) {
 		Inventoriable actualProduct = product;
 		if (product instanceof MultipleResource) {
@@ -59,6 +102,11 @@ public class Player extends AbstractMovable{
 	    }
 	}
 	
+	/**
+	 * Retirer un item de l'inventaire
+	 * 
+	 * @param resources item
+	 */
 	public void removeItem(Inventoriable resources) {
 		if (this.inventory.containsKey(resources)) {
 			if (this.inventory.get(resources)==1) {
@@ -70,6 +118,12 @@ public class Player extends AbstractMovable{
 		}
 	}
 	
+	/**
+	 * Récuperer un item avec le nom
+	 * 
+	 * @param nom de l'item
+	 * @return item
+	 */
 	public Optional<Inventoriable> getItem(String nom) {
 		Object[] inventoryTmp = this.inventory.keySet().toArray();
 		for (int i = 0; i < inventoryTmp.length; i++) {
@@ -102,6 +156,11 @@ public class Player extends AbstractMovable{
         this.setSprite(wearItem.getSprite());
     }
 
+    /**
+     * Récuperer inventaire
+     * 
+     * @return inventaire
+     */
     public ObservableMap<Inventoriable, Integer> getInventory() {
 		return inventory;
 	}

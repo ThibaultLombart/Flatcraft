@@ -52,6 +52,9 @@ public final class Resource implements Inventoriable{
     
     private IResource hardness;
     
+    /**
+     * L'attribut fuel...
+     */
     private IResourceFuel fuel;
 
     /**
@@ -60,6 +63,7 @@ public final class Resource implements Inventoriable{
      * @param state L'état state pour les textures
      * @param toolType Le type d'outils nécessaire pour extraire la ressource de la carte.
      * @param hardness La dureté initiale de la ressource.
+     * @param fuel fuel
      *
      * @throws IllegalArgumentException Si la valeur de {@code hardness} est négative.
      */
@@ -72,10 +76,16 @@ public final class Resource implements Inventoriable{
     
     
 
+    /**
+     * @return etat
+     */
     public IState getState() {
 		return state;
 	}
     
+    /**
+     * @param state etat
+     */
     public void setState(IState state) {
     	this.state = state;
     }
@@ -97,6 +107,7 @@ public final class Resource implements Inventoriable{
      *
      * @return Le nom de cette ressource.
      */
+    @Override
     public String getInternalName() {
         return state.getName().toLowerCase().replace(" ", "_");
     }
@@ -128,6 +139,7 @@ public final class Resource implements Inventoriable{
      *
      * @return La dureté de cet élément.
      */
+    @Override
     public IResource getHardness() {
         return hardness;
     }
@@ -135,6 +147,7 @@ public final class Resource implements Inventoriable{
     /**
      * Donne un coup sur cette ressource pour l'extraire de la carte.
      * Cela réduit sa dureté.
+     * @param cellule cellule
      *
      * @throws IllegalStateException Si la dureté de la ressource est déjà égale
      *         à {@code 0}.
@@ -180,7 +193,8 @@ public final class Resource implements Inventoriable{
 
 
 
-	public IResourceFuel getFuel() {
+	@Override
+    public IResourceFuel getFuel() {
 		return fuel;
 	}
 

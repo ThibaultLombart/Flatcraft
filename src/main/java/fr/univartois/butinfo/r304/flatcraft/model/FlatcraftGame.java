@@ -86,6 +86,9 @@ public final class FlatcraftGame {
      */
     private IFlatcraftController controller;
     
+    /**
+     * L'attribut generate...
+     */
     private IGenerate generate;
 
     /**
@@ -93,8 +96,14 @@ public final class FlatcraftGame {
      */
     private ISpriteStore spriteStore;
     
+    /**
+     * L'attribut liste des Crafts
+     */
     private CraftFurnaceObject craft;
     
+    /**
+     * L'attribut liste des Cuissons
+     */
     private CraftFurnaceObject furnace;
 
     /**
@@ -128,14 +137,35 @@ public final class FlatcraftGame {
      */
     private Player player;
     
+    /**
+     * L'attribut ENDPORTAL...
+     */
     private static final String ENDPORTAL = "endportal";
     
+    /**
+     * L'attribut NETHERPORTAL...
+     */
     private static final String NETHERPORTAL = "netherportal";
     
+    /**
+     * L'attribut STEELPICK...
+     */
     private static final String STEELPICK = "steelpick";
+    /**
+     * L'attribut STONEAXE...
+     */
     private static final String STONEAXE = "stoneaxe";
+    /**
+     * L'attribut STONEPICK...
+     */
     private static final String STONEPICK = "stonepick";
+    /**
+     * L'attribut WOODAXE...
+     */
     private static final String WOODAXE = "woodaxe";
+    /**
+     * L'attribut WOODPICK...
+     */
     private static final String WOODPICK = "woodpick";
 
     /**
@@ -161,8 +191,14 @@ public final class FlatcraftGame {
      */
     private FlatcraftAnimation animation = new FlatcraftAnimation(this, movableObjects);
     
+    /**
+     * L'attribut liste des mondes
+     */
     private List<GameMap> worldList = new ArrayList<>();
     
+    /**
+     * L'attribut MAPCRAFTSPRITE...
+     */
     private static final Map<String, Sprite> MAPCRAFTSPRITE = Map.of("wood",SpriteStore.getSpriteStore().getSprite("default_wood"),
             "stick",SpriteStore.getSpriteStore().getSprite("default_stick"),
             WOODPICK,SpriteStore.getSpriteStore().getSprite("default_tool_woodpick"),
@@ -173,6 +209,9 @@ public final class FlatcraftGame {
             NETHERPORTAL,SpriteStore.getSpriteStore().getSprite("default_netherportal"),
             ENDPORTAL,SpriteStore.getSpriteStore().getSprite("default_endportal"));
     
+    /**
+     * L'attribut MAPCRAFTNAME...
+     */
     private static final Map<String, String> MAPCRAFTNAME = Map.of(WOODPICK,"Wood Pickaxe",
     		WOODAXE,"Wood Axe",
             STONEPICK,"Stone Pickaxe",
@@ -181,24 +220,39 @@ public final class FlatcraftGame {
             NETHERPORTAL,"Nether Portal",
             ENDPORTAL,"End Portal");
     
+    /**
+     * L'attribut MAPCRAFTTOOLTYPE...
+     */
     private static final Map<String, ToolType> MAPCRAFTTOOLTYPE = Map.of(WOODPICK,ToolType.MEDIUM_TOOL,
     		WOODAXE,ToolType.MEDIUM_TOOL,
             STONEPICK,ToolType.HARD_TOOL,
             STONEAXE,ToolType.HARD_TOOL,
             STEELPICK,ToolType.HARD_TOOL);
     
+    /**
+     * L'attribut mapcrafthardness...
+     */
     private final Map<String, IResource> mapcrafthardness = Map.of("wood",new EtatResource2(cellFactory));
     
+    /**
+     * L'attribut MAPCRAFTFUEL...
+     */
     private static final Map<String, IResourceFuel> MAPCRAFTFUEL = Map.of("wood",new EtatFuel(),
     			"stick",new EtatFuel(),
     			WOODPICK,new EtatFuel(),
     			WOODAXE,new EtatFuel());
     
    
+    /**
+     * L'attribut MAPCOOKSPRITE...
+     */
     private static final Map<String, Sprite> MAPCOOKSPRITE = Map.of("gold_lingot",SpriteStore.getSpriteStore().getSprite("default_gold_ingot"),
             "steel_lingot",SpriteStore.getSpriteStore().getSprite("default_steel_ingot"),
             "copper_lingot",SpriteStore.getSpriteStore().getSprite("default_copper_ingot"));
     
+    /**
+     * L'attribut MAPCOOKNAME...
+     */
     private static final Map<String, String> MAPCOOKNAME = Map.of("gold_lingot","Gold Lingot",
             "steel_lingot","Steel Lingot",
             "copper_lingot","Copper Lingot");
@@ -250,6 +304,11 @@ public final class FlatcraftGame {
         this.controller = controller;
     }
     
+    /**
+     * Set la map générée
+     * 
+     * @param generate map générée
+     */
     public void setGenerate(IGenerate generate) {
         this.generate = generate;
     }
@@ -323,21 +382,36 @@ public final class FlatcraftGame {
         player.addItem(portal2);
     }
 
+    /**
+     * Récuperer la map
+     * 
+     * @return map
+     */
     public GameMap getMap() {
 		return map;
 	}
 
+	/**
+	 * Récuperer joueur
+	 * 
+	 * @return Joueur
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * Set le joueur
+	 * 
+	 * @param player joueur
+	 */
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
 
 	/**
      * Crée la carte du jeu.
-	 * @param cellFactory2 
+	 * @param cellFactory2 Cellfactory
      *
      * @return La carte du jeu créée.
      */
@@ -522,6 +596,11 @@ public final class FlatcraftGame {
     }
 
 
+	/**
+	 * Récuperer CellFactory
+	 * 
+	 * @return CellFactory
+	 */
 	public CellFactory getCellFactory() {
 		return cellFactory;
 	}
@@ -661,11 +740,22 @@ public final class FlatcraftGame {
         }
     }
 
+	/**
+	 * Changer la map
+	 * 
+	 * @param map variable map
+	 * @param cellFactory2 cellFactory
+	 */
 	private void setMap(GameMap map, CellFactory cellFactory2) {
 		this.map = map;
 		this.cellFactory = cellFactory2;
 	}
 	
+	/**
+	 * Changer de dimension
+	 * 
+	 * @param portalType Type du Portail
+	 */
 	public void changeDimension(PortalType portalType) {
 	    switch (portalType) {
 	        case END:
@@ -715,6 +805,11 @@ public final class FlatcraftGame {
         player.setWearItem(inHand);
     }
     
+    /**
+     * Permet de ne pas faire buguer l'itérator
+     * 
+     * @return iterator list
+     */
     private List<Inventoriable> copyInventoryKeys() {
         return new ArrayList<>(player.getInventory().keySet());
     }

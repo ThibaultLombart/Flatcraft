@@ -13,8 +13,18 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatNotFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.state_inventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
+/**
+ * Le type ChooseSpriteEnd
+ *
+ * @author thibault
+ *
+ * @version 0.1.0
+ */
 public class ChooseSpriteEnd implements CellFactory {
 	
+	/**
+	 * L'attribut r...
+	 */
 	Random r = new Random();
 	/**
 	 * L'attribut spriteStore...

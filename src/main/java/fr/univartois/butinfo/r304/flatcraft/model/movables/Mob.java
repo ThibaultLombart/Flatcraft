@@ -21,27 +21,43 @@ import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
  */
 public class Mob extends AbstractMovable {
 
+
     /**
-     * Crée une nouvelle instance de Mob.
-     * @param game
-     * @param xPosition
-     * @param yPosition
-     * @param sprite
+     * L'attribut healthPoints...
      */
     private int healthPoints;
     
+    /**
+     * L'attribut strategie...
+     */
     private IDeplacementMob strategie;
     
+    /**
+     * Crée une nouvelle instance de Mob.
+     * @param game jeu
+     * @param xPosition position x
+     * @param yPosition position y
+     * @param spriteDroit spritedroit
+     * @param spriteGauche spritegauche
+     * @param type type
+     * @param strategie strategie
+     */
     public Mob(FlatcraftGame game, double xPosition, double yPosition, Sprite spriteDroit,Sprite spriteGauche, EMob type, IDeplacementMob strategie) {
         super(game, xPosition, yPosition, spriteDroit);
         this.healthPoints = type.getHealth();
         this.strategie = strategie;
     }
     
+    /**
+     * @return pv
+     */
     public int getHealthPoints() {
         return healthPoints;
     }
 
+    /**
+     * @param healthPoints pv
+     */
     public void setHealthPoints(int healthPoints) {
         this.healthPoints=healthPoints;
     }

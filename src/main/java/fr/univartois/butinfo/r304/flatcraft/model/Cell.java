@@ -128,6 +128,7 @@ public interface Cell {
      * Exécute l'action permise par la ressource contenue dans cette cellule.
      * Cette méthode est sans effet si la cellule ne contient pas de ressource ou si la
      * ressource ne propose pas d'action.
+     * @param game Variable du Jeu
      */
     void execute(FlatcraftGame game);
 

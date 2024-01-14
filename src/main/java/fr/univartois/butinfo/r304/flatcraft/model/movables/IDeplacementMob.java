@@ -18,7 +18,7 @@ package fr.univartois.butinfo.r304.flatcraft.model.movables;
 public interface IDeplacementMob {
 
     /**
-     * @param entity
+     * @param entity entité
      */
     void deplacement(AbstractMovable entity);
     
