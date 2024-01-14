@@ -5,7 +5,7 @@
  * Tous droits réservés.
  */
 
-package fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory;
+package fr.univartois.butinfo.r304.flatcraft.model.resources.state_inventory;
 
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 

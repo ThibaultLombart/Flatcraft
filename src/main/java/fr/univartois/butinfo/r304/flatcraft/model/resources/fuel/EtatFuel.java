@@ -7,7 +7,6 @@ public class EtatFuel implements IResourceFuel{
 
 	@Override
 	public Inventoriable combustible(Inventoriable ressource) {
-		// TODO Auto-generated method stub
 		return ressource;
 	}
 	

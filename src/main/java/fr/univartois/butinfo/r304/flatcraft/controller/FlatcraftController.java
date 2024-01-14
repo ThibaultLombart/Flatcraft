@@ -25,7 +25,6 @@ import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.IFlatcraftController;
 import fr.univartois.butinfo.r304.flatcraft.model.map.GameMap;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ResourceInInventoryWallon;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import javafx.beans.binding.Bindings;

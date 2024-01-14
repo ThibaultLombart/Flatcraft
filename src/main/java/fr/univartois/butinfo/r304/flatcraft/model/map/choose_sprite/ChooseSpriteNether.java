@@ -1,5 +1,5 @@
 
-package fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite;
+package fr.univartois.butinfo.r304.flatcraft.model.map.choose_sprite;
 
 import fr.univartois.butinfo.r304.flatcraft.model.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.CellFactory;
@@ -10,7 +10,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatNotFuel;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.state_inventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
 public class ChooseSpriteNether implements CellFactory {

@@ -6,7 +6,6 @@ public class EtatNotFuel implements IResourceFuel{
 
 	@Override
 	public Inventoriable combustible(Inventoriable ressource) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

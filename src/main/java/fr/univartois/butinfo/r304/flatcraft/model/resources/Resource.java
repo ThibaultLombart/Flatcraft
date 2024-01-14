@@ -19,9 +19,8 @@ package fr.univartois.butinfo.r304.flatcraft.model.resources;
 import java.util.Objects;
 
 import fr.univartois.butinfo.r304.flatcraft.model.Cell;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.IResourceFuel;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.IState;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.state_inventory.IState;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
 /**

@@ -30,19 +30,10 @@ public class Mob extends AbstractMovable {
      */
     private int healthPoints;
     
-   // private EMob type;
-    
-   // private Sprite spriteDroit;
-    
-   // private Sprite spriteGauche;
-    
     private IDeplacementMob strategie;
     
     public Mob(FlatcraftGame game, double xPosition, double yPosition, Sprite spriteDroit,Sprite spriteGauche, EMob type, IDeplacementMob strategie) {
         super(game, xPosition, yPosition, spriteDroit);
-        // this.type = type;
-        // this.spriteDroit = spriteDroit;
-        // this.spriteGauche = spriteGauche;
         this.healthPoints = type.getHealth();
         this.strategie = strategie;
     }

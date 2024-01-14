@@ -56,8 +56,7 @@ public class MultipleResource implements Inventoriable {
      */
     @Override
     public void execute() {
-        // TODO Auto-generated method stub.
-        
+        // NOT USED
     }
 
 	@Override
