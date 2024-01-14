@@ -1,5 +1,6 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model.resources;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.IResourceFuel;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
 public class MultipleResource implements Inventoriable {
@@ -42,6 +43,26 @@ public class MultipleResource implements Inventoriable {
 	
 	public Resource getResource() {
 		return resource;
+	}
+
+	public IResourceFuel getFuel() {
+		return resource.getFuel();
+	}
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable#execute()
+     */
+    @Override
+    public void execute() {
+        // TODO Auto-generated method stub.
+        
+    }
+
+	@Override
+	public IResource getHardness() {
+		return resource.getHardness();
 	}
 
 }

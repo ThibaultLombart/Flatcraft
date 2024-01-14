@@ -16,6 +16,7 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model.resources;
 
+import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.IResourceFuel;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
 /**
@@ -54,7 +55,17 @@ public interface Inventoriable {
      * @return
      */
     String getInternalName();
-    
-    int getQuantity();
+
+	int getQuantity();
+	
+	IResourceFuel getFuel();
+	
+	IResource getHardness();
+	
+	/**
+     * Exécute l'action permise par cet élément.
+     * Cette méthode est sans effet sur les ressources qui ne proposent pas d'action.
+     */
+    void execute();
 
 }

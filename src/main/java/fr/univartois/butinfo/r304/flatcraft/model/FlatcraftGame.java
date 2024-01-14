@@ -17,6 +17,11 @@
 package fr.univartois.butinfo.r304.flatcraft.model;
 
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 
 import java.util.ArrayList;
 import java.io.IOException;
@@ -29,20 +34,26 @@ import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftFurnaceObject;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.RuleParser;
 import fr.univartois.butinfo.r304.flatcraft.model.map.GameMap;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
+import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSprite;
 import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSpriteEnd;
 import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSpriteNether;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource2;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.IResource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatFuel;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatNotFuel;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.IResourceFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.MultipleResource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.ObservableMap;
 
 /**
  * La classe {@link FlatcraftGame} permet de gérer une partie du jeu Flatcraft.
@@ -116,6 +127,19 @@ public final class FlatcraftGame {
     private Player player;
 
     /**
+     * La dernière direction suivie par le joueur.
+     * Elle est stockée sous la forme d'un entier, afin d'indiquer s'il avance ou s'il
+     * recule.
+     */
+    private int lastDirection = 1;
+
+    /**
+     * L'iterateur permettant de parcourir les ressources contenues dans l'inventaire du
+     * joueur.
+     */
+    private Iterator<Inventoriable> inventoryIterator;
+
+    /**
      * La liste des objets mobiles du jeu.
      */
     private List<IMovable> movableObjects = new CopyOnWriteArrayList<>();
@@ -144,6 +168,20 @@ public final class FlatcraftGame {
             "steelpick","Steel Pickaxe",
             "netherportal","Nether Portal",
             "endportal","End Portal");
+    
+    private static final Map<String, ToolType> MAPCRAFTTOOLTYPE = Map.of("woodpick",ToolType.MEDIUM_TOOL,
+            "woodaxe",ToolType.MEDIUM_TOOL,
+            "stonepick",ToolType.HARD_TOOL,
+            "stoneaxe",ToolType.HARD_TOOL,
+            "steelpick",ToolType.HARD_TOOL);
+    
+    private final Map<String, IResource> MAPCRAFTHARDNESS = Map.of("wood",new EtatResource2(cellFactory));
+    
+    private final Map<String, IResourceFuel> MAPCRAFTFUEL = Map.of("wood",new EtatFuel(),
+    			"stick",new EtatFuel(),
+    			"woodpick",new EtatFuel(),
+    			"woodaxe",new EtatFuel());
+    
    
     private static final Map<String, Sprite> MAPCOOKSPRITE = Map.of("gold_lingot",SpriteStore.getSpriteStore().getSprite("default_gold_ingot"),
             "steel_lingot",SpriteStore.getSpriteStore().getSprite("default_steel_ingot"),
@@ -163,7 +201,8 @@ public final class FlatcraftGame {
      *        {@link Sprite} du jeu.
      * @param factory La fabrique permettant de créer les cellules du jeux.
      */
-    public FlatcraftGame(int width, int height, int mapRepeat, ISpriteStore spriteStore, CellFactory factory) {
+    public FlatcraftGame(int width, int height, int mapRepeat, ISpriteStore spriteStore,
+            CellFactory factory) {
         this.width = width;
         this.height = height;
         this.mapRepeat = mapRepeat;
@@ -226,6 +265,7 @@ public final class FlatcraftGame {
         movableObjects.add(player);
         controller.addMovable(player);
         
+        
         /*
          *  MOBS
          * 
@@ -235,6 +275,8 @@ public final class FlatcraftGame {
             cochon.move(10);
          * 
          */
+        
+        controller.bindLeftAnchor(leftAnchor);
         
         
 
@@ -266,6 +308,10 @@ public final class FlatcraftGame {
         
         // On démarre l'animation du jeu.
         animation.start();
+        
+        Inventoriable woodpick = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("default_tool_woodpick"),"woodpick"),ToolType.MEDIUM_TOOL,new EtatResourceUnbreakable(ChooseSprite.getChooseSprite()), new EtatNotFuel());
+        player.setWearItem(woodpick);
+        player.addItem(woodpick);
     }
 
     public GameMap getMap() {
@@ -287,8 +333,8 @@ public final class FlatcraftGame {
      * @return La carte du jeu créée.
      */
     private GameMap createMap(CellFactory cellFactory2) {
-        int hauteur = this.height / 16;
-        int largeur = this.width / 16;
+        int hauteur = getHeight() / 16;
+        int largeur = getWidth() / 16;
         
         return generate.createMapGen(hauteur, largeur, cellFactory);
         
@@ -324,6 +370,7 @@ public final class FlatcraftGame {
     public void moveLeft() {
     	player.setHorizontalSpeed(-150);
     	move(player);
+        lastDirection = -1;
     }
 
     /**
@@ -332,6 +379,7 @@ public final class FlatcraftGame {
     public void moveRight() {
     	player.setHorizontalSpeed(150);
     	move(player);
+        lastDirection = 1;
     }
 
     /**
@@ -444,10 +492,21 @@ public final class FlatcraftGame {
         // On commence par récupérer la position du centre de l'objet.
         int midX = movable.getX() + (movable.getWidth() / 2);
         int midY = movable.getY() + (movable.getHeight() / 2);
+        return getCellAt(midX, midY);
+    }
 
+    /**
+     * Donne la cellule à la position donnée sur la carte.
+     *
+     * @param x La position en x de la cellule.
+     * @param y La position en y de la cellule.
+     *
+     * @return La cellule à la position donnée.
+     */
+    public Cell getCellAt(int x, int y) {
         // On traduit cette position en position dans la carte.
-        int row = midY / spriteStore.getSpriteSize();
-        int column = midX / spriteStore.getSpriteSize();
+        int row = y / spriteStore.getSpriteSize();
+        int column = x / spriteStore.getSpriteSize();
 
         // On récupère enfin la cellule à cette position dans la carte.
         return getMap().getAt(row, column);
@@ -459,6 +518,32 @@ public final class FlatcraftGame {
 	}
     
     
+    /**
+     * Récupére la cellule correspondant à la prochaine position d'un objet mobile.
+     * Il s'agit de la cellule voisine de celle sur laquelle l'objet en question occupe le
+     * plus de place, en suivant la dernière direction suivie par joueur.
+     *
+     * @param movable L'objet mobile dont la prochaine cellule doit être récupérée.
+     *
+     * @return La prochaine cellule occupée par l'objet mobile.
+     */
+    private Optional<Cell> getNextCellOf(IMovable movable) {
+        // On commence par récupérer la position du centre de l'objet.
+        int midX = movable.getX() + (movable.getWidth() / 2);
+        int midY = movable.getY() + (movable.getHeight() / 2);
+
+        // On traduit cette position en position dans la carte.
+        int row = midY / spriteStore.getSpriteSize();
+        int column = midX / spriteStore.getSpriteSize() + lastDirection;
+
+        // On récupère enfin la cellule à cette position dans la carte.
+        if (column < map.getWidth()) {
+            return Optional.of(map.getAt(row, column));
+        }
+
+        return Optional.empty();
+    }
+
     /**
      * Crée une nouvelle ressource à l'aide d'un ensemble de ressources, en suivant les
      * règles de la table de craft.
@@ -493,30 +578,38 @@ public final class FlatcraftGame {
             
         if (quantite != 0) {
             Sprite spriteItem;
-            String nomExterne;
+            String nomExterne = nomItemCraft;
+            ToolType toolType = ToolType.NO_TOOL;
             spriteItem = MAPCRAFTSPRITE.get(nomItemCraft);
+            
             if(MAPCRAFTNAME.containsKey(nomItemCraft)) {
                 nomExterne = MAPCRAFTNAME.get(nomItemCraft);
-            } else {
-                nomExterne = nomItemCraft;
             }
-            if (quantite == 1 ) {
-            	return new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory));
+            
+            if(MAPCRAFTTOOLTYPE.containsKey(nomItemCraft)) {
+            	toolType = MAPCRAFTTOOLTYPE.get(nomItemCraft);
             }
-            else {
-            	return new MultipleResource(new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory)),quantite);
+            
+            IResource hardness = new EtatResourceUnbreakable(cellFactory);
+            if(MAPCRAFTHARDNESS.containsKey(nomItemCraft)) {
+            	hardness = MAPCRAFTHARDNESS.get(nomItemCraft);
             }
-
+            
+            IResourceFuel fuel = new EtatNotFuel();
+            if(MAPCRAFTFUEL.containsKey(nomItemCraft)) {
+            	fuel = MAPCRAFTFUEL.get(nomItemCraft);
             }
-         else {
+            
+            return new Resource(new ResourceInInventory(spriteItem,nomExterne),toolType,hardness, fuel);
+        } else {
             controller.displayError("Erreur, Il n'existe pas de craft.");
             return null;
         }
     }
 
     /**
-     * Crée une nouvelle ressource à l'aide d'un combustible et d'une ressource, en suivant les
-     * règles du fourneau.
+     * Crée une nouvelle ressource à l'aide d'un combustible et d'une ressource, en
+     * suivant les règles du fourneau.
      *
      * @param fuel Le matériau combustible utilisé dans le fourneau.
      * @param resource La ressource à transformer.
@@ -526,9 +619,12 @@ public final class FlatcraftGame {
     public Inventoriable cook(Inventoriable fuel, Inventoriable resource) {
         
         String res = resource.getInternalName();
+        System.out.println(res);
         
         String nomItemCook = "";
         int quantite = 0;
+        
+       
         for(CraftAndFurnace cookUnite : furnace.getListCraft()) {
             if(cookUnite.getRule().equals(res)) {
                 nomItemCook = cookUnite.getProduct();
@@ -546,7 +642,8 @@ public final class FlatcraftGame {
                 nomExterne = nomItemCook;
             }
             
-            return (new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory)));
+            
+            return fuel.getFuel().combustible(new Resource(new ResourceInInventory(spriteItem,nomExterne),ToolType.NO_TOOL,new EtatResourceUnbreakable(cellFactory), new EtatFuel()));
         } else {
             controller.displayError("Erreur, Il n'existe pas de cuisson pour cet item.");
             return null;
@@ -556,5 +653,52 @@ public final class FlatcraftGame {
 	private void setMap(GameMap map) {
 		this.map = map;
 	}
+    /**
+     * Dépose sur la carte la ressource que le joueur a actuellement en main.
+     */
+    public void dropResource() {
+        // On commence par rechercher la cellule voisine de celle du joueur, si elle
+        // existe.
+    	System.out.println("DDD");
+        Optional<Cell> next = getNextCellOf(player);
+        if (next.isEmpty()) {
+            return;
+        }
+
+        // Le dépôt ne peut fonctionner que si la cellule ne contient pas de ressource.
+        Cell target = next.get();
+        Inventoriable inHand = player.getWearItem();
+        if (target.setResource(inHand)) {
+            player.removeItem(inHand);
+            switchResource();
+        }
+    }
+
+    /**
+     * Modifie la ressource que l'utilisateur a actuellement en main.
+     * C'est la prochaine ressource dans l'inventaire qui est choisie.
+     */
+    public void switchResource() {
+    	System.out.println("PRINT S");
+        if ((inventoryIterator == null) || (!inventoryIterator.hasNext())) {
+            ObservableMap<Inventoriable, Integer> inventory = player.getInventory();
+            inventoryIterator = inventory.keySet().iterator();
+        }
+
+        Inventoriable inHand = inventoryIterator.next();
+        player.setWearItem(inHand);
+    }
+
+    /**
+     * Exécute l'action associée à la ressource située sur la cellule voisine de celle du
+     * joueur.
+     */
+    public void executeResource() {
+        Optional<Cell> next = getNextCellOf(player);
+        if (next.isPresent()) {
+            Cell cell = next.get();
+            cell.execute();
+        }
+    }
 
 }

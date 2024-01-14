@@ -3,18 +3,11 @@ package fr.univartois.butinfo.r304.flatcraft.model;
 import java.util.Objects;
 import java.util.Optional;
 
-import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSprite;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.AbstractMovable;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource3;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.MultipleResource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
-import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -22,15 +15,13 @@ import javafx.collections.ObservableMap;
 
 public class Player extends AbstractMovable{
     
-    private static Inventoriable nothing = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("air"),"air"),ToolType.NO_TOOL,new EtatResourceUnbreakable(ChooseSprite.getChooseSprite()));
-
 	private IntegerProperty healthPoints;
 	
 	private IntegerProperty xpPoints;
 	
 	private ObservableMap<Inventoriable, Integer> inventory = FXCollections.observableHashMap();
 	
-	private Inventoriable wearItem = nothing;
+	private Inventoriable wearItem;
 
 	
 	public Player(FlatcraftGame game, int x, int y, Sprite sprite) {
@@ -70,7 +61,7 @@ public class Player extends AbstractMovable{
 	
 	public void removeItem(Inventoriable resources) {
 		if (this.inventory.containsKey(resources)) {
-			if (this.inventory.get(resources)<=1) {
+			if (this.inventory.get(resources)==1) {
 				this.inventory.remove(resources);
 			}
 			else {

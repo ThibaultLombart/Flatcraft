@@ -2,7 +2,10 @@ package fr.univartois.butinfo.r304.flatcraft.model.map;
 
 import fr.univartois.butinfo.r304.flatcraft.model.Player;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreakable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
 public class GenerateCell extends AbstractCell{
@@ -42,4 +45,43 @@ public class GenerateCell extends AbstractCell{
 		
 			
 	}
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see fr.univartois.butinfo.r304.flatcraft.model.Cell#setResource(fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable)
+     */
+    @Override
+    public boolean setResource(Inventoriable resource) {
+    	if(this.getResource() == null && !(resource.getHardness() instanceof EtatResourceUnbreakable) ) {
+    		Resource resourceNew = new Resource(new ResourceOnMap(resource.getSprite(),resource.getName()),resource.getToolType(),resource.getHardness(),resource.getFuel());
+    		this.replaceBy(new GenerateCell(resourceNew));
+        	return true;
+        }
+        return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see fr.univartois.butinfo.r304.flatcraft.model.Cell#accepts(fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable)
+     */
+    @Override
+    public boolean accepts(IMovable movable) {
+        if(this.getResource() == null) {
+        	return true;
+        }
+        return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see fr.univartois.butinfo.r304.flatcraft.model.Cell#execute()
+     */
+    @Override
+    public void execute() {
+        // TODO Auto-generated method stub.
+        
+    }
 }
