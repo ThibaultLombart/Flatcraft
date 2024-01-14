@@ -5,7 +5,7 @@
  * Tous droits réservés.
  */
 
-package fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory;
+package fr.univartois.butinfo.r304.flatcraft.model.resources.state_inventory;
 
 import java.util.Map;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
@@ -31,6 +31,9 @@ public class ResourceOnMap implements IState {
             SpriteStore.getSpriteStore().getSprite("default_mineral_mese"),SpriteStore.getSpriteStore().getSprite("default_mese_crystal_fragment"),
             SpriteStore.getSpriteStore().getSprite("default_stone"),SpriteStore.getSpriteStore().getSprite("default_cobble"));
     
+    /**
+     * L'attribut NEXTSTRING...
+     */
     private static final Map<String, String> NEXTSTRING = Map.of("Copper Ore", "Copper Lump",
             "Iron Ore", "Steel Lump",
             "Coal Ore", "Coal Lump",

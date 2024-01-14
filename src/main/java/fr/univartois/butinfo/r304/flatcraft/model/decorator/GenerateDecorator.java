@@ -20,17 +20,21 @@ import fr.univartois.butinfo.r304.flatcraft.model.map.SimpleGameMap;
  */
 public abstract class GenerateDecorator implements IGenerate{
     
+    /**
+     * L'attribut decorated...
+     */
     private IGenerate decorated;
     
     /**
      * Crée une nouvelle instance de GenerateDecorator.
-     * @param decorated
+     * @param decorated décoré
      */
     protected GenerateDecorator(IGenerate decorated) {
         this.decorated = decorated;
     }
     
     
+    @Override
     public SimpleGameMap createMapGen(int hauteur, int largeur, CellFactory cellFactory) {
         return decorated.createMapGen(hauteur,largeur, cellFactory);
     }

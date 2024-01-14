@@ -18,6 +18,9 @@ import fr.univartois.butinfo.r304.flatcraft.model.CellFactory;
  */
 public class MapGenerator implements IGenerate{
     
+    /**
+     * L'attribut mapGenerator...
+     */
     private static MapGenerator mapGenerator = null;
     
     
@@ -27,6 +30,9 @@ public class MapGenerator implements IGenerate{
     private MapGenerator() {
     }
     
+    /**
+     * @return mapGenerator
+     */
     public static MapGenerator getMapGenerator() {
         if(mapGenerator == null) {
             mapGenerator = new MapGenerator();

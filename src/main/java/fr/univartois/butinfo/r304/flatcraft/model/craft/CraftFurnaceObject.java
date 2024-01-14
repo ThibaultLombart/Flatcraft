@@ -26,6 +26,7 @@ public class CraftFurnaceObject {
     
     /**
      * Crée une nouvelle instance de ComplicatedObject.
+     * @param b builder
      */
     public CraftFurnaceObject(ComplicatedObjectBuilderCraft b) {
 

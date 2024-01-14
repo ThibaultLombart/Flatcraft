@@ -1,4 +1,4 @@
-package fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite;
+package fr.univartois.butinfo.r304.flatcraft.model.map.choose_sprite;
 
 import java.util.Random;
 
@@ -14,9 +14,16 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatNotFuel;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.state_inventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
+/**
+ * Le type ChooseSprite
+ *
+ * @author thibault
+ *
+ * @version 0.1.0
+ */
 public class ChooseSprite implements CellFactory {
 	
 	/**
@@ -29,13 +36,25 @@ public class ChooseSprite implements CellFactory {
 	 */
 	private static ChooseSprite chooseSprite;
 	
+	/**
+	 * L'attribut STONE...
+	 */
+	public static final String STONE = "Stone";
+	/**
+	 * L'attribut STONE_DEFAULT...
+	 */
+	public static final String STONE_DEFAULT = "default_stone";
+	/**
+	 * L'attribut RANDOM...
+	 */
+	public static final Random RANDOM = new Random();
+	
 	
 	
     /**
      * Crée une nouvelle instance de ChooseSprite.
      */
     private ChooseSprite() {
-        // TODO Auto-generated constructor stub.
     }
     
     /**
@@ -54,15 +73,12 @@ public class ChooseSprite implements CellFactory {
 	
 	@Override
 	public void setSpriteStore(ISpriteStore spriteStore) {
-		// TODO Auto-generated method stub
 		this.spriteStore = spriteStore;
 	}
 
 	@Override
 	public Cell createSky() {
-		// TODO Auto-generated method stub
-		Random r = new Random();
-        int chance = r.nextInt(4);
+        int chance = RANDOM.nextInt(4);
         if (chance <= 3) {
         	return new GenerateCell(this.spriteStore.getSprite("default_ice"));
 		}
@@ -71,9 +87,7 @@ public class ChooseSprite implements CellFactory {
 
 	@Override
 	public Cell createSoilSurface() {
-		// TODO Auto-generated method stub
-		Random r = new Random();
-        int chance = r.nextInt(4);
+		int chance = RANDOM.nextInt(4);
         if (chance <= 3) {
         	return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_grass"),"Grass"),ToolType.NO_TOOL,new EtatResource3(this), new EtatNotFuel()));
 		}
@@ -82,14 +96,12 @@ public class ChooseSprite implements CellFactory {
 	
 	@Override
 	public Cell createSubSoil(int i) {
-		// TODO Auto-generated method stub
-		Random r = new Random();
 		int chance;
 		if(i == 44) {
 			return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_bedrock"),"Bedrock"),ToolType.NO_TOOL,new EtatResourceUnbreakable(this), new EtatNotFuel()));
 		}
 		if(i > 40) {
-			chance = r.nextInt(150);
+			chance = RANDOM.nextInt(150);
 			if(chance < 2) {
 				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_diamond"),"Diamond"),ToolType.MEDIUM_TOOL,new EtatResource4(this), new EtatNotFuel()));
 			} else if (chance < 10){
@@ -97,11 +109,11 @@ public class ChooseSprite implements CellFactory {
 			} else if (chance < 15){
 				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_iron"),"Iron Lump"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
 			} else {
-				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_stone"),"Stone"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
+				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite(STONE_DEFAULT),STONE),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
 			}
 		}
 		if(i > 30) {
-			chance = r.nextInt(150);
+			chance = RANDOM.nextInt(150);
 			if (chance < 2){
 				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_gold"),"Gold Lump"),ToolType.MEDIUM_TOOL,new EtatResource3(this), new EtatNotFuel()));
 			} else if (chance < 5){
@@ -109,29 +121,29 @@ public class ChooseSprite implements CellFactory {
 			}else if (chance < 15){
 				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_coal"),"Coal Lump"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatFuel()));
 			} else {
-				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_stone"),"Stone"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
+				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite(STONE_DEFAULT),STONE),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
 			}
 		}
 		
 		if(i > 27) {
-			chance = r.nextInt(150);
+			chance = RANDOM.nextInt(150);
 			if (chance < 15){
 				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_mineral_coal"),"Coal Ore"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatFuel()));
 			} else {
-				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_stone"),"Stone"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
+				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite(STONE_DEFAULT),STONE),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
 			}
 		}
 		
 		if(i > 25) {
-			return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_stone"),"Stone"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
+			return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite(STONE_DEFAULT),STONE),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
 		}
 		
 		if(i == 25) {
-			chance = r.nextInt(150);
+			chance = RANDOM.nextInt(150);
 			if (chance < 50){
 				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_dirt"),"Dirt"),ToolType.NO_TOOL,new EtatResource1(this), new EtatNotFuel()));
 			} else {
-				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_stone"),"Stone"),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
+				return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite(STONE_DEFAULT),STONE),ToolType.MEDIUM_TOOL,new EtatResource2(this), new EtatNotFuel()));
 			}
 		}
 		
@@ -140,9 +152,7 @@ public class ChooseSprite implements CellFactory {
 
 	@Override
 	public Cell createTrunk() {
-		// TODO Auto-generated method stub
-		Random r = new Random();
-        int chance = r.nextInt(8);
+		int chance = RANDOM.nextInt(8);
         if (chance <= 4) {
         	return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_tree"),"Tree"),ToolType.NO_TOOL,new EtatResource3(this), new EtatFuel()));
 		}
@@ -154,9 +164,7 @@ public class ChooseSprite implements CellFactory {
 
 	@Override
 	public Cell createLeaves() {
-		// TODO Auto-generated method stub
-		Random r = new Random();
-        int chance = r.nextInt(8);
+		int chance = RANDOM.nextInt(8);
         if (chance <= 4) {
         	return new GenerateCell(new Resource(new ResourceOnMap(this.spriteStore.getSprite("default_leaves"),"Oak Leaves"),ToolType.NO_TOOL,new EtatResource3(this), new EtatFuel()));
 		}

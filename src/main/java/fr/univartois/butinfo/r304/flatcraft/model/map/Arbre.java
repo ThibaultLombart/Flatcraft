@@ -7,14 +7,36 @@ import fr.univartois.butinfo.r304.flatcraft.model.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.CellFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.decorator.GenerateDecorator;
 
+/**
+ * Le type Arbre
+ *
+ * @author Thibault
+ *
+ * @version 0.1.0
+ */
 public class Arbre extends GenerateDecorator implements IGenerate {
 
+	/**
+	 * L'attribut r...
+	 */
 	Random r = new Random();
 	
+	/**
+	 * L'attribut tailleMax...
+	 */
 	private int tailleMax;
 	
+	/**
+	 * L'attribut nbArbres...
+	 */
 	private int nbArbres;
 	
+	/**
+	 * Crée une nouvelle instance de Arbre.
+	 * @param map map
+	 * @param tailleMax taille arbre max
+ 	 * @param nbArbres nombre arbre max
+	 */
 	public Arbre(IGenerate map, int tailleMax, int nbArbres) {
 		super(map);
 		this.tailleMax = tailleMax;

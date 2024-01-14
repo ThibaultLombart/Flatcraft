@@ -26,18 +26,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftAndFurnace;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.CraftFurnaceObject;
 import fr.univartois.butinfo.r304.flatcraft.model.craft.RuleParser;
 import fr.univartois.butinfo.r304.flatcraft.model.map.GameMap;
 import fr.univartois.butinfo.r304.flatcraft.model.map.GenerateCell;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
-import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSprite;
-import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSpriteEnd;
-import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSpriteNether;
+import fr.univartois.butinfo.r304.flatcraft.model.map.choose_sprite.ChooseSprite;
+import fr.univartois.butinfo.r304.flatcraft.model.map.choose_sprite.ChooseSpriteEnd;
+import fr.univartois.butinfo.r304.flatcraft.model.map.choose_sprite.ChooseSpriteNether;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource2;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResource5;
@@ -48,7 +46,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatNotFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.IResourceFuel;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.state_inventory.ResourceInInventory;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.MultipleResource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Portal;
@@ -58,7 +56,6 @@ import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.ObservableMap;
 
 /**
  * La classe {@link FlatcraftGame} permet de gérer une partie du jeu Flatcraft.
@@ -89,6 +86,9 @@ public final class FlatcraftGame {
      */
     private IFlatcraftController controller;
     
+    /**
+     * L'attribut generate...
+     */
     private IGenerate generate;
 
     /**
@@ -96,8 +96,14 @@ public final class FlatcraftGame {
      */
     private ISpriteStore spriteStore;
     
+    /**
+     * L'attribut liste des Crafts
+     */
     private CraftFurnaceObject craft;
     
+    /**
+     * L'attribut liste des Cuissons
+     */
     private CraftFurnaceObject furnace;
 
     /**
@@ -130,6 +136,37 @@ public final class FlatcraftGame {
      * La représentation du joueur.
      */
     private Player player;
+    
+    /**
+     * L'attribut ENDPORTAL...
+     */
+    private static final String ENDPORTAL = "endportal";
+    
+    /**
+     * L'attribut NETHERPORTAL...
+     */
+    private static final String NETHERPORTAL = "netherportal";
+    
+    /**
+     * L'attribut STEELPICK...
+     */
+    private static final String STEELPICK = "steelpick";
+    /**
+     * L'attribut STONEAXE...
+     */
+    private static final String STONEAXE = "stoneaxe";
+    /**
+     * L'attribut STONEPICK...
+     */
+    private static final String STONEPICK = "stonepick";
+    /**
+     * L'attribut WOODAXE...
+     */
+    private static final String WOODAXE = "woodaxe";
+    /**
+     * L'attribut WOODPICK...
+     */
+    private static final String WOODPICK = "woodpick";
 
     /**
      * La dernière direction suivie par le joueur.
@@ -154,44 +191,68 @@ public final class FlatcraftGame {
      */
     private FlatcraftAnimation animation = new FlatcraftAnimation(this, movableObjects);
     
+    /**
+     * L'attribut liste des mondes
+     */
     private List<GameMap> worldList = new ArrayList<>();
     
+    /**
+     * L'attribut MAPCRAFTSPRITE...
+     */
     private static final Map<String, Sprite> MAPCRAFTSPRITE = Map.of("wood",SpriteStore.getSpriteStore().getSprite("default_wood"),
             "stick",SpriteStore.getSpriteStore().getSprite("default_stick"),
-            "woodpick",SpriteStore.getSpriteStore().getSprite("default_tool_woodpick"),
-            "woodaxe",SpriteStore.getSpriteStore().getSprite("default_tool_woodaxe"),
-            "stonepick",SpriteStore.getSpriteStore().getSprite("default_tool_stonepick"),
-            "stoneaxe",SpriteStore.getSpriteStore().getSprite("default_tool_stoneaxe"),
-            "steelpick",SpriteStore.getSpriteStore().getSprite("default_tool_steelpick"),
-            "netherportal",SpriteStore.getSpriteStore().getSprite("default_netherportal"),
-            "endportal",SpriteStore.getSpriteStore().getSprite("default_endportal"));
+            WOODPICK,SpriteStore.getSpriteStore().getSprite("default_tool_woodpick"),
+            WOODAXE,SpriteStore.getSpriteStore().getSprite("default_tool_woodaxe"),
+            STONEPICK,SpriteStore.getSpriteStore().getSprite("default_tool_stonepick"),
+            STONEAXE,SpriteStore.getSpriteStore().getSprite("default_tool_stoneaxe"),
+            STEELPICK,SpriteStore.getSpriteStore().getSprite("default_tool_steelpick"),
+            NETHERPORTAL,SpriteStore.getSpriteStore().getSprite("default_netherportal"),
+            ENDPORTAL,SpriteStore.getSpriteStore().getSprite("default_endportal"));
     
-    private static final Map<String, String> MAPCRAFTNAME = Map.of("woodpick","Wood Pickaxe",
-            "woodaxe","Wood Axe",
-            "stonepick","Stone Pickaxe",
-            "stoneaxe","Stone Axe",
-            "steelpick","Steel Pickaxe",
-            "netherportal","Nether Portal",
-            "endportal","End Portal");
+    /**
+     * L'attribut MAPCRAFTNAME...
+     */
+    private static final Map<String, String> MAPCRAFTNAME = Map.of(WOODPICK,"Wood Pickaxe",
+    		WOODAXE,"Wood Axe",
+            STONEPICK,"Stone Pickaxe",
+            STONEAXE,"Stone Axe",
+            STEELPICK,"Steel Pickaxe",
+            NETHERPORTAL,"Nether Portal",
+            ENDPORTAL,"End Portal");
     
-    private static final Map<String, ToolType> MAPCRAFTTOOLTYPE = Map.of("woodpick",ToolType.MEDIUM_TOOL,
-            "woodaxe",ToolType.MEDIUM_TOOL,
-            "stonepick",ToolType.HARD_TOOL,
-            "stoneaxe",ToolType.HARD_TOOL,
-            "steelpick",ToolType.HARD_TOOL);
+    /**
+     * L'attribut MAPCRAFTTOOLTYPE...
+     */
+    private static final Map<String, ToolType> MAPCRAFTTOOLTYPE = Map.of(WOODPICK,ToolType.MEDIUM_TOOL,
+    		WOODAXE,ToolType.MEDIUM_TOOL,
+            STONEPICK,ToolType.HARD_TOOL,
+            STONEAXE,ToolType.HARD_TOOL,
+            STEELPICK,ToolType.HARD_TOOL);
     
-    private final Map<String, IResource> MAPCRAFTHARDNESS = Map.of("wood",new EtatResource2(cellFactory));
+    /**
+     * L'attribut mapcrafthardness...
+     */
+    private final Map<String, IResource> mapcrafthardness = Map.of("wood",new EtatResource2(cellFactory));
     
-    private final Map<String, IResourceFuel> MAPCRAFTFUEL = Map.of("wood",new EtatFuel(),
+    /**
+     * L'attribut MAPCRAFTFUEL...
+     */
+    private static final Map<String, IResourceFuel> MAPCRAFTFUEL = Map.of("wood",new EtatFuel(),
     			"stick",new EtatFuel(),
-    			"woodpick",new EtatFuel(),
-    			"woodaxe",new EtatFuel());
+    			WOODPICK,new EtatFuel(),
+    			WOODAXE,new EtatFuel());
     
    
+    /**
+     * L'attribut MAPCOOKSPRITE...
+     */
     private static final Map<String, Sprite> MAPCOOKSPRITE = Map.of("gold_lingot",SpriteStore.getSpriteStore().getSprite("default_gold_ingot"),
             "steel_lingot",SpriteStore.getSpriteStore().getSprite("default_steel_ingot"),
             "copper_lingot",SpriteStore.getSpriteStore().getSprite("default_copper_ingot"));
     
+    /**
+     * L'attribut MAPCOOKNAME...
+     */
     private static final Map<String, String> MAPCOOKNAME = Map.of("gold_lingot","Gold Lingot",
             "steel_lingot","Steel Lingot",
             "copper_lingot","Copper Lingot");
@@ -243,10 +304,15 @@ public final class FlatcraftGame {
         this.controller = controller;
     }
     
+    /**
+     * Set la map générée
+     * 
+     * @param generate map générée
+     */
     public void setGenerate(IGenerate generate) {
         this.generate = generate;
     }
-
+    
     /**
      * Prépare la partie de Flatcraft avant qu'elle ne démarre.
      */
@@ -265,7 +331,7 @@ public final class FlatcraftGame {
         worldList.add(nether);
         
     	// On crée la carte du jeu.
-        setMap(worldList.get(0));
+        setMap(worldList.get(0),cellFactory);
         
         controller.prepare(getMap());
 
@@ -273,16 +339,6 @@ public final class FlatcraftGame {
         movableObjects.add(player);
         controller.addMovable(player);
         
-        
-        /*
-         *  MOBS
-         * 
-         *  Mob cochon = new Mob(this, 50, 19*16, spriteStore.getSprite(EMob.COCHON.getSpriteDroit()),spriteStore.getSprite(EMob.COCHON.getSpriteGauche()),EMob.COCHON,new DeplacementLineaire());
-            movableObjects.add(cochon);
-            controller.addMovable(cochon);
-            cochon.move(10);
-         * 
-         */
         
         controller.bindLeftAnchor(leftAnchor);
         
@@ -317,38 +373,52 @@ public final class FlatcraftGame {
         // On démarre l'animation du jeu.
         animation.start();
         
-        Inventoriable woodpick = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("default_tool_woodpick"),"woodpick"),ToolType.MEDIUM_TOOL,new EtatResourceUnbreakable(ChooseSprite.getChooseSprite()), new EtatNotFuel());
-        Inventoriable portal = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("default_netherportal"), "netherportal"),ToolType.NO_TOOL,new EtatResource5(ChooseSprite.getChooseSprite()),new EtatNotFuel());
-        Inventoriable portal2 = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("default_endportal"), "endportal"),ToolType.NO_TOOL,new EtatResource5(ChooseSprite.getChooseSprite()),new EtatNotFuel());
+        Inventoriable woodpick = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("default_tool_woodpick"),WOODPICK),ToolType.MEDIUM_TOOL,new EtatResourceUnbreakable(ChooseSprite.getChooseSprite()), new EtatNotFuel());
+        Inventoriable portal = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("default_netherportal"), NETHERPORTAL),ToolType.NO_TOOL,new EtatResource5(ChooseSprite.getChooseSprite()),new EtatNotFuel());
+        Inventoriable portal2 = new Resource(new ResourceInInventory(SpriteStore.getSpriteStore().getSprite("default_endportal"), ENDPORTAL),ToolType.NO_TOOL,new EtatResource5(ChooseSprite.getChooseSprite()),new EtatNotFuel());
         player.setWearItem(woodpick);
         player.addItem(woodpick);
         player.addItem(portal);
         player.addItem(portal2);
     }
 
+    /**
+     * Récuperer la map
+     * 
+     * @return map
+     */
     public GameMap getMap() {
 		return map;
 	}
 
+	/**
+	 * Récuperer joueur
+	 * 
+	 * @return Joueur
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * Set le joueur
+	 * 
+	 * @param player joueur
+	 */
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
 
 	/**
      * Crée la carte du jeu.
-	 * @param cellFactory2 
+	 * @param cellFactory2 Cellfactory
      *
      * @return La carte du jeu créée.
      */
     private GameMap createMap(CellFactory cellFactory2) {
         int hauteur = getHeight() / 16;
         int largeur = getWidth() / 16;
-        cellFactory = cellFactory2;
-        return generate.createMapGen(hauteur, largeur, cellFactory);
+        return generate.createMapGen(hauteur, largeur, cellFactory2);
         
         
     }
@@ -526,6 +596,11 @@ public final class FlatcraftGame {
     }
 
 
+	/**
+	 * Récuperer CellFactory
+	 * 
+	 * @return CellFactory
+	 */
 	public CellFactory getCellFactory() {
 		return cellFactory;
 	}
@@ -604,8 +679,8 @@ public final class FlatcraftGame {
             }
             
             IResource hardness = new EtatResourceUnbreakable(cellFactory);
-            if(MAPCRAFTHARDNESS.containsKey(nomItemCraft)) {
-            	hardness = MAPCRAFTHARDNESS.get(nomItemCraft);
+            if(mapcrafthardness.containsKey(nomItemCraft)) {
+            	hardness = mapcrafthardness.get(nomItemCraft);
             }
             
             IResourceFuel fuel = new EtatNotFuel();
@@ -636,7 +711,6 @@ public final class FlatcraftGame {
     public Inventoriable cook(Inventoriable fuel, Inventoriable resource) {
         
         String res = resource.getInternalName();
-        System.out.println(res);
         
         String nomItemCook = "";
         int quantite = 0;
@@ -666,19 +740,29 @@ public final class FlatcraftGame {
         }
     }
 
-	private void setMap(GameMap map) {
+	/**
+	 * Changer la map
+	 * 
+	 * @param map variable map
+	 * @param cellFactory2 cellFactory
+	 */
+	private void setMap(GameMap map, CellFactory cellFactory2) {
 		this.map = map;
+		this.cellFactory = cellFactory2;
 	}
 	
+	/**
+	 * Changer de dimension
+	 * 
+	 * @param portalType Type du Portail
+	 */
 	public void changeDimension(PortalType portalType) {
 	    switch (portalType) {
 	        case END:
-	        	System.out.println("end");
-	            setMap(worldList.get(1));
+	            setMap(worldList.get(1),ChooseSpriteEnd.getChooseSpriteEnd());
 	            break;
 	        case NETHER:
-	        	System.out.println("nether");
-	            setMap(worldList.get(2)); 
+	            setMap(worldList.get(2),ChooseSpriteNether.getChooseSpriteNether()); 
 	            break;
 	    }
 	    controller.prepare(getMap());
@@ -696,14 +780,12 @@ public final class FlatcraftGame {
 	    Cell target = next.get();
 	    
 	    Inventoriable inHand = player.getWearItem();
-	    if ((inHand.getName().equals("endportal") || inHand.getName().equals("netherportal")) && target.setResource(inHand)) {
-	        PortalType portalType = inHand.getName().equals("endportal") ? PortalType.END : PortalType.NETHER;
-	        GenerateCell portalCell = (GenerateCell) target;
-	        portalCell.setPortal(new Portal(portalCell, portalType));
-	        player.removeItem(inHand);
-	        switchResource();
-	    }
 	    if (target.setResource(inHand)) {
+	    	if ((inHand.getName().equals(ENDPORTAL) || inHand.getName().equals(NETHERPORTAL))) {
+		        PortalType portalType = inHand.getName().equals(ENDPORTAL) ? PortalType.END : PortalType.NETHER;
+		        GenerateCell portalCell = (GenerateCell) target;
+		        portalCell.setPortal(new Portal(portalCell, portalType));
+		    }
 	        player.removeItem(inHand);
 	        switchResource();
 	    }
@@ -715,14 +797,21 @@ public final class FlatcraftGame {
      * C'est la prochaine ressource dans l'inventaire qui est choisie.
      */
     public void switchResource() {
-    	System.out.println("PRINT S");
         if ((inventoryIterator == null) || (!inventoryIterator.hasNext())) {
-            ObservableMap<Inventoriable, Integer> inventory = player.getInventory();
-            inventoryIterator = inventory.keySet().iterator();
+        	inventoryIterator = copyInventoryKeys().iterator();
         }
 
         Inventoriable inHand = inventoryIterator.next();
         player.setWearItem(inHand);
+    }
+    
+    /**
+     * Permet de ne pas faire buguer l'itérator
+     * 
+     * @return iterator list
+     */
+    private List<Inventoriable> copyInventoryKeys() {
+        return new ArrayList<>(player.getInventory().keySet());
     }
 
     /**

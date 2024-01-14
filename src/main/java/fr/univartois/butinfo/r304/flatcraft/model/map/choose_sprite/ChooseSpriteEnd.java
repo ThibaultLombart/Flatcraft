@@ -1,4 +1,4 @@
-package fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite;
+package fr.univartois.butinfo.r304.flatcraft.model.map.choose_sprite;
 
 import java.util.Random;
 
@@ -10,11 +10,21 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.EtatResourceUnbreaka
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatNotFuel;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceOnMap;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.state_inventory.ResourceOnMap;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
+/**
+ * Le type ChooseSpriteEnd
+ *
+ * @author thibault
+ *
+ * @version 0.1.0
+ */
 public class ChooseSpriteEnd implements CellFactory {
 	
+	/**
+	 * L'attribut r...
+	 */
 	Random r = new Random();
 	/**
 	 * L'attribut spriteStore...

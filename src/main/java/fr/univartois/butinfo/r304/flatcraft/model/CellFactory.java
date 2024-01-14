@@ -56,6 +56,7 @@ public interface CellFactory {
     /**
      * Crée une cellule représentant le sous-sol.
      * Il peut s'agir de terre, ou de minerai à aller chercher en profondeur, par exemple.
+     * @param i couche
      *
      * @return La cellule créée.
      */

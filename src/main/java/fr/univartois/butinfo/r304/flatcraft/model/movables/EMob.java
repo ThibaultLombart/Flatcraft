@@ -17,16 +17,46 @@ package fr.univartois.butinfo.r304.flatcraft.model.movables;
 public enum EMob {
     
     
+    /**
+     * L'attribut COCHON...
+     */
     COCHON("pig_droit","pig_gauche",10),
+    /**
+     * L'attribut VACHE...
+     */
     VACHE("vache_droit","vache_gauche",10),
+    /**
+     * L'attribut POULE...
+     */
     POULE("poule_droit","poule_gauche",4),
+    /**
+     * L'attribut MOUTON...
+     */
     MOUTON("mouton_droit","mouton_gauche",10),
+    /**
+     * L'attribut ZOMBIE...
+     */
     ZOMBIE("zombie_droit","zombie_gauche",20);
     
+    /**
+     * L'attribut spriteDroit...
+     */
     private String spriteDroit;
+    /**
+     * L'attribut spriteGauche...
+     */
     private String spriteGauche;
+    /**
+     * L'attribut health...
+     */
     private int health;
     
+    /**
+     * Crée une nouvelle instance de EMob.
+     * @param spriteDroit spriteDroit du mob
+     * @param spriteGauche spriteGauche du mob
+     * @param health vie du mob
+     */
     private EMob(String spriteDroit, String spriteGauche, int health) {
         this.spriteDroit = spriteDroit;
         this.spriteGauche = spriteGauche;

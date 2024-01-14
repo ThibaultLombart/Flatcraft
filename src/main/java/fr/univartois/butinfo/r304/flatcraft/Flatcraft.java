@@ -25,7 +25,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.map.Arbre;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IGenerate;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.model.map.Terrils;
-import fr.univartois.butinfo.r304.flatcraft.model.map.chooseSprite.ChooseSprite;
+import fr.univartois.butinfo.r304.flatcraft.model.map.choose_sprite.ChooseSprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -57,7 +57,10 @@ public final class Flatcraft extends Application {
      */
     private static final int GAME_HEIGHT = 720;
     
-    private static final Random r = new Random();
+    /**
+     * L'attribut RANDOM...
+     */
+    private static final Random RANDOM = new Random();
     /**
      * Le nombre de fois que la carte se "répète" horizontalement.
      * Cela permet d'avoir une carte plus grande que la fenêtre.
@@ -73,9 +76,9 @@ public final class Flatcraft extends Application {
     public void start(Stage stage) throws IOException {
         // On commence par charger la vue et son contrôleur.
     	
-    	int typeTerrils = r.nextInt(10);
-    	int typeArbre = r.nextInt(3,9);
-    	int nbArbre = r.nextInt(50,150);
+    	int typeTerrils = RANDOM.nextInt(10);
+    	int typeArbre = RANDOM.nextInt(3,9);
+    	int nbArbre = RANDOM.nextInt(50,150);
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/univartois/butinfo/r304/flatcraft/view/flatcraft.fxml"));
         Parent viewContent = fxmlLoader.load();
@@ -83,8 +86,7 @@ public final class Flatcraft extends Application {
         controller.setStage(stage);
 
         // On crée ensuite le jeu, que l'on lie au contrôleur.
-        // TODO Utiliser ici la bonne factory pour créer les objets du jeu.
-        FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, MAP_REPEAT, SpriteStore.getSpriteStore(), ChooseSprite.getChooseSprite());
+        game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, MAP_REPEAT, SpriteStore.getSpriteStore(), ChooseSprite.getChooseSprite());
         
         
         IGenerate map = MapGenerator.getMapGenerator();

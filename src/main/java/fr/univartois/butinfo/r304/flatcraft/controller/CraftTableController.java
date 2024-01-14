@@ -162,8 +162,7 @@ public final class CraftTableController {
                     Inventoriable resource = optionalResource.get();
 
                     // Si la ressource est un MultipleResource, ajoutez chaque élément séparément
-                    if (resource instanceof MultipleResource) {
-                        MultipleResource multipleResource = (MultipleResource) resource;
+                    if (resource instanceof MultipleResource multipleResource) {
                         for (int i = 0; i < multipleResource.getQuantity(); i++) {
                             if (resources[row][column] == null) {
                                 Inventoriable innerResource = multipleResource.getResource();

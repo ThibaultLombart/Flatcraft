@@ -7,7 +7,7 @@ module fr.univartois.butinfo.r304.flatcraft {
   exports fr.univartois.butinfo.r304.flatcraft.model.map;
   exports fr.univartois.butinfo.r304.flatcraft.model.movables;
   exports fr.univartois.butinfo.r304.flatcraft.model.resources;
-  exports fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory;
+  exports fr.univartois.butinfo.r304.flatcraft.model.resources.state_inventory;
   exports fr.univartois.butinfo.r304.flatcraft.view;
   
   
