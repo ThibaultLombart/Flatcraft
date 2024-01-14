@@ -48,6 +48,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.EtatNotFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.fuel.IResourceFuel;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.stateinventory.ResourceInInventory;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.MultipleResource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
@@ -599,8 +600,12 @@ public final class FlatcraftGame {
             if(MAPCRAFTFUEL.containsKey(nomItemCraft)) {
             	fuel = MAPCRAFTFUEL.get(nomItemCraft);
             }
-            
-            return new Resource(new ResourceInInventory(spriteItem,nomExterne),toolType,hardness, fuel);
+            if (quantite == 1 ) {
+            	return new Resource(new ResourceInInventory(spriteItem,nomExterne),toolType,hardness, fuel);
+            }
+            else {
+            	return new MultipleResource(new Resource(new ResourceInInventory(spriteItem,nomExterne),toolType,hardness, fuel), quantite);
+            }
         } else {
             controller.displayError("Erreur, Il n'existe pas de craft.");
             return null;
